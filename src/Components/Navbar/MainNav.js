@@ -1,11 +1,10 @@
 import React from "react";
 // import { Navbar, Form, Button } from "react-bootstrap/Navbar";
-import logo from "../images/umall2.gif";
+import logo from "./../../images/umall2.gif";
 import NavForm from "./NavForm";
+import Badge from "./../../SmallComponent/badge";
 import LeftNav from "./LeftNav";
-import Cart from "./../SmallComponent/Cart";
-import Badge from "./../SmallComponent/badge";
-
+import Cart from "./../../SmallComponent/Cart";
 function MainNav() {
   return (
     <nav className="Navbar">

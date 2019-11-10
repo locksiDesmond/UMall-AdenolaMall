@@ -1,8 +1,8 @@
 import React from "react";
 import "./css/umall.css";
-import MainNav from "./Navbar/MainNav";
-import SideNav from "./SideNav/SideNav";
-import MainBody from "./Main/MainBody";
+import MainNav from "./Components/Navbar/MainNav";
+import SideNav from "./Components/SideNav/SideNav";
+import MainBody from "./Components/Main/MainBody";
 
 function UMall() {
   return (

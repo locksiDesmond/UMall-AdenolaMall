@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Btn from "../../../SmallComponent/Btn";
+import Btn from "./../../SmallComponent/Btn";
 function LeftNav() {
   const [signedIn, setSignedin] = useState(true);
   const apiData = `https://sheet.zoho.com/api/private/csv/download/[bookid]/sheet-name:[name]/[range]?apikey=[APIKey]&authtoken=[AuthToken]&scope=DataAPI`;
