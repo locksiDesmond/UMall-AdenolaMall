@@ -1,0 +1,143 @@
+.nav {
+    background-color: #fff;
+}
+
+.Navbar {
+    display: block;
+    justify-content: space-between;
+    box-shadow: 1px -1px 12px 0px black;
+}
+
+
+
+.navbar--logo {
+    max-height: 4.5rem;
+}
+
+.btn--group {
+    display: table;
+}
+
+button {
+    border: 1px solid transparent;
+}
+
+.btn--group>button {
+    border-left: 0;
+    margin-left: 0;
+}
+
+.btn--group::after {
+    content: ' ';
+    margin: 1.2rem;
+}
+
+.btn--component {
+    height: 1.8rem;
+}
+
+.navbar--contents {
+    float: right;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 2rem;
+}
+
+.left--nav>button {
+    content: '';
+    margin: .4rem;
+}
+
+.notification--badge {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: .7rem;
+    text-align: center;
+    position: absolute;
+    right: 2rem;
+    top: 1.2rem;
+
+}
+
+/* Body css */
+.body {
+    display: flex;
+    margin-top: 1rem;
+
+}
+
+/* SideNav */
+.SideNav {
+    display: block;
+    flex: 1;
+    padding-left: 3rem;
+    background-color: antiquewhite;
+    padding-top: 3rem;
+
+}
+
+.SideNav--dropdown {
+    position: relative;
+    padding: 1rem 0 2rem 1rem;
+
+
+}
+
+.SideNav--dropdown::after {
+
+    content: " ";
+    display: block;
+    width: 10rem;
+    height: 1px;
+    background-color: coral;
+}
+
+.dropdown--list {
+    display: block;
+    padding-left: 1.2rem;
+    font-size: 1.3rem;
+
+}
+
+.dropdown--list:hover {
+    background-color: #3442;
+    border: 1px solid #0f1ea1;
+
+}
+
+.SideNav--dropdown:hover>.dropdown--item {
+    display: block;
+}
+
+.dropdown--item {
+    position: absolute;
+    list-style: none;
+    background-color: bisque;
+    left: 15rem;
+    top: 1rem;
+    z-index: 99;
+    display: none;
+}
+
+
+
+
+/* MainBody */
+.MainBody {
+    flex: 4;
+    /* background-color: aqua; */
+}
+
+.Main--image {
+    background-image: url("images/creditcard.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* .logo--div {
+    flex: end;
+} */
