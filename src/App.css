@@ -75,6 +75,13 @@ button {
 
 }
 
+/* colors and buttons */
+.btn--large {
+    width: 15rem !important;
+    background-color: #0f1ea1;
+}
+
+
 /* SideNav */
 .SideNav {
     display: block;
@@ -167,6 +174,7 @@ section.signin {
     height: 624px;
     background-color: #fff;
     border-radius: 17px;
+    margin-top: 3rem;
 
 }
 
@@ -178,6 +186,14 @@ section.signin {
     padding: 1.5rem;
 }
 
+/* signUp */
+.signupform {
+    padding: 1.5rem;
+}
+
+/* End signup */
+
+/* continue  signIn */
 .logo--group--with--text>img {
     height: 97px;
     margin-left: 1rem;
@@ -185,6 +201,13 @@ section.signin {
 
 .logo--group--with--text>p {
     text-align: center;
+    position: absolute;
+    top: 4rem;
+    left: 11rem;
+}
+
+.logo--group--with--text {
+    position: relative;
 }
 
 .signin-form-name {
@@ -205,4 +228,37 @@ section.signin {
     color: #25627a !important;
     background-color: #fcfcfc !important;
     width: 80% !important;
+}
+
+.signinform>.btn--large {
+    margin-left: 2rem;
+    margin-top: 1.5rem;
+}
+
+/* media for signup */
+@media (max-width: 576px) {
+    .signin--section {
+        width: 100%;
+    }
+
+    .signin {
+        background-color: #fff;
+    }
+
+    .logo--group--with--text>p {
+        margin-left: -7rem;
+        position: absolute;
+        right: 0rem;
+    }
+
+    .signin--body {
+        padding-left: 2rem;
+    }
+}
+
+@media (max-width:500px) {
+
+    .bg-ski {
+        width: 100% !important;
+    }
 }

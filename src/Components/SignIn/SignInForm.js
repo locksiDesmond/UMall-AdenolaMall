@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-import firebase from "./../../Firebase/Firebase";
+import { firebase } from "./../../Firebase/Firebase";
+import { Redirect } from "react-router-dom";
 
 function SignInForm() {
   const [displayName, setName] = useState("");
@@ -10,10 +11,18 @@ function SignInForm() {
   const [confirm, setConfirm] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [redirect, setRedirect] = useState("");
+  const [loading, setLoading] = useState(false);
   const style = error ? "error" : "bg-ski";
+  useEffect(() => {
+    if (error) {
+      setLoading(false);
+    }
+  }, [error]);
 
   const handleSubmit = e => {
     e.preventDefault();
+    setLoading(true);
     if (displayName === "" || displayName === null) {
       setError("!invalid DisplayName");
       return;
@@ -24,14 +33,22 @@ function SignInForm() {
       setError("Enter password");
       return;
     } else {
-      //   Fire.signUp(email, password).catch(error => {
-      //     setError(error.message);
-      //   });
       firebase
         .auth()
         .createUserWithEmailAndPassword(email, password)
+        .then(user => {
+          if (user) {
+            setRedirect(true);
+            user.diplayName = displayName;
+          }
+        })
         .catch(error => {
-          setError(error.message);
+          if (error.code !== "auth/network-request-failed") {
+            setError(error.message);
+            setLoading(false);
+          } else {
+            setLoading(true);
+          }
         });
       setName("");
       setPassword("");
@@ -42,11 +59,15 @@ function SignInForm() {
 
   return (
     <Form className="signinform" onSubmit={handleSubmit}>
+      {redirect ? <Redirect to={{ pathname: "/protected/Home" }} /> : null}
       <Form.Group>
         <Form.Label className="signin-form-name">Display Name</Form.Label>
         <Form.Control
           value={displayName}
-          onChange={e => setName(e.currentTarget.value)}
+          onChange={e => {
+            setName(e.currentTarget.value);
+            setError(false);
+          }}
           className={style}
           type="text"
         />
@@ -77,8 +98,11 @@ function SignInForm() {
           className="bg-ski"
         />
       </Form.Group>
-      {error ? <Alert variant="danger">{error}</Alert> : null}
-      <Button type="submit">Submit</Button>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Button className="btn--large" type="submit">
+        Submit
+      </Button>
+      {loading && <p>Loading</p>}
     </Form>
   );
 }

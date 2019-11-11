@@ -1,10 +1,10 @@
 import React from "react";
 import MainImage from './MainImage';
 
-function MainBody() {
+function Home() {
   return <div className="MainBody">
       <MainImage/>
       </div>;
 }
 
-export default MainBody;
+export default Home;
