@@ -1,27 +1,25 @@
 import React from "react";
-// import { Navbar, Form, Button } from "react-bootstrap/Navbar";
+import Navbar from "react-bootstrap/Navbar";
 import logo from "./../../images/umall2.gif";
 import NavForm from "./NavForm";
-import Badge from "./../../SmallComponent/badge";
 import LeftNav from "./LeftNav";
 import Cart from "./../../SmallComponent/Cart";
 function MainNav() {
   return (
-    <nav className="Navbar">
+    <Navbar className="Navbar">
       <a href="/" className="navbar-brand">
         <img className="navbar--logo" alt="" src={logo} />
       </a>
-
       <NavForm />
-      <div className="navbar--contents" style={{ marginTop: "1.2rem" }}>
+      <div className="navbar--contents">
         <LeftNav />
         <div className="logo--div">
           <a href="/">
-            <Cart /> <Badge />
+            <Cart />
           </a>
         </div>
       </div>
-    </nav>
+    </Navbar>
   );
 }
 
