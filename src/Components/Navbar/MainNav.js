@@ -19,9 +19,9 @@ class MainNav extends React.Component {
         <div className="navbar--contents">
           <LeftNav authenticated={authenticated} />
           <div className="logo--div">
-            <a href="/">
+            <Link to={{ pathname: "/" }}>
               <Cart />
-            </a>
+            </Link>
           </div>
         </div>
       </Navbar>

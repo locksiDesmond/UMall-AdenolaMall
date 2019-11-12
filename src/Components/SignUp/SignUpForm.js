@@ -13,8 +13,10 @@ function SignUpForm() {
   const handleSubmit = e => {
     e.preventDefault();
     if (!email) {
+      setError("No Email");
       return;
     } else if (!password) {
+      setError("No passWord");
       return;
     } else {
       firebase
@@ -55,7 +57,11 @@ function SignUpForm() {
       <Button className="btn--large" type="submit">
         Submit
       </Button>
-      {error ? <Alert variant="danger">{error}</Alert> : null}
+      {error ? (
+        <Alert style={{ marginTop: "2rem" }} variant="danger">
+          {error}
+        </Alert>
+      ) : null}
     </Form>
   );
 }

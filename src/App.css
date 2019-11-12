@@ -165,6 +165,13 @@ a:hover,
     background-color: #048cc2;
 }
 
+/* Footer */
+.footer--section {
+    background-color: #cccaca;
+    padding: 2rem 2.5rem;
+    font-size: 1rem;
+    margin-top: 2rem;
+}
 
 /* SideNav */
 .SideNav {
