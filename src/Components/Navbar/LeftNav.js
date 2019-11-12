@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "./../../Firebase/Firebase";
-function LeftNav() {
-  const [signedIn] = useState(false);
-  const style = !signedIn ? { display: "none" } : {};
+import { Link } from "react-router-dom";
+function LeftNav(props) {
+  const [signedIn, setSignedIn] = useState(false);
   const Logout = () => {
     firebase
       .auth()
@@ -11,12 +11,32 @@ function LeftNav() {
         console.log("error");
       });
   };
-  return (
-    <div className="left--nav">
-      <p style={style}>Sign in</p>
-      <p onClick={Logout}>Log Out</p>
-    </div>
+  const authenticated = props.authenticated;
+  console.log(authenticated);
+  useEffect(() => {
+    if (authenticated) {
+      setSignedIn(true);
+    } else {
+      setSignedIn(false);
+    }
+  }, [authenticated]);
+  const signedInPost = (
+    <React.Fragment>
+      {" "}
+      <span>
+        <button className="a">Post</button>
+      </span>
+      <span onClick={Logout}>
+        <a href="/">Log Out</a>
+      </span>
+    </React.Fragment>
   );
+  const signin = (
+    <span>
+      <Link to={{ pathname: "/signin" }}>Sign in </Link>
+    </span>
+  );
+  return <div className="left--nav">{signedIn ? signedInPost : signin}</div>;
 }
 
 export default LeftNav;

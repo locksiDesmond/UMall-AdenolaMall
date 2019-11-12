@@ -35,7 +35,7 @@ function SignUpForm() {
     <Form className="signupform" onSubmit={handleSubmit}>
       {redirect ? <Redirect to={{ pathname: "/protected/home" }} /> : null}
       <Form.Group>
-        <Form.Label>Email</Form.Label>
+        <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control
           type="email"
           onChange={e => setEmail(e.currentTarget.value)}
@@ -43,7 +43,7 @@ function SignUpForm() {
           className={style}
         />
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="signin-form-name">
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
@@ -52,7 +52,9 @@ function SignUpForm() {
           className={style}
         />
       </Form.Group>
-      <Button type="submit">Submit</Button>
+      <Button className="btn--large" type="submit">
+        Submit
+      </Button>
       {error ? <Alert variant="danger">{error}</Alert> : null}
     </Form>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "./../../images/umall2.gif";
 import SignUpForm from "./SignUpForm";
 
 function SignUp() {
@@ -6,8 +7,10 @@ function SignUp() {
     <section className="signin">
       <section className="signin--section">
         <section className="signup-body">
-          <div></div>
-          <h2>SignUP</h2>
+          <div className="logo--group--with--text">
+            <img alt="Logo" src={logo} />
+            <p>Sell swiftly, buy Swiftly</p>
+          </div>
           <SignUpForm />
         </section>
       </section>
