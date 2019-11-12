@@ -278,16 +278,17 @@ section.signin {
 /* End signup */
 
 /* continue  signIn */
-.logo--group--with--text>img {
+.logo--group--with--text img {
     height: 97px;
     margin-left: 1rem;
 }
 
-.logo--group--with--text>p {
+.logo--group--with--text p {
     text-align: center;
     position: absolute;
     top: 4rem;
     left: 11rem;
+    color: #000
 }
 
 .logo--group--with--text {

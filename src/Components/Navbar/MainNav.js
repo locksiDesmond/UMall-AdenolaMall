@@ -5,15 +5,16 @@ import NavForm from "./NavForm";
 import LeftNav from "./LeftNav";
 import Cart from "./../../SmallComponent/Cart";
 import { ContextCreator } from "./../../Context/Context";
+import { Link } from "react-router-dom";
 class MainNav extends React.Component {
   static contextType = ContextCreator;
   render() {
     const { authenticated } = this.context;
     return (
       <Navbar className="Navbar">
-        <a href="/" className="navbar-brand">
+        <Link to={{ pathname: "/" }} className="navbar-brand">
           <img className="navbar--logo" alt="" src={logo} />
-        </a>
+        </Link>
         <NavForm />
         <div className="navbar--contents">
           <LeftNav authenticated={authenticated} />

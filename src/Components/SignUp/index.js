@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./../../images/umall2.gif";
 import SignUpForm from "./SignUpForm";
+import { Link } from "react-router-dom";
 
 function SignUp() {
   return (
@@ -8,8 +9,10 @@ function SignUp() {
       <section className="signin--section">
         <section className="signup-body">
           <div className="logo--group--with--text">
-            <img alt="Logo" src={logo} />
-            <p>Sell swiftly, buy Swiftly</p>
+            <Link to={{ pathname: "/" }}>
+              <img alt="Logo" src={logo} />
+              <p>Sell swiftly, buy Swiftly</p>
+            </Link>
           </div>
           <SignUpForm />
         </section>
