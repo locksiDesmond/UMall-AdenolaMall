@@ -32,7 +32,7 @@ class ProtectedRoutes extends React.Component {
     );
     return (
       <React.Fragment>
-        {authenticated ? RenderItem : <Redirect to={{ pathname: "/public" }} />}
+        {authenticated ? RenderItem : <Redirect to={{ pathname: "/signin" }} />}
       </React.Fragment>
     );
   }

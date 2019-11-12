@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "./../../Firebase/Firebase";
+import { firebase } from "./../../Firebase/Firebase";
 import { Link } from "react-router-dom";
 function LeftNav(props) {
   const [signedIn, setSignedIn] = useState(false);
@@ -12,7 +12,6 @@ function LeftNav(props) {
       });
   };
   const authenticated = props.authenticated;
-  console.log(authenticated);
   useEffect(() => {
     if (authenticated) {
       setSignedIn(true);
