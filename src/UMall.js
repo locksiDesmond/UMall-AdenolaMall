@@ -2,6 +2,7 @@ import React from "react";
 import "./css/umall.css";
 import Routes from "./Routes/Routes";
 import { ContextCreator } from "./Context/Context";
+import Loading from "./SmallComponent/Loading";
 
 function UMall() {
   return (
@@ -9,7 +10,7 @@ function UMall() {
       <div className="body">
         <ContextCreator.Consumer>
           {({ loaded }) => {
-            return <> {loaded ? <Routes /> : <p>Loading</p>}</>;
+            return <> {loaded ? <Routes loading={loaded} /> : <Loading />}</>;
           }}
         </ContextCreator.Consumer>
       </div>

@@ -1,14 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MainNav from "../Navbar/MainNav";
-
-const LandingPage = () => {
+import SideNav from "../SideNav/SideNav";
+import LandingPageBody from "./LandingPageBody";
+import Loading from "../../SmallComponent/Loading";
+const LandingPage = props => {
   return (
     <div>
-      <MainNav />
-      <h2>Landing Page</h2>
-      <Link to="signin">SignIn</Link>
-      <Link to="signup">signup</Link>
+      {!props.loading ? (
+        <Loading />
+      ) : (
+        <React.Fragment>
+          <MainNav />
+          <Link to="signin">SignIn</Link>
+          <Link to="signup">signup</Link>
+          <div className="body--content">
+            <SideNav />
+            <LandingPageBody />
+          </div>
+        </React.Fragment>
+      )}
     </div>
   );
 };

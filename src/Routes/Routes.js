@@ -6,7 +6,7 @@ import SignIn from "./../Components/SignIn/index";
 import SignUp from "./../Components/SignUp/index";
 import LandingPage from "./../Components/LandingPage/index";
 import Footer from "./../Components/Footer/index";
-const Routes = () => {
+const Routes = props => {
   return (
     <React.Fragment>
       <Router>
@@ -15,7 +15,11 @@ const Routes = () => {
           <Route path="/signUp" component={SignUp} />
           <Route path="/public" component={PublicRoutes} />
           <Route path="/home" component={ProtectedRoutes} />
-          <Route exact path="/" component={LandingPage} />
+          <Route
+            exact
+            path="/"
+            component={() => <LandingPage loading={props.loading} />}
+          />
         </Switch>
         <Footer />
       </Router>

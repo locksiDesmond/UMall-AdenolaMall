@@ -6,7 +6,6 @@ import Home from "./../Components/Home/MainBody";
 import { Redirect } from "react-router-dom";
 import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
-import Footer from "./../Components/Footer/index";
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +28,6 @@ class ProtectedRoutes extends React.Component {
           <Route path="/Profile" component={UserProfile} />
           <Route path="/upload" component={Upload} />
         </Switch>
-        <Footer />
       </div>
     );
     return (
