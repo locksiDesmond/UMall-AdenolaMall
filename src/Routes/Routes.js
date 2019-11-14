@@ -5,6 +5,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import SignIn from "./../Components/SignIn/index";
 import SignUp from "./../Components/SignUp/index";
 import LandingPage from "./../Components/LandingPage/index";
+import ErrorPage from "./../SmallComponent/ErrorPage";
 import Footer from "./../Components/Footer/index";
 const Routes = props => {
   return (
@@ -20,6 +21,7 @@ const Routes = props => {
             path="/"
             component={() => <LandingPage loading={props.loading} />}
           />
+          <Route path="*" component={ErrorPage} />
         </Switch>
         <Footer />
       </Router>

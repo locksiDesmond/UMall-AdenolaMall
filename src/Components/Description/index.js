@@ -1,6 +1,12 @@
 import React from "react";
 
 function Description() {
-  return <h1>description</h1>;
+  return (
+    <div className="main--content">
+      <div>
+        <h1>description</h1>
+      </div>
+    </div>
+  );
 }
 export default Description;

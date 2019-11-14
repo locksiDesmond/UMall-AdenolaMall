@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { firebase } from "./../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
+import ButtonLg from "../../SmallComponent/ButtonLg";
 
 function SignInForm() {
   const [displayName, setName] = useState("");
@@ -98,11 +98,9 @@ function SignInForm() {
           className="bg-ski"
         />
       </Form.Group>
+      <ButtonLg type="submit" title="submit" />
+
       {error && <Alert variant="danger">{error}</Alert>}
-      <Button className="btn--large" type="submit">
-        Submit
-      </Button>
-      {loading && <p>Loading</p>}
     </Form>
   );
 }

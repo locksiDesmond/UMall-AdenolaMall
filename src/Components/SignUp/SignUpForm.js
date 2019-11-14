@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
 import { firebase } from "./../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
+import ButtonLg from "./../../SmallComponent/ButtonLg";
 function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,9 +54,7 @@ function SignUpForm() {
           className={style}
         />
       </Form.Group>
-      <Button className="btn--large" type="submit">
-        Submit
-      </Button>
+      <ButtonLg type="submit" title="submit" />
       {error ? (
         <Alert style={{ marginTop: "2rem" }} variant="danger">
           {error}

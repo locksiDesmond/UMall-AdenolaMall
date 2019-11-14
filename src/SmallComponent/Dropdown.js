@@ -39,7 +39,7 @@ class Dropdown extends React.Component {
           {isOpen &&
             item.map(item => {
               return (
-                <Link to={{ pathname: item.path }}>
+                <Link key={item.id} to={{ pathname: item.path || "errorpage" }}>
                   <li className="dropdown--item--list">{item.title}</li>
                 </Link>
               );

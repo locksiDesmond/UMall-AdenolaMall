@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "./../../Firebase/Firebase";
 import { Link } from "react-router-dom";
+import Btn from "./../../SmallComponent/Btn";
 function LeftNav(props) {
   const [signedIn, setSignedIn] = useState(false);
   const Logout = () => {
@@ -32,7 +33,9 @@ function LeftNav(props) {
   );
   const signin = (
     <span>
-      <Link to={{ pathname: "/signin" }}>Sign in </Link>
+      <Link to={{ pathname: "/signin" }}>
+        <Btn title="signin" color="#f4754e" />
+      </Link>
     </span>
   );
   return <div className="left--nav">{signedIn ? signedInPost : signin}</div>;

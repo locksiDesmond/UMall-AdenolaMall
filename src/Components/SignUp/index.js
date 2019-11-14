@@ -7,7 +7,7 @@ function SignUp() {
   return (
     <section className="signin">
       <section className="signin--section">
-        <section className="signup-body">
+        <section className="signin--body">
           <div className="logo--group--with--text">
             <Link to={{ pathname: "/" }}>
               <img alt="Logo" src={logo} />
