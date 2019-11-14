@@ -1,12 +1,8 @@
 import React from "react";
 
 function NavForm() {
-
   return (
-    <form
-      className="btn--group"
-      style={{ display: "inline-block", marginLeft: "3rem" }}
-    >
+    <form className="btn--group">
       <input
         style={{
           width: "20rem",
@@ -17,7 +13,7 @@ function NavForm() {
         id="name"
         name="name"
         placeholder="....."
-        className=""
+        className="search--input"
       />
       <button
         className="navform--button"
