@@ -31,11 +31,12 @@ function SignUpForm() {
         .catch(error => {
           setError(error.message);
         });
+        // firebase.firestore().collection('users').doc()
     }
   };
   return (
     <Form className="signupform" onSubmit={handleSubmit}>
-      {redirect ? <Redirect to={{ pathname: "/protected/home" }} /> : null}
+      {redirect && <Redirect to={{ pathname: "/home" }} />}
       <Form.Group>
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control

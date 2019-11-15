@@ -22,7 +22,6 @@ function LeftNav(props) {
   }, [authenticated]);
   const signedInPost = (
     <React.Fragment>
-      {" "}
       <span>
         <button className="a">Post</button>
       </span>

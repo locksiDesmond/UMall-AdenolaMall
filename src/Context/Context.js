@@ -31,6 +31,7 @@ class ContextClass extends React.Component {
     });
     return () => unsubscribe();
   }
+
   render() {
     return (
       <ContextCreator.Provider value={{ ...this.state }}>

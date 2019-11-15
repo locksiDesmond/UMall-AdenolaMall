@@ -1,12 +1,17 @@
 import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-
-// import './App.css';
+import Button from "react-bootstrap/Button";
+import { firebase } from "./../../Firebase/Firebase";
+import {
+  extractImageFileExtensionFromBase64,
+  base64StringtoFile
+} from "./../../FileConversion/index";
 
 class PictureUpload extends PureComponent {
   state = {
-    src: null,
+    data: "",
+    src: this.props.src,
     crop: {
       unit: "%",
       width: 30,
@@ -14,15 +19,15 @@ class PictureUpload extends PureComponent {
     }
   };
 
-  onSelectFile = e => {
-    if (e.target.files && e.target.files.length > 0) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        this.setState({ src: reader.result })
-      );
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  // onSelectFile = e => {
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const reader = new FileReader();
+  //     reader.addEventListener("load", () =>
+  //       this.setState({ src: reader.result })
+  //     );
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
 
   // If you setState the crop in here you should return false.
   onImageLoaded = image => {
@@ -69,7 +74,9 @@ class PictureUpload extends PureComponent {
       crop.width,
       crop.height
     );
-
+    this.setState({
+      data: canvas.toDataURL("file.jpg")
+    });
     return new Promise((resolve, reject) => {
       canvas.toBlob(blob => {
         if (!blob) {
@@ -84,15 +91,46 @@ class PictureUpload extends PureComponent {
       }, "image/jpeg");
     });
   }
+  handleDownload = e => {
+    e.preventDefault();
 
+    console.log("clicked");
+    const { src } = this.state;
+    const datas = this.state.data;
+    const fileExtension = extractImageFileExtensionFromBase64(src);
+    const fileName = "file." + fileExtension;
+    const croppedFile = base64StringtoFile(src, fileName);
+    // const dataDown = datas.toDataURl("img/" + fileExtension);
+    const ref = firebase.storage().ref("images");
+    // const upload = ref.child(croppedFile.name).put(croppedFile);
+    // upload.on(
+    //   "state_changed",
+    //   snapshot => {
+    //     console.log("runnin");
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   },
+    //   () => {
+    //     console.log("done");
+    //   }
+    // );
+    ref.put(croppedFile).then(() => {
+      console.log("succesful");
+    });
+
+    // downloadBase64File(datas, fileName);
+
+    console.log(croppedFile.name, datas, fileName);
+  };
   render() {
     const { crop, croppedImageUrl, src } = this.state;
 
     return (
-      <div className="App">
-        <div>
+      <div className="imageupload">
+        {/* <div>
           <input type="file" onChange={this.onSelectFile} />
-        </div>
+        </div> */}
         {src && (
           <ReactCrop
             src={src}
@@ -104,7 +142,14 @@ class PictureUpload extends PureComponent {
           />
         )}
         {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
+          <React.Fragment>
+            <img
+              alt="Crop"
+              style={{ maxWidth: "100%" }}
+              src={croppedImageUrl}
+            />
+            <Button onClick={this.handleDownload}> post</Button>
+          </React.Fragment>
         )}
       </div>
     );

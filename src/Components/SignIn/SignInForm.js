@@ -98,7 +98,7 @@ function SignInForm() {
           className="bg-ski"
         />
       </Form.Group>
-      <ButtonLg type="submit" title="submit" />
+      <ButtonLg disable={loading && true} type="submit" title="submit" />
 
       {error && <Alert variant="danger">{error}</Alert>}
     </Form>
