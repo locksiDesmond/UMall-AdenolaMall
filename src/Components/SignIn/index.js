@@ -1,9 +1,9 @@
 import React from "react";
 import logo from "./../../images/umall2.gif";
-import SignUpForm from "./SignUpForm";
+import SignInForm from "./SignInForm";
 import { Link } from "react-router-dom";
 
-function SignUp() {
+function SignIn() {
   return (
     <section className="signin">
       <section className="signin--section">
@@ -14,10 +14,10 @@ function SignUp() {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-          <SignUpForm />
+          <SignInForm />
         </section>
       </section>
     </section>
   );
 }
-export default SignUp;
+export default SignIn;

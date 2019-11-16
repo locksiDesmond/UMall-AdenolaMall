@@ -1,8 +1,8 @@
 import React from "react";
 import logo from "./../../images/umall2.gif";
-import SignInForm from "./SignInForm";
 import { Link } from "react-router-dom";
-function SignIn() {
+import SignInForm from "../SignIn/SignInForm";
+function SignUp() {
   return (
     <section className="signin">
       <section className="signin--section">
@@ -13,7 +13,6 @@ function SignIn() {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-
           <SignInForm />
         </div>
       </section>
@@ -21,4 +20,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default SignUp;
