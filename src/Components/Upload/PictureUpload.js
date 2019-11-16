@@ -2,7 +2,8 @@ import React, { PureComponent } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import Button from "react-bootstrap/Button";
-import { firebase } from "./../../Firebase/Firebase";
+import Spinner from "react-bootstrap/Spinner";
+// import { firebase } from "./../../Firebase/Firebase";
 import {
   extractImageFileExtensionFromBase64,
   base64StringtoFile
@@ -17,7 +18,8 @@ class PictureUpload extends PureComponent {
       unit: "%",
       width: 30,
       aspect: 16 / 9
-    }
+    },
+    context: ""
   };
 
   // onSelectFile = e => {
@@ -105,7 +107,14 @@ class PictureUpload extends PureComponent {
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(src, fileName);
     // const dataDown = datas.toDataURl("img/" + fileExtension);
-    const ref = firebase.storage().ref("images");
+    this.setState(
+      {
+        context: croppedFile
+      },
+      this.props.handleDownload(croppedFile)
+    );
+    // const ref = firebase.storage().ref("images");
+    //break;
     // const upload = ref.child(croppedFile.name).put(croppedFile);
     // upload.on(
     //   "state_changed",
@@ -119,9 +128,10 @@ class PictureUpload extends PureComponent {
     //     console.log("done");
     //   }
     // );
-    ref.put(croppedFile).then(() => {
-      console.log("succesful");
-    });
+    //continue
+    // ref.put(croppedFile).then(() => {
+    //   console.log("succesful");
+    // });
 
     // downloadBase64File(datas, fileName);
   };
@@ -154,6 +164,7 @@ class PictureUpload extends PureComponent {
               />
             </div>
             <Button
+              disabled={this.props.loading ? true : false}
               type="submit"
               style={{
                 marginLeft: "1rem",
@@ -161,10 +172,18 @@ class PictureUpload extends PureComponent {
                 marginTop: "3rem"
               }}
               onClick={e => {
-                this.props.handleDownload(e);
                 this.handleDownload(e);
               }}
             >
+              {this.props.loading && (
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+              )}
               post
             </Button>
           </div>

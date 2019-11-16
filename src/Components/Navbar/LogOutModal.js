@@ -12,7 +12,7 @@ const LogOutModal = props => {
       });
   };
   return (
-    <Modal show={props.show}>
+    <Modal show={props.show} size="sm">
       <Modal.Body>
         <p style={{ textAlign: "center" }}>Are you sure you want to log out</p>
         <div

@@ -29,7 +29,7 @@ class Dropdown extends React.Component {
           >
             <img
               className="dropdown--svg"
-              src={isOpen ? logo : logo2}
+              src={isOpen ? logo2 : logo}
               alt="dropdown icon"
             />
           </button>

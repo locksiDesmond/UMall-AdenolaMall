@@ -16,14 +16,14 @@ function LeftNav(props) {
     <React.Fragment>
       <span>
         <Link to={{ pathname: "/home/upload" }}>
-          <button className="a">Post</button>
+          <Btn title="post" color="#f4754e" />
         </Link>
         <button
-          style={{ marginLeft: ".5rem" }}
+          style={{ marginLeft: ".5rem", fontSize: "1rem" }}
           className="a signin--modal--button"
           onClick={props.showLogOut}
         >
-          Log Out
+          Log-out
         </button>
       </span>
     </React.Fragment>

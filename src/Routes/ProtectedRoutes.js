@@ -31,7 +31,10 @@ class ProtectedRoutes extends React.Component {
             <Route exact path="/home" component={Home} />
             <Route path="/Home/Profile" component={UserProfile} />
             <Route path="/Home/upload" component={Upload} />
-            <Route path="*" component={ErrorPage} />
+            <Route
+              path="*"
+              component={() => <ErrorPage className="main--content" />}
+            />
           </Switch>
         </div>
       </React.Fragment>

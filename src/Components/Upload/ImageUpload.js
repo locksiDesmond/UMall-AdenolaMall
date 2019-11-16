@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Upload from "../../images/svgs/Drag to upload.svg";
 import "./ReactCrop.css";
@@ -22,6 +22,11 @@ function ImageUpload(props) {
       Reader.readAsDataURL(file);
     });
   }, []);
+  useEffect(() => {
+    if (props.loaded) {
+      setSrc("");
+    }
+  }, [props.loaded]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -33,9 +38,14 @@ function ImageUpload(props) {
           props={crop}
           error={props.error}
           src={imgSrc}
+          loading={props.loading}
         />
       ) : (
-        <div className="image" {...getRootProps()}>
+        <div
+          className="image"
+          style={{ cursor: "pointer" }}
+          {...getRootProps()}
+        >
           <input {...getInputProps()} />
           <p>Drag and upload files here</p>
           <img className="" src={Upload} alt="drag n drop" />
