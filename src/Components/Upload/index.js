@@ -1,13 +1,11 @@
 import React from "react";
-import ImageUpload from "./ImageUpload";
+import UpLoadForm from "./UpLoadForm";
 
 const Upload = () => {
   return (
     <div className="main--content">
-      <div className="upload--content">
-        <h1>imageUpload</h1>
-        <ImageUpload />
-      </div>
+      <h1>imageUpload</h1>
+      <UpLoadForm />
       Upload
     </div>
   );

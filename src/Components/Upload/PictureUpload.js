@@ -12,6 +12,7 @@ class PictureUpload extends PureComponent {
   state = {
     data: "",
     src: this.props.src,
+    error: this.props.error,
     crop: {
       unit: "%",
       width: 30,
@@ -94,9 +95,12 @@ class PictureUpload extends PureComponent {
   handleDownload = e => {
     e.preventDefault();
 
+    const { src, error } = this.state;
+    if (error) {
+      return null;
+    }
     console.log("clicked");
-    const { src } = this.state;
-    const datas = this.state.data;
+    // const datas = this.state.data;
     const fileExtension = extractImageFileExtensionFromBase64(src);
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(src, fileName);
@@ -120,14 +124,12 @@ class PictureUpload extends PureComponent {
     });
 
     // downloadBase64File(datas, fileName);
-
-    console.log(croppedFile.name, datas, fileName);
   };
   render() {
     const { crop, croppedImageUrl, src } = this.state;
 
     return (
-      <div className="imageupload">
+      <div style={{ display: "flex" }}>
         {/* <div>
           <input type="file" onChange={this.onSelectFile} />
         </div> */}
@@ -135,6 +137,7 @@ class PictureUpload extends PureComponent {
           <ReactCrop
             src={src}
             crop={crop}
+            className="image"
             ruleOfThirds
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
@@ -142,14 +145,29 @@ class PictureUpload extends PureComponent {
           />
         )}
         {croppedImageUrl && (
-          <React.Fragment>
-            <img
-              alt="Crop"
-              style={{ maxWidth: "100%" }}
-              src={croppedImageUrl}
-            />
-            <Button onClick={this.handleDownload}> post</Button>
-          </React.Fragment>
+          <div style={{ display: "flex", marginTop: "1.3rem" }}>
+            <div style={{ width: "18rem", height: "auto", marginLeft: "1rem" }}>
+              <img
+                alt="Crop"
+                style={{ maxWidth: "100%", border: "1px solid #000" }}
+                src={croppedImageUrl}
+              />
+            </div>
+            <Button
+              type="submit"
+              style={{
+                marginLeft: "1rem",
+                height: "2.2rem",
+                marginTop: "3rem"
+              }}
+              onClick={e => {
+                this.props.handleDownload(e);
+                this.handleDownload(e);
+              }}
+            >
+              post
+            </Button>
+          </div>
         )}
       </div>
     );

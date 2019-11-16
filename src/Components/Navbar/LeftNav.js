@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { firebase } from "./../../Firebase/Firebase";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
 function LeftNav(props) {
   const [signedIn, setSignedIn] = useState(false);
-  const Logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch(error => {
-        console.log("error");
-      });
-  };
+
   const authenticated = props.authenticated;
   useEffect(() => {
     if (authenticated) {
@@ -23,18 +15,30 @@ function LeftNav(props) {
   const signedInPost = (
     <React.Fragment>
       <span>
-        <button className="a">Post</button>
-      </span>
-      <span onClick={Logout}>
-        <a href="/">Log Out</a>
+        <Link to={{ pathname: "/home/upload" }}>
+          <button className="a">Post</button>
+        </Link>
+        <button
+          style={{ marginLeft: ".5rem" }}
+          className="a signin--modal--button"
+          onClick={props.showLogOut}
+        >
+          Log Out
+        </button>
       </span>
     </React.Fragment>
   );
   const signin = (
     <span>
       <Link to={{ pathname: "/signin" }}>
-        <Btn title="signin" color="#f4754e" />
+        <Btn className="dontshow" title="signin" color="#f4754e" />
       </Link>
+      <button onClick={props.handleShow} className="signin--modal--button a">
+        Signin
+      </button>
+      <button onClick={props.showSignUp} className="signin--modal--button a">
+        SignUp
+      </button>
     </span>
   );
   return <div className="left--nav">{signedIn ? signedInPost : signin}</div>;

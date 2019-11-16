@@ -1,106 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { firebase } from "./../../Firebase/Firebase";
+import { firebase } from "../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
-
 function SignInForm() {
-  const [displayName, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [redirect, setRedirect] = useState("");
-  const [loading, setLoading] = useState(false);
-  const style = error ? "error" : "bg-ski";
-  useEffect(() => {
-    if (error) {
-      setLoading(false);
-    }
-  }, [error]);
-
+  const [redirect, setRedirect] = useState(false);
+  const style = error ? "input--error" : "input--control";
   const handleSubmit = e => {
     e.preventDefault();
-    setLoading(true);
-    if (displayName === "" || displayName === null) {
-      setError("!invalid DisplayName");
-      return;
-    } else if (password !== confirm) {
-      setError("Passwords are not the same");
+    if (!email) {
+      setError("No Email");
       return;
     } else if (!password) {
-      setError("Enter password");
+      setError("No passWord");
       return;
     } else {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email, password)
         .then(user => {
           if (user) {
+            console.log(user);
             setRedirect(true);
-            user.diplayName = displayName;
           }
         })
         .catch(error => {
-          if (error.code !== "auth/network-request-failed") {
-            setError(error.message);
-            setLoading(false);
-          } else {
-            setLoading(true);
-          }
+          setError(error.message);
         });
-      setName("");
-      setPassword("");
-      setConfirm("");
-      setEmail("");
+      // firebase.firestore().collection('users').doc()
     }
   };
-
   return (
-    <Form className="signinform" onSubmit={handleSubmit}>
-      {redirect ? <Redirect to={{ pathname: "/protected/Home" }} /> : null}
-      <Form.Group>
-        <Form.Label className="signin-form-name">Display Name</Form.Label>
-        <Form.Control
-          value={displayName}
-          onChange={e => {
-            setName(e.currentTarget.value);
-            setError(false);
-          }}
-          className={style}
-          type="text"
-        />
-      </Form.Group>
+    <Form className="signupform" onSubmit={handleSubmit}>
+      {redirect && <Redirect to={{ pathname: "/home" }} />}
       <Form.Group>
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control
-          value={email}
-          onChange={e => setEmail(e.currentTarget.value)}
-          className="bg-ski"
           type="email"
+          onChange={e => setEmail(e.currentTarget.value)}
+          value={email}
+          className={style}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label className="signin-form-name">Password</Form.Label>
+      <Form.Group className="signin-form-name">
+        <Form.Label>Password</Form.Label>
         <Form.Control
-          value={password}
-          onChange={e => setPassword(e.currentTarget.value)}
-          className="bg-ski"
           type="password"
+          onChange={e => setPassword(e.currentTarget.value)}
+          value={password}
+          className={style}
         />
       </Form.Group>
-      <Form.Group>
-        <Form.Label className="signin-form-name">Confirm Password</Form.Label>
-        <Form.Control
-          value={confirm}
-          onChange={e => setConfirm(e.currentTarget.value)}
-          className="bg-ski"
-        />
-      </Form.Group>
-      <ButtonLg disable={loading && true} type="submit" title="submit" />
-
-      {error && <Alert variant="danger">{error}</Alert>}
+      <ButtonLg small="true" type="submit" title="submit" />
+      {error ? (
+        <Alert style={{ marginTop: "2rem" }} variant="danger">
+          {error}
+        </Alert>
+      ) : null}
     </Form>
   );
 }

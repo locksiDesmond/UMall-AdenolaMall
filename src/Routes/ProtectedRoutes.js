@@ -8,6 +8,7 @@ import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
 import SideNav from "../Components/SideNav/SideNav";
+import ErrorPage from "./../SmallComponent/ErrorPage";
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);
@@ -19,20 +20,21 @@ class ProtectedRoutes extends React.Component {
   render() {
     const { authenticated, loading } = this.context;
     const RenderItem = (
-      <div>
+      <React.Fragment>
         <MainNav />
+        <Link to={{ pathname: "/home/" }}>Home </Link>
+        <Link to={{ pathname: "/home/Profile" }}>Profile</Link>
+        <Link to={{ pathname: "/home/upload" }}>Upload Dp</Link>
         <div className="body--content">
-          <Link to={{ pathname: "/home/" }}>Home </Link>
-          <Link to={{ pathname: "/home/Profile" }}>Profile</Link>
-          <Link to={{ pathname: "/home/upload" }}>Upload Dp</Link>
           <SideNav />
           <Switch>
-            <Route exact path="/home/" component={Home} />
+            <Route exact path="/home" component={Home} />
             <Route path="/Home/Profile" component={UserProfile} />
             <Route path="/Home/upload" component={Upload} />
+            <Route path="*" component={ErrorPage} />
           </Switch>
         </div>
-      </div>
+      </React.Fragment>
     );
     return (
       <React.Fragment>

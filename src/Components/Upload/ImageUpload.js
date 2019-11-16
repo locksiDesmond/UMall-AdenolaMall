@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Upload from "../../images/svgs/boy.svg";
+import Upload from "../../images/svgs/Drag to upload.svg";
 import "./ReactCrop.css";
 import PictureUpload from "./PictureUpload";
-function ImageUpload() {
+function ImageUpload(props) {
   const [imgSrc, setSrc] = useState(null);
   const [crop] = useState({ aspect: 1 / 1 });
   const onDrop = useCallback(acceptedfiles => {
@@ -16,8 +16,8 @@ function ImageUpload() {
         console.log("Error");
       };
       Reader.onload = () => {
-        const byr = Reader.result;
-        setSrc(byr);
+        const dataUrl = Reader.result;
+        setSrc(dataUrl);
       };
       Reader.readAsDataURL(file);
     });
@@ -26,14 +26,19 @@ function ImageUpload() {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   return (
-    <section className="image">
+    <section className="">
       {imgSrc ? (
-        <PictureUpload props={crop} src={imgSrc} />
+        <PictureUpload
+          handleDownload={props.handleSubmit}
+          props={crop}
+          error={props.error}
+          src={imgSrc}
+        />
       ) : (
         <div className="image" {...getRootProps()}>
           <input {...getInputProps()} />
           <p>Drag and upload files here</p>
-          <img className="imageupload" src={Upload} alt="drag n drop" />
+          <img className="" src={Upload} alt="drag n drop" />
         </div>
       )}
     </section>

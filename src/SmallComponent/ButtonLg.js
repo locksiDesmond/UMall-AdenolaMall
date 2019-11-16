@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 function ButtonLg(props) {
   const { title } = props;
   return (
-    <Button className="btn--large" {...props}>
+    <Button className={props.small ? "btn--small" : "btn--large"} {...props}>
       {title}
     </Button>
   );

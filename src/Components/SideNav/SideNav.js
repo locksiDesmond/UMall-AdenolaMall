@@ -5,7 +5,7 @@ class SideNav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobilePhone: [
+      Devices: [
         {
           id: 1,
           title: "Mobile  Phone",
@@ -14,9 +14,13 @@ class SideNav extends React.Component {
         {
           id: 2,
           title: "Laptops"
+        },
+        {
+          id: 3,
+          title: "other accessories"
         }
       ],
-      mensWear: [
+      clothing: [
         {
           id: 1,
           title: "Clothes"
@@ -25,14 +29,41 @@ class SideNav extends React.Component {
           id: 2,
           title: "Shoes"
         }
+      ],
+      Footwear: [
+        {
+          id: 0,
+          title: "male"
+        },
+        { id: 1, title: "female" }
+      ],
+      Cosmetics: [
+        {
+          id: 0,
+          title: "creams"
+        },
+        { id: 1, title: "perfumes" }
+      ],
+      HouseItems: [
+        {
+          id: 0,
+          title: "New"
+        },
+        {
+          id: 1,
+          title: "Used"
+        }
       ]
     };
   }
   render() {
     return (
       <div className="sidenav">
-        <Dropdown title="Mobile Phone" item={this.state.mobilePhone} />
-        <Dropdown title="Men's Wear" item={this.state.mensWear} />
+        <Dropdown title="Devices" item={this.state.Devices} />
+        <Dropdown title="Clothing" item={this.state.clothing} />
+        <Dropdown title="Cosmetics" item={this.state.Cosmetics} />
+        <Dropdown title="Footwears" item={this.state.Footwear} />
+        <Dropdown title="Household Appliances" item={this.state.HouseItems} />
       </div>
     );
   }

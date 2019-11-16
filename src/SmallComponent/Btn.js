@@ -17,7 +17,7 @@ function Btn(props) {
 
   return (
     <Button
-      className="btn--component"
+      {...props}
       style={over ? styles.elements : styles.over}
       onMouseOver={() => {
         setOver(true);
