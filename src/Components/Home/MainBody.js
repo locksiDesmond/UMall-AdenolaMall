@@ -17,34 +17,29 @@ class Home extends React.Component {
 
   componentDidMount() {
     const byte = firebase.firestore().collection("Clothings");
-    byte
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          const data = doc.data();
-          const now = Date.now();
-          const date = now - data.date;
-          const newData = date.toString();
-          console.log(newData);
-          var msec = date;
-          var hh = Math.floor(msec / 1000 / 60 / 60);
-          msec -= hh * 1000 * 60 * 60;
-          var mm = Math.floor(msec / 1000 / 60);
-          msec -= mm * 1000 * 60;
-          var ss = Math.floor(msec / 1000);
-          msec -= ss * 1000;
-          console.log(hh, mm, ss);
-          this.setState({
-            loading: true
-          });
-        });
-      })
-      .catch(error => {
-        this.setState({
-          loading: true,
-          error: "Connection load"
-        });
+    byte.onSnapshot(snapshot => {
+      const items = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      this.setState({
+        data: items,
+        loading: true
       });
+    });
+
+    // const now = Date.now();
+    // const date = now - data.date;
+    // const newData = date.toString();
+    // console.log(newData);
+    // var msec = date;
+    // var hh = Math.floor(msec / 1000 / 60 / 60);
+    // msec -= hh * 1000 * 60 * 60;
+    // var mm = Math.floor(msec / 1000 / 60);
+    // msec -= mm * 1000 * 60;
+    // var ss = Math.floor(msec / 1000);
+    // msec -= ss * 1000;
+    // console.log(hh, mm, ss);
   }
   render() {
     return (
@@ -55,7 +50,7 @@ class Home extends React.Component {
         ) : (
           <React.Fragment>
             <MainImage />
-            <Recent />
+            <Recent data={this.state.data} />
             <h2>Drop your files here</h2>
           </React.Fragment>
         )}

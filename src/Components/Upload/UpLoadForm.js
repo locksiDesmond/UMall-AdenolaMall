@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import ImageUpload from "./ImageUpload";
 import SelectForm from "./SelectForm";
 import { firebase } from "./../../Firebase/Firebase";
+import ProgressBar from "react-bootstrap/ProgressBar";
 class UpLoadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ class UpLoadForm extends React.Component {
     this.changeSubCategory = this.changeSubCategory.bind(this);
     this.errors = this.errors.bind(this);
     this.upload = this.upload.bind(this);
+    this.fileUpload = this.fileUpload.bind(this);
   }
   errors(name, error) {
     const value = name;
@@ -105,6 +107,36 @@ class UpLoadForm extends React.Component {
     }
   }
   upload(picture) {
+    const { title, condition, description, subcategory } = this.state;
+    const store = firebase.storage();
+    const pictureUploading = store
+      .ref()
+      .child(
+        `${condition.name}/${subcategory.name}${title.name}/${description.name}`
+      )
+      .put(picture);
+    pictureUploading.on(
+      "state_changed",
+      snapshot => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        this.setState({
+          progress: progress
+        });
+      },
+      error => {
+        this.setState({ error: error.message });
+      },
+      () => {
+        pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
+          this.setState({ pictureUrl: downloadUrl, progress: 0 });
+          console.log(downloadUrl);
+          this.fileUpload(downloadUrl);
+        });
+      }
+    );
+  }
+  fileUpload(downloadUrl) {
     const { title, condition, description, price, subcategory } = this.state;
     const date = Date.now();
     const subCategory = subcategory.name;
@@ -114,12 +146,12 @@ class UpLoadForm extends React.Component {
         condition: condition.name,
         description: description.name,
         price: price.name,
-        date: date
+        date: date,
+        pictureUrl: downloadUrl
       }
     };
-    const doc = firebase.firestore();
-    doc
-      .collection(condition.name)
+    const db = firebase.firestore();
+    db.collection(condition.name)
       .doc()
       .set(data)
       .then(() => {
@@ -133,7 +165,8 @@ class UpLoadForm extends React.Component {
           subcategory: { name: "Male", error: "" },
           objects: [],
           loading: false,
-          uploaded: true
+          uploaded: true,
+          pictureUrl: ""
         });
       })
       .catch(error => {
@@ -141,7 +174,6 @@ class UpLoadForm extends React.Component {
         this.setState({ loading: false, error: error.message });
       });
   }
-
   render() {
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
@@ -223,6 +255,8 @@ class UpLoadForm extends React.Component {
           loaded={this.state.loaded}
           handleSubmit={this.handleSubmit}
         />
+        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.progress && <ProgressBar now={this.state.progress} />}
       </Form>
     );
   }
