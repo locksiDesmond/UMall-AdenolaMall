@@ -1,9 +1,10 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
+import {Form, Alert} from "react-bootstrap";
 import ImageUpload from "./ImageUpload";
 import SelectForm from "./SelectForm";
 import { firebase } from "./../../Firebase/Firebase";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import {Redirect } from "react-router-dom"
 class UpLoadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ class UpLoadForm extends React.Component {
       description: { name: "", error: "" },
       price: { name: "", error: "" },
       error: "",
+      category: { name: "", error: "" },
       subcategory: { name: "", error: "" },
       objects: [],
       loading: false,
@@ -36,7 +38,7 @@ class UpLoadForm extends React.Component {
     this.setState({
       loading: true
     });
-    const { title, description, price, condition } = this.state;
+    const { title, description, price, condition, category } = this.state;
     if (!title.name) {
       this.errors("title", "Enter a Title or Name of Product");
     }
@@ -46,10 +48,21 @@ class UpLoadForm extends React.Component {
     if (!price.name) {
       this.errors("price", "No price Found");
     }
-    if (!condition.name) {
-      this.errors("condition", "You must select a category");
+    if (!category.name) {
+      this.errors("category", "You must select a category");
     }
-    if (!(!title.name || !description.name || !price.name || !condition.name)) {
+    if (!condition.name) {
+      this.errors("condition", "state a condition!");
+    }
+    if (
+      !(
+        !title.name ||
+        !description.name ||
+        !price.name ||
+        !condition.name ||
+        !category.name
+      )
+    ) {
       this.upload(picture);
     } else {
       this.setState({
@@ -66,20 +79,20 @@ class UpLoadForm extends React.Component {
     });
   }
   changeSubCategory() {
-    switch (this.state.condition.name) {
-      case "Laptops":
+    switch (this.state.category.name) {
+      case "Devices":
         this.setState({
           objects: [
             {
-              name: "laptops",
+              name: "Laptops and Tablets",
               id: 0
             },
             {
-              name: "Mobile phones",
+              name: "Mobile Phones",
               id: 1
             },
             {
-              name: "others",
+              name: "Others accessories",
               id: 2
             }
           ]
@@ -94,12 +107,37 @@ class UpLoadForm extends React.Component {
               id: 0
             },
             {
-              name: "female",
+              name: "Female",
               id: 1
             }
           ]
         });
         break;
+        case "Cosmetics":
+          this.setState({
+            objects:[
+              {
+                name: "Creams",
+                id:0
+              },{
+              name:"Perfumes",
+              id:1
+            }
+          ]
+          });
+          break;
+        case "Household items":
+          this.setState({
+            objects:[{
+              name:"Used",
+              id:0,
+            },
+          {
+            name:"New",
+            id:1,
+          }]
+          });
+          break;
       default:
         this.setState({
           objects: []
@@ -107,12 +145,12 @@ class UpLoadForm extends React.Component {
     }
   }
   upload(picture) {
-    const { title, condition, description, subcategory } = this.state;
+    const { title, description, subcategory, category } = this.state;
     const store = firebase.storage();
     const pictureUploading = store
       .ref()
       .child(
-        `${condition.name}/${subcategory.name}${title.name}/${description.name}`
+        `${category.name}/${subcategory.name}/${title.name}/${description.name}`
       )
       .put(picture);
     pictureUploading.on(
@@ -137,21 +175,27 @@ class UpLoadForm extends React.Component {
     );
   }
   fileUpload(downloadUrl) {
-    const { title, condition, description, price, subcategory } = this.state;
+    const {
+      title,
+      condition,
+      description,
+      price,
+      subcategory,
+      category
+    } = this.state;
     const date = Date.now();
-    const subCategory = subcategory.name;
     const data = {
-      [subCategory]: {
-        name: title.name,
-        condition: condition.name,
-        description: description.name,
-        price: price.name,
-        date: date,
-        pictureUrl: downloadUrl
-      }
+      name: title.name,
+      subCategory: subcategory.name,
+      condition: condition.name,
+      category: category.name,
+      description: description.name,
+      price: price.name,
+      date: date,
+      pictureUrl: downloadUrl
     };
     const db = firebase.firestore();
-    db.collection(condition.name)
+    db.collection(category.name)
       .doc()
       .set(data)
       .then(() => {
@@ -162,6 +206,7 @@ class UpLoadForm extends React.Component {
           description: { name: "", error: "" },
           price: { name: "", error: "" },
           error: "",
+          category: { name: "", error: "" },
           subcategory: { name: "Male", error: "" },
           objects: [],
           loading: false,
@@ -177,6 +222,8 @@ class UpLoadForm extends React.Component {
   render() {
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
+        {this.state.uploaded && <Redirect to={{pathname:"/Home"}}/>}
+        {this.state.progress && <ProgressBar now={this.state.progress} />}
         <Form.Group>
           <Form.Label className="signin-form-name">Name</Form.Label>
           <Form.Control
@@ -195,23 +242,25 @@ class UpLoadForm extends React.Component {
           <Form.Label className="signin-form-name">Category</Form.Label>
           <select
             className={`form-control ${
-              this.state.condition.error ? "input--error" : "input--control"
+              this.state.category.error ? "input--error" : "input--control"
             }`}
-            name="condition"
+            name="category"
             onChange={e => {
               this.handleChange(e);
               setTimeout(() => {
                 this.changeSubCategory();
               }, 200);
             }}
-            value={this.state.condition.name}
+            value={this.state.category.name}
           >
-            <option>New</option>
+            <option>Devices</option>
             <option>Clothings</option>
             <option>Footwears</option>
-            <option>Laptops</option>
+            <option>Cosmetics</option>
+            <option>Household items</option>
+
           </select>
-          {this.state.condition.error && <p>{this.state.condition.error}</p>}
+          {this.state.category.error && <p>{this.state.category.error}</p>}
         </Form.Group>
         <Form.Group>
           <SelectForm
@@ -223,19 +272,41 @@ class UpLoadForm extends React.Component {
           />
         </Form.Group>
 
-        <Form.Group>
-          <Form.Label className="signin-form-name">Price (in Naira)</Form.Label>
-          <input
-            className={`form-control ${
-              this.state.price.error ? "input--error" : "input--control"
-            }`}
-            name="price"
-            value={this.state.price.name}
-            placeholder="$10"
-            onChange={this.handleChange}
-            type="number"
-          />
-          {this.state.price.error && <p>{this.state.price.error}</p>}
+        <Form.Group className="input-condition-price">
+          <div>
+            <Form.Label style={{}} className="signin-form-name">
+              Price (in Naira)
+            </Form.Label>
+            <input
+              className={`form-control ${
+                this.state.price.error ? "input--error" : "input--control"
+              }`}
+              name="price"
+              value={this.state.price.name}
+              placeholder="$10"
+              onChange={this.handleChange}
+              type="number"
+            />
+            {this.state.price.error && <p>{this.state.price.error}</p>}
+          </div>
+          <div className=" input--condition">
+            <Form.Label className="signin-form-name">
+              Select Condition
+            </Form.Label>
+            <select
+              className={`form-control ${
+                this.state.condition.error ? "input--error" : "input--control"
+              }`}
+              name="condition"
+              value={this.state.condition.name}
+              placeholder="$10"
+              onChange={this.handleChange}
+            >
+              <option>Used</option>
+              <option>New</option>
+            </select>
+            {this.state.condition.error && <p>{this.state.condition.error}</p>}
+          </div>
         </Form.Group>
         <label className="signin-form-name">Description</label>
         <textarea
@@ -255,8 +326,7 @@ class UpLoadForm extends React.Component {
           loaded={this.state.loaded}
           handleSubmit={this.handleSubmit}
         />
-        {this.state.error && <p>{this.state.error}</p>}
-        {this.state.progress && <ProgressBar now={this.state.progress} />}
+        {this.state.error && <Alert>{this.state.error}</Alert>}
       </Form>
     );
   }

@@ -6,12 +6,14 @@ function Btn(props) {
     elements: {
       borderColor: props.color,
       color: props.color,
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      padding: ".1rem .8rem .2rem  "
     },
     over: {
       backgroundColor: props.color,
       color: "#fff ",
-      borderColor: "none"
+      borderColor: "none",
+      padding: ".1rem .8rem .2rem "
     }
   };
 

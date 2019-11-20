@@ -9,34 +9,37 @@ function SignInForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
   const style = error ? "input--error" : "input--control";
   const handleSubmit = e => {
     e.preventDefault();
+    setLoading(true);
     if (!email) {
       setError("No Email");
-      return;
-    } else if (!password) {
+    }
+    if (!password) {
       setError("No passWord");
-      return;
-    } else {
+    }
+    if (!(!email || !password)) {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(user => {
           if (user) {
-            console.log(user);
             setRedirect(true);
+            setLoading(false);
           }
         })
         .catch(error => {
           setError(error.message);
+          setLoading(false);
         });
-      // firebase.firestore().collection('users').doc()
     }
+    setLoading(false);
   };
   return (
     <Form className="signupform" onSubmit={handleSubmit}>
-      {redirect && <Redirect to={{ pathname: "/home" }} />}
+      {redirect && <Redirect to={{ pathname: "/Home" }} />}
       <Form.Group>
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control
@@ -55,7 +58,13 @@ function SignInForm() {
           className={style}
         />
       </Form.Group>
-      <ButtonLg small="true" type="submit" title="submit" />
+      <ButtonLg
+        disabled={loading ? true : false}
+        small="true"
+        type="submit"
+        title="submit"
+      />
+
       {error ? (
         <Alert style={{ marginTop: "2rem" }} variant="danger">
           {error}

@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./../../images/umall2.gif";
 import { Link } from "react-router-dom";
-import SignInForm from "../SignIn/SignInForm";
+import SignUpForm from "../SignUp/SignUpForm";
 function SignUp() {
   return (
     <section className="signin">
@@ -13,7 +13,7 @@ function SignUp() {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-          <SignInForm />
+          <SignUpForm />
         </div>
       </section>
     </section>

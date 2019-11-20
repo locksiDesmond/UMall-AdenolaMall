@@ -3,7 +3,6 @@ import Navbar from "react-bootstrap/Navbar";
 import logo from "./../../images/umall2.gif";
 import NavForm from "./NavForm";
 import LeftNav from "./LeftNav";
-import Cart from "./../../SmallComponent/Cart";
 import { ContextCreator } from "./../../Context/Context";
 import { Link } from "react-router-dom";
 import SignUpModal from "./SignUpModal";
@@ -70,11 +69,6 @@ class MainNav extends React.Component {
             authenticated={authenticated}
             showSignUp={this.showSignUp}
           />
-          <div className="logo--div">
-            <Link to={{ pathname: "/" }}>
-              <Cart />
-            </Link>
-          </div>
           <LogOutModal
             show={this.state.logout}
             handleClose={this.closeLogOut}
@@ -85,6 +79,9 @@ class MainNav extends React.Component {
           />
           <SignInModal show={this.state.show} handleClose={this.handleClose} />
         </div>
+        <button onClick={this.props.onClick} className="btn hamburger">
+          hambugger
+        </button>
       </Navbar>
     );
   }

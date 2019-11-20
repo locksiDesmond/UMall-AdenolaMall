@@ -1,5 +1,6 @@
 import React from "react";
 import Dropdown from "../../SmallComponent/Dropdown";
+import laptop from "../../images/svgs/laptop.svg";
 
 class SideNav extends React.Component {
   constructor(props) {
@@ -8,62 +9,92 @@ class SideNav extends React.Component {
       Devices: [
         {
           id: 1,
-          title: "Mobile  Phone",
-          path: "/signin"
+          title: "Mobile Phones",
+          category: "Devices"
         },
         {
           id: 2,
-          title: "Laptops"
+          title: "Laptops",
+          avatar: laptop,
+          category: "Devices"
         },
         {
           id: 3,
-          title: "other accessories"
+          title: "Other accessories",
+          category: "Devices"
         }
       ],
       clothing: [
         {
           id: 1,
-          title: "Clothes"
+          title: "Male",
+          category: "Clothings"
         },
         {
           id: 2,
-          title: "Shoes"
+          title: "Female",
+          path: "/home/clothing",
+          category: "Clothings"
         }
       ],
       Footwear: [
         {
           id: 0,
-          title: "male"
+          title: "Male",
+          category: "Footwear"
         },
-        { id: 1, title: "female" }
+        { id: 1, title: "female", category: "Footwear" }
       ],
       Cosmetics: [
         {
           id: 0,
-          title: "creams"
+          title: "Creams",
+          category: "Cosmetics"
         },
-        { id: 1, title: "perfumes" }
+        { id: 1, title: "Perfumes", category: "Cosmetics" }
       ],
       HouseItems: [
         {
           id: 0,
-          title: "New"
+          title: "New",
+          category: "Household items"
         },
         {
           id: 1,
-          title: "Used"
+          title: "Used",
+          category: "Household items"
         }
       ]
     };
   }
   render() {
     return (
-      <div className="sidenav">
-        <Dropdown title="Devices" item={this.state.Devices} />
-        <Dropdown title="Clothing" item={this.state.clothing} />
-        <Dropdown title="Cosmetics" item={this.state.Cosmetics} />
-        <Dropdown title="Footwears" item={this.state.Footwear} />
-        <Dropdown title="Household Appliances" item={this.state.HouseItems} />
+      <div className={`sidenav ${this.props.disabled && "show--nav"}`}>
+        <Dropdown
+          title="Devices"
+          onClick={this.props.onClick}
+          item={this.state.Devices}
+        />
+        <Dropdown
+          title="Clothing"
+          onClick={this.props.onClick}
+          item={this.state.clothing}
+        />
+        <Dropdown
+          title="Cosmetics"
+          onClick={this.props.onClick}
+          item={this.state.Cosmetics}
+        />
+        <Dropdown
+          title="Footwears"
+          onClick={this.props.onClick}
+          item={this.state.Footwear}
+        />
+        <Dropdown
+          title="Household Appliances"
+          onClick={this.props.onClick}
+          item={this.state.HouseItems}
+        />
       </div>
     );
   }

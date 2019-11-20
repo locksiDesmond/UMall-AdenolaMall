@@ -7,7 +7,7 @@ class Dropdown extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
-      headerTitle: this.props.title
+      redirect: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -17,12 +17,12 @@ class Dropdown extends React.Component {
     }));
   }
   render() {
-    const { headerTitle, isOpen } = this.state;
-    const { item } = this.props;
+    const { isOpen } = this.state;
+    const { item, title } = this.props;
     return (
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
-          <span>{headerTitle}</span>
+          <span>{title}</span>
           <button
             className="dropdown--icon a"
             onClick={() => this.handleClick()}
@@ -39,8 +39,25 @@ class Dropdown extends React.Component {
           {isOpen &&
             item.map(item => {
               return (
-                <Link key={item.id} to={{ pathname: item.path || "errorpage" }}>
-                  <li className="dropdown--item--list">{item.title}</li>
+                <Link
+                  onClick={() => {
+                    this.props.onClick();
+                    this.handleClick();
+                  }}
+                  key={item.id}
+                  to={{
+                    pathname: "/home/clothing" || "errorpage",
+                    state: item
+                  }}
+                >
+                  <li className="dropdown--item--list">
+                    <img
+                      className="img-thumbnail sidenav--avatar"
+                      src={item.avatar}
+                      alt="icon"
+                    />
+                    {item.title}
+                  </li>
                 </Link>
               );
             })}

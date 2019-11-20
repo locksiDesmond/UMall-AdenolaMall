@@ -100,7 +100,7 @@ function SignUpForm() {
       </Form.Group>
       <ButtonLg
         small="true"
-        disable={loading && true}
+        disabled={loading && true}
         type="submit"
         title="submit"
       />

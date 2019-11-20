@@ -9,28 +9,38 @@ import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
 import SideNav from "../Components/SideNav/SideNav";
 import ErrorPage from "./../SmallComponent/ErrorPage";
+import Clothing from "./../Components/DropdownPages/Clothings";
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ""
+      name: "",
+      sidebar: false
     };
+    this.sideNavToggle = this.sideNavToggle.bind(this);
   }
   static contextType = ContextCreator;
+  sideNavToggle() {
+    this.setState({
+      sidebar: !this.state.sidebar
+    });
+    console.log("toggle");
+  }
   render() {
     const { authenticated, loading } = this.context;
     const RenderItem = (
       <React.Fragment>
-        <MainNav />
+        <MainNav onClick={this.sideNavToggle} />
         <Link to={{ pathname: "/home/" }}>Home </Link>
         <Link to={{ pathname: "/home/Profile" }}>Profile</Link>
         <Link to={{ pathname: "/home/upload" }}>Upload Dp</Link>
         <div className="body--content">
-          <SideNav />
+          <SideNav onClick={this.sideNavToggle} disabled={this.state.sidebar} />
           <Switch>
             <Route exact path="/home" component={Home} />
             <Route path="/Home/Profile" component={UserProfile} />
             <Route path="/Home/upload" component={Upload} />
+            <Route path="/home/Clothing" component={Clothing} />
             <Route
               path="*"
               component={() => <ErrorPage className="main--content" />}
