@@ -1,9 +1,9 @@
 import React from "react";
 import { BallBeat } from "react-pure-loaders";
 
-function Loading() {
+function Loading(props) {
   return (
-    <div className="loading">
+    <div {...props} className="loading">
       <BallBeat color="#05aff2" loading={true} />
     </div>
   );

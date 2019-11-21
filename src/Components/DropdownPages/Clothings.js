@@ -1,16 +1,15 @@
-import React, { useState } from "react";
-
+import React from "react";
 import Newdata from "./FetchData";
 import ProductCard from "./../ProductCard/index";
 import Loading from "../../SmallComponent/Loading";
 
 function Clothing(props) {
-  const [state] = useState(props.location.state);
+  let state = props.location.state;
   const datas = Newdata(state.category, state.title);
   const products = (
     <div className="products">
       {datas.map(item => (
-        <ProductCard data={item} />
+        <ProductCard key={item.date} data={item} />
       ))}
     </div>
   );

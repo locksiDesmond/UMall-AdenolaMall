@@ -22,7 +22,9 @@ class Dropdown extends React.Component {
     return (
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
-          <span>{title}</span>
+          <Link to={{ pathname: `/Home/main/${title}`, state: title }}>
+            <span style={{ color: "#000" }}>{title}</span>
+          </Link>
           <button
             className="dropdown--icon a"
             onClick={() => this.handleClick()}
@@ -46,7 +48,8 @@ class Dropdown extends React.Component {
                   }}
                   key={item.id}
                   to={{
-                    pathname: "/home/clothing" || "errorpage",
+                    pathname:
+                      `/home/main/Clothings/${item.title}` || "errorpage",
                     state: item
                   }}
                 >

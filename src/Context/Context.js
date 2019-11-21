@@ -12,8 +12,8 @@ class ContextClass extends React.Component {
       loaded: false
     };
   }
-  async componentDidMount() {
-    const unsubscribe = await firebase.auth().onAuthStateChanged(user => {
+  componentDidMount() {
+    this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const email = user.email;
         this.setState({
@@ -29,7 +29,9 @@ class ContextClass extends React.Component {
         });
       }
     });
-    return () => unsubscribe();
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {

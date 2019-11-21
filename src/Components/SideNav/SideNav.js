@@ -24,7 +24,7 @@ class SideNav extends React.Component {
           category: "Devices"
         }
       ],
-      clothing: [
+      Clothings: [
         {
           id: 1,
           title: "Male",
@@ -76,9 +76,9 @@ class SideNav extends React.Component {
           item={this.state.Devices}
         />
         <Dropdown
-          title="Clothing"
+          title="Clothings"
           onClick={this.props.onClick}
-          item={this.state.clothing}
+          item={this.state.Clothings}
         />
         <Dropdown
           title="Cosmetics"

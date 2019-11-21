@@ -1,12 +1,15 @@
 import React from "react";
 import UpLoadForm from "./UpLoadForm";
+import {Redirect} from "react-router-dom";
 
-const Upload = () => {
+const Upload = ({ authenticated }) => {
   return (
     <div className="main--content">
-      <h1>imageUpload</h1>
-      <UpLoadForm />
-      Upload
+      {authenticated ? (
+        <UpLoadForm />
+      ) : (
+        <Redirect to={{ pathname: "/signin" }} />
+      )}
     </div>
   );
 };

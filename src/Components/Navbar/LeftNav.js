@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
 function LeftNav(props) {
-  const [signedIn, setSignedIn] = useState(false);
+  // const [signedIn, setSignedIn] = useState(false);
 
-  const authenticated = props.authenticated;
-  useEffect(() => {
-    if (authenticated) {
-      setSignedIn(true);
-    } else {
-      setSignedIn(false);
-    }
-  }, [authenticated]);
+  // const authenticated = props.authenticated;
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     setSignedIn(true);
+  //   } else {
+  //     setSignedIn(false);
+  //   }
+  // }, [authenticated]);
   const signedInPost = (
     <React.Fragment>
       <span>
@@ -41,7 +41,11 @@ function LeftNav(props) {
       </button>
     </span>
   );
-  return <div className="left--nav">{signedIn ? signedInPost : signin}</div>;
+  return (
+    <div className="left--nav">
+      {props.authenticated ? signedInPost : signin}
+    </div>
+  );
 }
 
 export default LeftNav;

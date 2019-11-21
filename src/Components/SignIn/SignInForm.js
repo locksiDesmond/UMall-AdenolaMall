@@ -5,8 +5,8 @@ import { firebase } from "../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
 function SignInForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState({ name: "", password: "" });
+  const [password, setPassword] = useState({ name: "", password: "" });
   const [error, setError] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -14,16 +14,16 @@ function SignInForm() {
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);
-    if (!email) {
-      setError("No Email");
+    if (!email.name) {
+      setEmail({ error: "no Email" });
     }
-    if (!password) {
-      setError("No passWord");
+    if (!password.name) {
+      setPassword({ error: "No password" });
     }
-    if (!(!email || !password)) {
+    if (!(!email.name || !password.name)) {
       firebase
         .auth()
-        .signInWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(email.name, password.name)
         .then(user => {
           if (user) {
             setRedirect(true);
@@ -44,19 +44,21 @@ function SignInForm() {
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control
           type="email"
-          onChange={e => setEmail(e.currentTarget.value)}
-          value={email}
-          className={style}
+          onChange={e => setEmail({ name: e.currentTarget.value })}
+          value={email.name}
+          className={email.error ? "input--error" : "input--control"}
         />
+        {email.error && <p style={{ color: "#f00" }}>{email.error}</p>}
       </Form.Group>
       <Form.Group className="signin-form-name">
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
-          onChange={e => setPassword(e.currentTarget.value)}
-          value={password}
-          className={style}
+          onChange={e => setPassword({ name: e.currentTarget.value })}
+          value={password.name}
+          className={password.error ? "input--error" : "input--control"}
         />
+        {password.error && <p style={{ color: "#f00" }}>{password.error}</p>}
       </Form.Group>
       <ButtonLg
         disabled={loading ? true : false}

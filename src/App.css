@@ -182,7 +182,7 @@ a:hover,
   border-radius: 1rem;
 }
 .btn--small {
-  width: 10em !important;
+  width: 7em !important;
   border-radius: 1.4rem !important;
 }
 
@@ -377,7 +377,11 @@ section.signin {
 .logo--group--with--text {
   position: relative;
 }
-
+.signin--link {
+  margin-top: 2rem;
+  margin-left: 3rem;
+  font-size: 1rem;
+}
 .signin-form-name {
   color: #05aff2 !important;
   font-weight: 500 !important;
@@ -401,7 +405,7 @@ section.signin {
   border-color: #000 !important;
   color: red !important;
 }
-.signinform > .btn--large {
+.signinform .btn--large {
   margin-left: 2rem;
   margin-top: 1.5rem;
 }
@@ -482,7 +486,8 @@ section.signin {
 @media (max-width: 733px) {
   .main--content {
     margin-left: 0;
-    padding-right: 2rem;
+    padding-left: 0.4rem;
+    padding-right: 0.5rem;
   }
 }
 
@@ -718,15 +723,86 @@ span.price {
   padding: 0.5rem 1rem;
   background-color: #fff;
 }
+
 @media (max-width: 700px) {
   .description--page {
     display: block;
-    margin: .6rem 0;
+    margin: 0.6rem 0;
   }
   .description--aside {
     margin: 1rem 0;
   }
-  .warnings{
+  .warnings {
     margin-top: 1rem;
   }
+}
+.main--content .main--image {
+  width: 100%;
+  border-radius: 10px 0 0 0;
+}
+.main {
+  border-radius: 10px 0 0 0;
+  padding-left: 0;
+}
+.image--div {
+  background-color: #cccaca;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  height: 28rem;
+  border-radius: 10px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10%;
+  font-size: 3rem;
+  font-weight: 400;
+  color: white;
+}
+
+.image--div > * {
+  padding: 3rem;
+}
+.big {
+  font-size: 1.3rem;
+  outline: none;
+  height: 4rem;
+  padding: 1rem 2rem !important;
+  box-shadow: 1.2px 1.2px 6px 0.4px grey;
+}
+.image--div p {
+  text-align: center;
+}
+@media (max-width: 992px) {
+  .image--div {
+    padding-top: 5%;
+    height: 21rem;
+  }
+  .image--div > * {
+    padding-top: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .image--div {
+    padding-top: 0.5rem;
+    font-size: 2rem;
+    height: 15.5rem;
+  }
+  .image--div > * {
+    padding: 1.5rem;
+  }
+  .big {
+    height: 3rem;
+    font-size: 1rem;
+    padding: 0.3rem 0.5rem !important;
+  }
+}
+@media (max-width: 576px) {
+  .image--div {
+    padding-top: 0.5rem;
+    font-size: 2rem;
+    height: 14rem;
+  }
+}
+.main--body > p {
+  font-size: 1.4rem;
+  padding: 2rem 0.8rem;
 }
