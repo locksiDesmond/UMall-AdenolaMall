@@ -10,6 +10,7 @@ const LogOutModal = props => {
       .catch(error => {
         console.log("error");
       });
+    props.handleClose();
   };
   return (
     <Modal show={props.show} size="sm">

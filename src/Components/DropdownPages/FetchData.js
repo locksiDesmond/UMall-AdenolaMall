@@ -20,7 +20,7 @@ const Newdata = (category, subcategory) => {
   return data;
 };
 export const CategoryData = category => {
-  const [times, setTimes] = useState([]);
+  const [times, setTimes] = useState(["loading"]);
   useEffect(() => {
     const unsubscribe = firebase
       .firestore()

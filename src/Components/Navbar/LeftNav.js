@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
+import img from "../../images/svgs/user.svg";
 function LeftNav(props) {
+  const [show, setShow] = useState(false);
   // const [signedIn, setSignedIn] = useState(false);
 
   // const authenticated = props.authenticated;
@@ -12,23 +14,50 @@ function LeftNav(props) {
   //     setSignedIn(false);
   //   }
   // }, [authenticated]);
-  const signedInPost = (
+  const showDropdown = () => {
+    setShow(!show);
+  };
+  const profile = (
+    <div
+      style={{ marginLeft: ".5rem" }}
+      className={`profile--dropdown ${show && "show"} `}
+    >
+      <button className="a">
+        <img
+          id="dropdown basic"
+          src={img}
+          alt="Dp"
+          onClick={showDropdown}
+          className="rounded-circle card--profile--photo"
+        />
+      </button>
+      <div className="dropdown--menu">
+        <button onClick={showDropdown} className="a">
+          Setting
+        </button>
+        <Link to={{ pathname: "/home/profile" }}>
+          <button onClick={showDropdown} className="a">
+            Profile
+          </button>
+        </Link>
+        <button className="a signin--modal--button" onClick={props.showLogOut}>
+          Log-out
+        </button>
+      </div>
+    </div>
+  );
+  const user = (
     <React.Fragment>
       <span>
         <Link to={{ pathname: "/home/upload" }}>
           <Btn title="post" color="#f4754e" />
         </Link>
-        <button
-          style={{ marginLeft: ".5rem", fontSize: "1rem" }}
-          className="a signin--modal--button"
-          onClick={props.showLogOut}
-        >
-          Log-out
-        </button>
+
+        {profile}
       </span>
     </React.Fragment>
   );
-  const signin = (
+  const anonymous = (
     <span>
       <Link to={{ pathname: "/signin" }}>
         <Btn className="dontshow" title="signin" color="#f4754e" />
@@ -42,9 +71,7 @@ function LeftNav(props) {
     </span>
   );
   return (
-    <div className="left--nav">
-      {props.authenticated ? signedInPost : signin}
-    </div>
+    <div className="left--nav">{props.authenticated ? user : anonymous}</div>
   );
 }
 

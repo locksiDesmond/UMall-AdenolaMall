@@ -61,11 +61,19 @@ class SignUpForm extends React.Component {
       debugger;
       firebase
         .auth()
-        .createUserWithEmailAndPassword(email, password)
+        .createUserWithEmailAndPassword(email.name, password.name)
         .then(user => {
-          if (user) {
-            this.setState({ redirect: true });
+          if (this.props.onClick) {
+            this.props.onClick();
           }
+          this.setState({
+            password: { name: "" },
+            confirm: { name: "" },
+            displayName: { name: "" },
+            email: { name: "" },
+            loading: false,
+            redirect: true
+          });
         })
         .catch(error => {
           if (error.code !== "auth/network-request-failed") {
@@ -75,13 +83,6 @@ class SignUpForm extends React.Component {
             this.setState({ error: "no Internet connection", loading: false });
           }
         });
-      this.setState({
-        password: { name: "" },
-        confirm: { name: "" },
-        displayName: { name: "" },
-        email: { name: "" },
-        loading: false
-      });
     }
     this.setState({
       loading: false

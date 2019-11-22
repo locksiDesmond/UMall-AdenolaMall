@@ -15,7 +15,7 @@ const SignInModal = props => {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-          <SignUpForm />
+          <SignUpForm onClick={props.handleClose} />
         </div>
         <Button onClick={props.handleClose}>Close</Button>
       </Modal.Body>

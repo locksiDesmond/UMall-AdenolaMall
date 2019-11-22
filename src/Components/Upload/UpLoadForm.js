@@ -18,7 +18,7 @@ class UpLoadForm extends React.Component {
       subcategory: { name: "", error: "" },
       objects: [],
       loading: false,
-      uploaded: false
+      uploaded: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -163,7 +163,7 @@ class UpLoadForm extends React.Component {
         });
       },
       error => {
-        this.setState({ error: error.message });
+        this.setState({ error: error.message , loading:false });
       },
       () => {
         pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {

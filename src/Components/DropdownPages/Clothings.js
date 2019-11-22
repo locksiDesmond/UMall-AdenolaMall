@@ -15,7 +15,13 @@ function Clothing(props) {
   );
   return (
     <div className="main--content">
-      {datas.length === 0 ? <Loading /> : products}
+      {datas[0] === "loading" ? (
+        <Loading />
+      ) : datas.length === 0 ? (
+        <p> no data found</p>
+      ) : (
+        products
+      )}
     </div>
   );
 }

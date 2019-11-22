@@ -9,20 +9,15 @@ function Descriptionbody(props) {
   return (
     <div className="description--page">
       <div className="product--description">
-        <h1> Title</h1>
+        <h1>{items.name}</h1>
         <img
           className="description--image"
           src={items.pictureUrl}
           alt=" product"
         />
-        <span className="date">Date</span>
+        <span className="date">{items.data}</span>
         <h2>Description</h2>
-        <p className="description--details">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam,
-          voluptas officiis? Eius impedit delectus saepe quibusdam rem corporis
-          modi cupiditate laboriosam debitis sequi velit commodi, omnis aut quae
-          quam voluptatibus?
-        </p>
+        <p className="description--details">{items.description}</p>
       </div>
       <div className="description--aside">
         <div className="product--owner-profile">

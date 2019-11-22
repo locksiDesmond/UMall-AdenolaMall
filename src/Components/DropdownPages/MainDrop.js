@@ -5,12 +5,13 @@ import Btn from "./../../SmallComponent/Btn";
 import ProductCard from "./../ProductCard/index";
 import { Link } from "react-router-dom";
 import Loading from "../../SmallComponent/Loading";
+// import { Spinner } from "react-bootstrap";
 
 function MainDrop(props) {
   let category = props.location.state;
   const data = CategoryData(category);
-  console.log(data);
-  const [imags, setImage] = useState("");
+  console.log(data[0] === "loading");
+  const [bgimage, setImage] = useState("");
   const products = data.map(item => (
     <ProductCard key={item.date} data={item} />
   ));
@@ -20,7 +21,7 @@ function MainDrop(props) {
         setImage("f");
         break;
       case "Clothings":
-        setImage("e");
+        setImage(image);
         break;
       case "Cosmetics":
         setImage("d");
@@ -38,35 +39,37 @@ function MainDrop(props) {
 
   return (
     <div className="main--content main">
-      {data.length === 0 ? (
-        <Loading />
-      ) : (
-        <React.Fragment>
-          <div
-            className="image--div"
-            style={{ backgroundImage: `url(${image})` }}
-          >
-            <div>
-              <p>Want to </p>
-              <p>
-                Buy <span style={{ color: "#f4754e" }}>?</span>
-              </p>
-              <Btn className="big" color="#f4754e" title="Shop now" />
-            </div>
-            <div>
-              <p>Want to</p>
-              <p>Sell</p>
-              <Link to={{ pathname: "/signin" }}>
-                <Btn className="big" color="#05aff2" title="Sign up" />
-              </Link>
-            </div>
+      <React.Fragment>
+        <div
+          className="image--div"
+          style={{ backgroundImage: `url(${bgimage})` }}
+        >
+          <div>
+            <p>Want to </p>
+            <p>
+              Buy <span style={{ color: "#f4754e" }}>?</span>
+            </p>
+            <Btn className="big" color="#f4754e" title="Shop now" />
           </div>
-          <div className="main--body">
-            <p>Trends</p>
-            <div className="products">{products}</div>
+          <div>
+            <p>Want to</p>
+            <p>Sell</p>
+            <Link to={{ pathname: "/signin" }}>
+              <Btn className="big" color="#05aff2" title="Sign up" />
+            </Link>
           </div>
-        </React.Fragment>
-      )}
+        </div>
+        <div className="main--body">
+          <p>Trends</p>
+          <div className="products">
+            {data[0] === "loading" ? (
+              <Loading className="products loading" />
+            ) : (
+              products
+            )}
+          </div>
+        </div>
+      </React.Fragment>
     </div>
   );
 }

@@ -71,7 +71,31 @@ button {
   text-transform: capitalize;
   padding: 0 0.3rem;
 }
-
+.profile--dropdown{
+  position:relative;
+  display:inline;
+}
+.dropdown--menu{
+  display:none;
+  position:absolute;
+background-color: #fff;
+margin-top: .4rem;
+width:6rem;
+padding:.7rem .5rem;
+box-shadow: 1px 1px 4px -2px black;
+z-index: 99;
+top:2.4rem;
+left:0
+  
+}
+.dropdown--menu button{
+  background-color: #fff;
+  color:#000;
+  font-size: .9rem !important;
+}
+.show > .dropdown--menu{
+  display:block;
+}
 .a {
   background-color: transparent;
   padding: 0;
@@ -771,6 +795,9 @@ span.price {
 .image--div p {
   text-align: center;
 }
+.image--div .big{
+margin-left: 1rem;
+}
 @media (max-width: 992px) {
   .image--div {
     padding-top: 5%;
@@ -805,4 +832,13 @@ span.price {
 .main--body > p {
   font-size: 1.4rem;
   padding: 2rem 0.8rem;
+}
+
+/* PROFILE NAV */
+.profile--nav a{
+  color:#001992 !important;
+}
+.profile--nav  .active{
+   background-color: #05aff2 !important;
+   border-radius: 10px 10px 0 0 ;
 }

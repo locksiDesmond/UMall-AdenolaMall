@@ -102,11 +102,9 @@ class PictureUpload extends PureComponent {
       return null;
     }
     console.log("clicked");
-    // const datas = this.state.data;
     const fileExtension = extractImageFileExtensionFromBase64(src);
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(src, fileName);
-    // const dataDown = datas.toDataURl("img/" + fileExtension);
     this.setState(
       {
         context: croppedFile
@@ -140,9 +138,6 @@ class PictureUpload extends PureComponent {
 
     return (
       <div style={{ display: "flex" }}>
-        {/* <div>
-          <input type="file" onChange={this.onSelectFile} />
-        </div> */}
         {src && (
           <ReactCrop
             src={src}

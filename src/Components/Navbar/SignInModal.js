@@ -16,7 +16,7 @@ const SignInModal = props => {
               <img alt="Logo" src={logo} />
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
-            <SignInForm />
+            <SignInForm onClick={props.handleClose} />
           </div>
           <Button onClick={props.handleClose}>Close</Button>
         </section>

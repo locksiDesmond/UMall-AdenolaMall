@@ -10,7 +10,6 @@ function SignInForm() {
   const [error, setError] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
-  const style = error ? "input--error" : "input--control";
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);

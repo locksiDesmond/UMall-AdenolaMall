@@ -24,7 +24,6 @@ class ProtectedRoutes extends React.Component {
     this.setState({
       sidebar: !this.state.sidebar
     });
-    console.log("toggle");
   }
   render() {
     const { authenticated, loading } = this.context;
