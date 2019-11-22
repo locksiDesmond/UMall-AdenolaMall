@@ -1,10 +1,11 @@
 import React from "react";
-import {Form, Alert} from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import ImageUpload from "./ImageUpload";
 import SelectForm from "./SelectForm";
 import { firebase } from "./../../Firebase/Firebase";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import {Redirect } from "react-router-dom"
+import Button from "react-bootstrap/Button";
+import { Redirect } from "react-router-dom";
 class UpLoadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,12 @@ class UpLoadForm extends React.Component {
       subcategory: { name: "", error: "" },
       objects: [],
       loading: false,
+      loaded1: false,
+      loaded2: false,
       uploaded: false,
+      picture1: "",
+      picture2: "",
+      pictures:[]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +32,8 @@ class UpLoadForm extends React.Component {
     this.errors = this.errors.bind(this);
     this.upload = this.upload.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
+    this.downloadPicture1 = this.downloadPicture1.bind(this);
+    this.downloadPicture2 = this.downloadPicture2.bind(this);
   }
   errors(name, error) {
     const value = name;
@@ -34,42 +42,65 @@ class UpLoadForm extends React.Component {
       error: "Error"
     }));
   }
-  handleSubmit(picture) {
+  downloadPicture1(picture) {
     this.setState({
-      loading: true
+      picture1: picture,
+      loaded1: true
     });
-    const { title, description, price, condition, category } = this.state;
-    if (!title.name) {
-      this.errors("title", "Enter a Title or Name of Product");
-    }
-    if (!description.name) {
-      this.errors("description", "description must be there");
-    }
-    if (!price.name) {
-      this.errors("price", "No price Found");
-    }
-    if (!category.name) {
-      this.errors("category", "You must select a category");
-    }
-    if (!condition.name) {
-      this.errors("condition", "state a condition!");
-    }
-    if (
-      !(
-        !title.name ||
-        !description.name ||
-        !price.name ||
-        !condition.name ||
-        !category.name
-      )
-    ) {
-      this.upload(picture);
-    } else {
-      this.setState({
-        loading: false
-      });
-    }
   }
+  downloadPicture2(picture) {
+    this.setState({
+      picture2: picture,
+      loaded2: true
+    });
+  }
+  handleSubmit(e){
+    e.preventDefault();
+         this.upload(this.state.picture1);
+        this.upload(this.state.picture2);
+  }
+  // handleSubmit(e) {
+  //   e.preventDefault()
+  //   this.setState({
+  //     loading: true
+  //   });
+  //   const { title, description, price, condition, category } = this.state;
+  //   if (!title.name) {
+  //     this.errors("title", "Enter a Title or Name of Product");
+  //   }
+  //   if (!description.name) {
+  //     this.errors("description", "description must be there");
+  //   }
+  //   if (!price.name) {
+  //     this.errors("price", "No price Found");
+  //   }
+  //   if (!category.name) {
+  //     this.errors("category", "You must select a category");
+  //   }
+  //   if (!condition.name) {
+  //     this.errors("condition", "state a condition!");
+  //   }
+  //   if (
+  //     !(
+  //       !title.name ||
+  //       !description.name ||
+  //       !price.name ||
+  //       !condition.name ||
+  //       !category.name
+  //     )
+  //   ) {
+  //     console.log("dafta")
+  //     this.upload(this.state.picture1);
+  //     if(this.state.picture2 !== "")
+  //     this.upload(this.state.picture2);
+  //   } else {
+  //     this.setState({
+  //       loading: false
+  //     });
+  //   } this.setState({
+  //     loading: false
+  //   });
+  // }
 
   handleChange(e) {
     let value = e.target.name;
@@ -113,31 +144,34 @@ class UpLoadForm extends React.Component {
           ]
         });
         break;
-        case "Cosmetics":
-          this.setState({
-            objects:[
-              {
-                name: "Creams",
-                id:0
-              },{
-              name:"Perfumes",
-              id:1
+      case "Cosmetics":
+        this.setState({
+          objects: [
+            {
+              name: "Creams",
+              id: 0
+            },
+            {
+              name: "Perfumes",
+              id: 1
             }
           ]
-          });
-          break;
-        case "Household items":
-          this.setState({
-            objects:[{
-              name:"Used",
-              id:0,
+        });
+        break;
+      case "Household items":
+        this.setState({
+          objects: [
+            {
+              name: "Used",
+              id: 0
             },
-          {
-            name:"New",
-            id:1,
-          }]
-          });
-          break;
+            {
+              name: "New",
+              id: 1
+            }
+          ]
+        });
+        break;
       default:
         this.setState({
           objects: []
@@ -150,7 +184,7 @@ class UpLoadForm extends React.Component {
     const pictureUploading = store
       .ref()
       .child(
-        `${category.name}/${subcategory.name}/${title.name}/${description.name}`
+        `${category.name}/${subcategory.name}/${title.name}/${description.name}${picture.size}`
       )
       .put(picture);
     pictureUploading.on(
@@ -163,25 +197,31 @@ class UpLoadForm extends React.Component {
         });
       },
       error => {
-        this.setState({ error: error.message , loading:false });
+        this.setState({ error: error.message, loading: false });
       },
       () => {
         pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
-          this.setState({ pictureUrl: downloadUrl, progress: 0 });
+          let newpics = this.state.pictures;
+          this.setState({ pictures: newpics.push(downloadUrl), progress: "",loading:false });
           console.log(downloadUrl);
-          this.fileUpload(downloadUrl);
+
         });
       }
     );
   }
-  fileUpload(downloadUrl) {
+  componentDidMount(){
+    if(this.state.picture1 &&this.state.picture2){
+debugger;
+    }
+  }
+  fileUpload(downloadUrl1, downloadUrl2 = "") {
     const {
       title,
       condition,
       description,
       price,
       subcategory,
-      category
+      category,
     } = this.state;
     const date = Date.now();
     const data = {
@@ -192,7 +232,8 @@ class UpLoadForm extends React.Component {
       description: description.name,
       price: price.name,
       date: date,
-      pictureUrl: downloadUrl
+      pictureUrl1: downloadUrl1,
+      picutureUrl2:downloadUrl2,
     };
     const db = firebase.firestore();
     db.collection(category.name)
@@ -222,7 +263,7 @@ class UpLoadForm extends React.Component {
   render() {
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
-        {this.state.uploaded && <Redirect to={{pathname:"/Home"}}/>}
+        {this.state.uploaded && <Redirect to={{ pathname: "/Home" }} />}
         {this.state.progress && <ProgressBar now={this.state.progress} />}
         <Form.Group>
           <Form.Label className="signin-form-name">Name</Form.Label>
@@ -258,7 +299,6 @@ class UpLoadForm extends React.Component {
             <option>Footwears</option>
             <option>Cosmetics</option>
             <option>Household items</option>
-
           </select>
           {this.state.category.error && <p>{this.state.category.error}</p>}
         </Form.Group>
@@ -274,7 +314,7 @@ class UpLoadForm extends React.Component {
 
         <Form.Group className="input-condition-price">
           <div>
-            <Form.Label style={{}} className="signin-form-name">
+            <Form.Label className="signin-form-name">
               Price (in Naira)
             </Form.Label>
             <input
@@ -323,9 +363,18 @@ class UpLoadForm extends React.Component {
         <ImageUpload
           loading={this.state.loading}
           error={this.state.error}
-          loaded={this.state.loaded}
-          handleSubmit={this.handleSubmit}
+          loaded={this.state.loaded1}
+          handleSubmit={this.downloadPicture1}
         />
+        <ImageUpload
+          loading={this.state.loading}
+          error={this.state.error}
+          loaded={this.state.loaded2}
+          handleSubmit={this.downloadPicture2}
+        />
+        <Button type="submit" onClick={this.handleSubmit}>
+          submit
+        </Button>
         {this.state.error && <Alert>{this.state.error}</Alert>}
       </Form>
     );

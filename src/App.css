@@ -842,3 +842,6 @@ margin-left: 1rem;
    background-color: #05aff2 !important;
    border-radius: 10px 10px 0 0 ;
 }
+.none{
+  display:none !important;
+}

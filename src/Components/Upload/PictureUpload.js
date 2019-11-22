@@ -142,7 +142,7 @@ class PictureUpload extends PureComponent {
           <ReactCrop
             src={src}
             crop={crop}
-            className="image"
+            className={`image ${this.props.loaded && "none"}`}
             ruleOfThirds
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
