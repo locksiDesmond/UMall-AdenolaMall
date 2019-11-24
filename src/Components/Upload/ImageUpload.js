@@ -40,6 +40,7 @@ function ImageUpload(props) {
           src={imgSrc}
           loading={props.loading}
           loaded={props.loaded}
+          value={props.value}
         />
       ) : (
         <div

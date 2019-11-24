@@ -19,7 +19,8 @@ class PictureUpload extends PureComponent {
       width: 30,
       aspect: 16 / 9
     },
-    context: ""
+    context: "",
+    cropped: ""
   };
 
   // onSelectFile = e => {
@@ -54,7 +55,7 @@ class PictureUpload extends PureComponent {
         crop,
         "newFile.jpeg"
       );
-      this.setState({ croppedImageUrl });
+      this.setState({ cropped: croppedImageUrl });
     }
   }
 
@@ -97,19 +98,19 @@ class PictureUpload extends PureComponent {
   handleDownload = e => {
     e.preventDefault();
 
-    const { src, error } = this.state;
+    const { error, data } = this.state;
     if (error) {
       return null;
     }
     console.log("clicked");
-    const fileExtension = extractImageFileExtensionFromBase64(src);
+    const fileExtension = extractImageFileExtensionFromBase64(data);
     const fileName = "file." + fileExtension;
-    const croppedFile = base64StringtoFile(src, fileName);
+    const croppedFile = base64StringtoFile(data, fileName);
     this.setState(
       {
         context: croppedFile
       },
-      this.props.handleDownload(croppedFile)
+      this.props.handleDownload(croppedFile, this.props.value)
     );
     // const ref = firebase.storage().ref("images");
     //break;
@@ -134,7 +135,7 @@ class PictureUpload extends PureComponent {
     // downloadBase64File(datas, fileName);
   };
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const { crop, cropped, src } = this.state;
 
     return (
       <div style={{ display: "flex" }}>
@@ -149,13 +150,13 @@ class PictureUpload extends PureComponent {
             onChange={this.onCropChange}
           />
         )}
-        {croppedImageUrl && (
+        {cropped && (
           <div style={{ display: "flex", marginTop: "1.3rem" }}>
             <div style={{ width: "18rem", height: "auto", marginLeft: "1rem" }}>
               <img
                 alt="Crop"
                 style={{ maxWidth: "100%", border: "1px solid #000" }}
-                src={croppedImageUrl}
+                src={cropped}
               />
             </div>
             <Button

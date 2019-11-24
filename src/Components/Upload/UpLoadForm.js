@@ -22,9 +22,9 @@ class UpLoadForm extends React.Component {
       loaded1: false,
       loaded2: false,
       uploaded: false,
-      picture1: "",
-      picture2: "",
-      pictures:[]
+      picture: [],
+      url: [],
+      loaded:Array(3).fill(false)
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -32,8 +32,8 @@ class UpLoadForm extends React.Component {
     this.errors = this.errors.bind(this);
     this.upload = this.upload.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
-    this.downloadPicture1 = this.downloadPicture1.bind(this);
-    this.downloadPicture2 = this.downloadPicture2.bind(this);
+    this.downloadPicture = this.downloadPicture.bind(this);
+    this.RenderImage = this.RenderImage.bind(this);
   }
   errors(name, error) {
     const value = name;
@@ -42,65 +42,56 @@ class UpLoadForm extends React.Component {
       error: "Error"
     }));
   }
-  downloadPicture1(picture) {
+  downloadPicture(picture, i) {
+    const loaded = this.state.loaded.slice();
+    loaded[i] = true
     this.setState({
-      picture1: picture,
-      loaded1: true
+      picture: [...this.state.picture, picture],
+      loaded: loaded
+
     });
   }
-  downloadPicture2(picture) {
+  handleSubmit(e) {
+    e.preventDefault()
     this.setState({
-      picture2: picture,
-      loaded2: true
+      loading: true
+    });
+    const { title, description, price, condition, category } = this.state;
+    if (!title.name) {
+      this.errors("title", "Enter a Title or Name of Product");
+    }
+    if (!description.name) {
+      this.errors("description", "description must be there");
+    }
+    if (!price.name) {
+      this.errors("price", "No price Found");
+    }
+    if (!category.name) {
+      this.errors("category", "You must select a category");
+    }
+    if (!condition.name) {
+      this.errors("condition", "state a condition!");
+    }
+    if (
+      !(
+        !title.name ||
+        !description.name ||
+        !price.name ||
+        !condition.name ||
+        !category.name
+      )
+    ) {
+      for (let i = 0; i <= this.state.picture.length; i++) {
+        this.upload(this.state.picture[i], i);
+      };
+    } else {
+      this.setState({
+        loading: false
+      });
+    } this.setState({
+      loading: false
     });
   }
-  handleSubmit(e){
-    e.preventDefault();
-         this.upload(this.state.picture1);
-        this.upload(this.state.picture2);
-  }
-  // handleSubmit(e) {
-  //   e.preventDefault()
-  //   this.setState({
-  //     loading: true
-  //   });
-  //   const { title, description, price, condition, category } = this.state;
-  //   if (!title.name) {
-  //     this.errors("title", "Enter a Title or Name of Product");
-  //   }
-  //   if (!description.name) {
-  //     this.errors("description", "description must be there");
-  //   }
-  //   if (!price.name) {
-  //     this.errors("price", "No price Found");
-  //   }
-  //   if (!category.name) {
-  //     this.errors("category", "You must select a category");
-  //   }
-  //   if (!condition.name) {
-  //     this.errors("condition", "state a condition!");
-  //   }
-  //   if (
-  //     !(
-  //       !title.name ||
-  //       !description.name ||
-  //       !price.name ||
-  //       !condition.name ||
-  //       !category.name
-  //     )
-  //   ) {
-  //     console.log("dafta")
-  //     this.upload(this.state.picture1);
-  //     if(this.state.picture2 !== "")
-  //     this.upload(this.state.picture2);
-  //   } else {
-  //     this.setState({
-  //       loading: false
-  //     });
-  //   } this.setState({
-  //     loading: false
-  //   });
-  // }
 
   handleChange(e) {
     let value = e.target.name;
@@ -109,6 +100,7 @@ class UpLoadForm extends React.Component {
       [value]: { name: e.target.value }
     });
   }
+
   changeSubCategory() {
     switch (this.state.category.name) {
       case "Devices":
@@ -178,43 +170,49 @@ class UpLoadForm extends React.Component {
         });
     }
   }
-  upload(picture) {
+  upload(picture, i) {
     const { title, description, subcategory, category } = this.state;
-    const store = firebase.storage();
-    const pictureUploading = store
-      .ref()
-      .child(
-        `${category.name}/${subcategory.name}/${title.name}/${description.name}${picture.size}`
-      )
-      .put(picture);
-    pictureUploading.on(
-      "state_changed",
-      snapshot => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        this.setState({
-          progress: progress
-        });
-      },
-      error => {
-        this.setState({ error: error.message, loading: false });
-      },
-      () => {
-        pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
-          let newpics = this.state.pictures;
-          this.setState({ pictures: newpics.push(downloadUrl), progress: "",loading:false });
-          console.log(downloadUrl);
-
-        });
-      }
-    );
+    return new Promise((resolve, reject) => {
+      const store = firebase.storage();
+      const pictureUploading = store
+        .ref()
+        .child(
+          `${category.name}/${subcategory.name}/${title.name}/${description.name}${i}`
+        )
+        .put(picture);
+      pictureUploading.on(
+        "state_changed",
+        snapshot => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          this.setState({
+            progress: progress
+          });
+          console.log(progress);
+        },
+        error => {
+          console.log("error");
+          this.setState({ error: error.message, loading: false });
+        },
+        () => {
+          pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
+            console.log(downloadUrl);
+            this.setState({
+              progress: "",
+              url: [...this.state.url, downloadUrl],
+              loading: false
+            });
+          });
+        }
+      );
+    });
   }
-  componentDidMount(){
-    if(this.state.picture1 &&this.state.picture2){
-debugger;
+  componentDidUpdate(){
+    if ( this.state.picture.length>0 &&  this.state.picture.length === this.state.url.length){
+      this.fileUpload()
     }
   }
-  fileUpload(downloadUrl1, downloadUrl2 = "") {
+  fileUpload() {
     const {
       title,
       condition,
@@ -222,6 +220,7 @@ debugger;
       price,
       subcategory,
       category,
+      url
     } = this.state;
     const date = Date.now();
     const data = {
@@ -232,8 +231,7 @@ debugger;
       description: description.name,
       price: price.name,
       date: date,
-      pictureUrl1: downloadUrl1,
-      picutureUrl2:downloadUrl2,
+      pictureUrl: url,
     };
     const db = firebase.firestore();
     db.collection(category.name)
@@ -359,25 +357,25 @@ debugger;
           rows="5"
         />
         {this.state.description.error && <p>{this.state.description.error}</p>}
-
-        <ImageUpload
-          loading={this.state.loading}
-          error={this.state.error}
-          loaded={this.state.loaded1}
-          handleSubmit={this.downloadPicture1}
-        />
-        <ImageUpload
-          loading={this.state.loading}
-          error={this.state.error}
-          loaded={this.state.loaded2}
-          handleSubmit={this.downloadPicture2}
-        />
+ 
+        {this.RenderImage(0)}
+        {this.RenderImage(1)}
         <Button type="submit" onClick={this.handleSubmit}>
           submit
         </Button>
         {this.state.error && <Alert>{this.state.error}</Alert>}
       </Form>
     );
+  }
+  RenderImage(i){
+ return( <ImageUpload
+          loading={this.state.loading[i]}
+          error={this.state.error}
+          loaded={this.state.loaded[i]}
+          value={i}
+          handleSubmit={this.downloadPicture}
+          
+        />)
   }
 }
 
