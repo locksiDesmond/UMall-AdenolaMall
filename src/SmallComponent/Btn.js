@@ -6,18 +6,20 @@ function Btn(props) {
     elements: {
       borderColor: props.color,
       color: props.color,
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
+      padding: ".1rem .8rem .2rem  "
     },
     over: {
       backgroundColor: props.color,
       color: "#fff ",
-      borderColor: "none"
+      borderColor: "none",
+      padding: ".1rem .8rem .2rem "
     }
   };
 
   return (
     <Button
-      className="btn--component"
+      {...props}
       style={over ? styles.elements : styles.over}
       onMouseOver={() => {
         setOver(true);

@@ -1,44 +1,82 @@
-import React, { useState, useEffect } from "react";
-import { firebase } from "./../../Firebase/Firebase";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
+import img from "../../images/svgs/user.svg";
 function LeftNav(props) {
-  const [signedIn, setSignedIn] = useState(false);
-  const Logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch(error => {
-        console.log("error");
-      });
+  const [show, setShow] = useState(false);
+  // const [signedIn, setSignedIn] = useState(false);
+
+  // const authenticated = props.authenticated;
+  // useEffect(() => {
+  //   if (authenticated) {
+  //     setSignedIn(true);
+  //   } else {
+  //     setSignedIn(false);
+  //   }
+  // }, [authenticated]);
+  const showDropdown = () => {
+    setShow(!show);
   };
-  const authenticated = props.authenticated;
-  useEffect(() => {
-    if (authenticated) {
-      setSignedIn(true);
-    } else {
-      setSignedIn(false);
-    }
-  }, [authenticated]);
-  const signedInPost = (
+  const profile = (
+    <div
+      style={{ marginLeft: ".5rem" }}
+      className={`profile--dropdown ${show && "show"} `}
+    >
+      <button className="a">
+        <img
+          id="dropdown basic"
+          src={img}
+          alt="Dp"
+          onClick={showDropdown}
+          className="rounded-circle card--profile--photo"
+        />
+      </button>
+      <div className="dropdown--menu">
+        <button className="a" onClick={showDropdown}>
+          Adeleke Johnson
+        </button>
+        <hr />
+        <button onClick={showDropdown} className="a">
+          Setting
+        </button>
+        <Link to={{ pathname: "/Profile" }}>
+          <button onClick={showDropdown} className="a">
+            Profile
+          </button>
+        </Link>
+        <button className="a signin--modal--button" onClick={props.showLogOut}>
+          Log-out
+        </button>
+      </div>
+    </div>
+  );
+  const user = (
     <React.Fragment>
-      {" "}
       <span>
-        <button className="a">Post</button>
-      </span>
-      <span onClick={Logout}>
-        <a href="/">Log Out</a>
+        <Link to={{ pathname: "/home/upload" }}>
+          <Btn title="post" color="#f4754e" />
+        </Link>
+
+        {profile}
       </span>
     </React.Fragment>
   );
-  const signin = (
+  const anonymous = (
     <span>
       <Link to={{ pathname: "/signin" }}>
-        <Btn title="signin" color="#f4754e" />
+        <Btn className="dontshow" title="signin" color="#f4754e" />
       </Link>
+      <button onClick={props.handleShow} className="signin--modal--button a">
+        Signin
+      </button>
+      <button onClick={props.showSignUp} className="signin--modal--button a">
+        SignUp
+      </button>
     </span>
   );
-  return <div className="left--nav">{signedIn ? signedInPost : signin}</div>;
+  return (
+    <div className="left--nav">{props.authenticated ? user : anonymous}</div>
+  );
 }
 
 export default LeftNav;

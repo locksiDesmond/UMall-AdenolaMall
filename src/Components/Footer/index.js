@@ -6,8 +6,9 @@ function Footer() {
       <ul>
         <li>Facebook</li>
         <li>React</li>
+        <li>&copy; Locksi </li>
       </ul>
     </footer>
   );
 }
-export default Footer
+export default Footer;
