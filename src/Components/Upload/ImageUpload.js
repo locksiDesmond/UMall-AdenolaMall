@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import Upload from "../../images/svgs/Drag to upload.svg";
+import Upload from "../../images/svgs/upload.svg";
 import "./ReactCrop.css";
 import PictureUpload from "./PictureUpload";
 function ImageUpload(props) {
@@ -23,10 +23,10 @@ function ImageUpload(props) {
     });
   }, []);
   useEffect(() => {
-    if (props.loaded) {
+    if (props.loade) {
       setSrc("");
     }
-  }, [props.loaded]);
+  }, [props.loade]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
@@ -39,6 +39,8 @@ function ImageUpload(props) {
           error={props.error}
           src={imgSrc}
           loading={props.loading}
+          loaded={props.loaded}
+          value={props.value}
         />
       ) : (
         <div

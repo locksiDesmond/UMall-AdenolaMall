@@ -3,7 +3,6 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-// import { firebase } from "./../../Firebase/Firebase";
 import {
   extractImageFileExtensionFromBase64,
   base64StringtoFile
@@ -97,20 +96,20 @@ class PictureUpload extends PureComponent {
   }
   handleDownload = e => {
     e.preventDefault();
-// Checked out cropped
-    const { src, error } = this.state;
+
+    const { error, data } = this.state;
     if (error) {
       return null;
     }
     console.log("clicked");
-    const fileExtension = extractImageFileExtensionFromBase64(src);
+    const fileExtension = extractImageFileExtensionFromBase64(data);
     const fileName = "file." + fileExtension;
-    const croppedFile = base64StringtoFile(src, fileName);
+    const croppedFile = base64StringtoFile(data, fileName);
     this.setState(
       {
         context: croppedFile
       },
-      this.props.handleDownload(croppedFile)
+      this.props.handleDownload(croppedFile, this.props.value)
     );
     // const ref = firebase.storage().ref("images");
     //break;
@@ -143,7 +142,7 @@ class PictureUpload extends PureComponent {
           <ReactCrop
             src={src}
             crop={crop}
-            className="image"
+            className={`image ${this.props.loaded && "none"}`}
             ruleOfThirds
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}

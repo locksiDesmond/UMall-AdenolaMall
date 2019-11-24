@@ -860,3 +860,6 @@ span.price {
   flex: 1;
   padding-left: 1rem;
 }
+.none{
+  display:none !important;
+}
