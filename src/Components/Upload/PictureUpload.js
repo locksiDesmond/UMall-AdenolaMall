@@ -19,6 +19,7 @@ class PictureUpload extends PureComponent {
       width: 30,
       aspect: 16 / 9
     },
+    cropped: "",
     context: ""
   };
 
@@ -54,7 +55,7 @@ class PictureUpload extends PureComponent {
         crop,
         "newFile.jpeg"
       );
-      this.setState({ croppedImageUrl });
+      this.setState({ cropped: croppedImageUrl });
     }
   }
 
@@ -96,7 +97,7 @@ class PictureUpload extends PureComponent {
   }
   handleDownload = e => {
     e.preventDefault();
-
+// Checked out cropped
     const { src, error } = this.state;
     if (error) {
       return null;
@@ -134,7 +135,7 @@ class PictureUpload extends PureComponent {
     // downloadBase64File(datas, fileName);
   };
   render() {
-    const { crop, croppedImageUrl, src } = this.state;
+    const { crop, cropped, src } = this.state;
 
     return (
       <div style={{ display: "flex" }}>
@@ -149,40 +150,40 @@ class PictureUpload extends PureComponent {
             onChange={this.onCropChange}
           />
         )}
-        {croppedImageUrl && (
+        {cropped && (
           <div style={{ display: "flex", marginTop: "1.3rem" }}>
             <div style={{ width: "18rem", height: "auto", marginLeft: "1rem" }}>
               <img
                 alt="Crop"
                 style={{ maxWidth: "100%", border: "1px solid #000" }}
-                src={croppedImageUrl}
+                src={cropped}
               />
             </div>
-            <Button
-              disabled={this.props.loading ? true : false}
-              type="submit"
-              style={{
-                marginLeft: "1rem",
-                height: "2.2rem",
-                marginTop: "3rem"
-              }}
-              onClick={e => {
-                this.handleDownload(e);
-              }}
-            >
-              {this.props.loading && (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              )}
-              post
-            </Button>
           </div>
         )}
+        <Button
+          disabled={this.props.loading ? true : false}
+          type="submit"
+          style={{
+            marginLeft: "1rem",
+            height: "2.2rem",
+            marginTop: "3rem"
+          }}
+          onClick={e => {
+            this.handleDownload(e);
+          }}
+        >
+          {this.props.loading && (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          )}
+          post
+        </Button>
       </div>
     );
   }

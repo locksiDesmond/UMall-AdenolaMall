@@ -10,12 +10,12 @@ class UpLoadForm extends React.Component {
     super(props);
     this.state = {
       title: { name: "", error: "" },
-      condition: { name: "", error: "" },
+      condition: { name: "New", error: "" },
       description: { name: "", error: "" },
       price: { name: "", error: "" },
       error: "",
-      category: { name: "", error: "" },
-      subcategory: { name: "", error: "" },
+      category: { name: "Devices", error: "" },
+      subcategory: { name:"", error: "" },
       objects: [],
       loading: false,
       uploaded: false,
@@ -84,7 +84,7 @@ class UpLoadForm extends React.Component {
         this.setState({
           objects: [
             {
-              name: "Laptops and Tablets",
+              name: "Laptops",
               id: 0
             },
             {
@@ -95,7 +95,7 @@ class UpLoadForm extends React.Component {
               name: "Others accessories",
               id: 2
             }
-          ]
+          ],subcategory:{name:"Laptops"}
         });
         break;
       case "Clothings":
@@ -110,7 +110,8 @@ class UpLoadForm extends React.Component {
               name: "Female",
               id: 1
             }
-          ]
+          ],
+          subcategory:{name:"Male"}
         });
         break;
         case "Cosmetics":
@@ -123,7 +124,7 @@ class UpLoadForm extends React.Component {
               name:"Perfumes",
               id:1
             }
-          ]
+          ],subcategory:{name:"Creams"}
           });
           break;
         case "Household items":
@@ -135,12 +136,14 @@ class UpLoadForm extends React.Component {
           {
             name:"New",
             id:1,
-          }]
+          }],
+          subcategory:{name:"Used"}
           });
           break;
       default:
         this.setState({
-          objects: []
+          objects: [],
+          subcategory:{name:""}
         });
     }
   }
@@ -253,11 +256,11 @@ class UpLoadForm extends React.Component {
             }}
             value={this.state.category.name}
           >
-            <option>Devices</option>
-            <option>Clothings</option>
-            <option>Footwears</option>
-            <option>Cosmetics</option>
-            <option>Household items</option>
+            <option  value="Devices">Devices</option>
+            <option value="Clothings">Clothings</option>
+            <option value="Footwears">Footwears</option>
+            <option value="Cosmetics">Cosmetics</option>
+            <option value="Household items">Household items</option>
 
           </select>
           {this.state.category.error && <p>{this.state.category.error}</p>}
@@ -274,7 +277,7 @@ class UpLoadForm extends React.Component {
 
         <Form.Group className="input-condition-price">
           <div>
-            <Form.Label style={{}} className="signin-form-name">
+            <Form.Label className="signin-form-name">
               Price (in Naira)
             </Form.Label>
             <input
@@ -302,8 +305,8 @@ class UpLoadForm extends React.Component {
               placeholder="$10"
               onChange={this.handleChange}
             >
-              <option>Used</option>
-              <option>New</option>
+              <option value="used">Used</option>
+              <option value="New">New</option>
             </select>
             {this.state.condition.error && <p>{this.state.condition.error}</p>}
           </div>

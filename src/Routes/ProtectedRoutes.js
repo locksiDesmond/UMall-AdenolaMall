@@ -1,7 +1,6 @@
 import React from "react";
 import MainNav from "./../Components/Navbar/MainNav";
 import { Route, Switch, Link } from "react-router-dom";
-import UserProfile from "./../Components/UserProfile/index";
 import Home from "./../Components/Home/MainBody";
 import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
@@ -37,7 +36,6 @@ class ProtectedRoutes extends React.Component {
           <SideNav onClick={this.sideNavToggle} disabled={this.state.sidebar} />
           <Switch>
             <Route exact path="/home" component={Home} />
-            <Route path="/Home/Profile" component={UserProfile} />
             <Route
               path="/Home/upload"
               component={() => <Upload authenticated={authenticated} />}

@@ -8,7 +8,7 @@ import logo from "./../../images/umall2.gif";
 const SignInModal = props => {
   return (
     <Modal show={props.show}>
-      <Modal.Header>Sign Up</Modal.Header>
+      \{" "}
       <Modal.Body>
         <section className="signin--body">
           <div className="logo--group--with--text">

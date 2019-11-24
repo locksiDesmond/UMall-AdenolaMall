@@ -32,10 +32,14 @@ function LeftNav(props) {
         />
       </button>
       <div className="dropdown--menu">
+        <button className="a" onClick={showDropdown}>
+          Adeleke Johnson
+        </button>
+        <hr />
         <button onClick={showDropdown} className="a">
           Setting
         </button>
-        <Link to={{ pathname: "/home/profile" }}>
+        <Link to={{ pathname: "/Profile" }}>
           <button onClick={showDropdown} className="a">
             Profile
           </button>

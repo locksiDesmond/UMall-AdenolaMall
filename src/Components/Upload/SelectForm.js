@@ -16,7 +16,9 @@ const SelectForm = props => {
       onChange={props.onChange}
     >
       {selects.map(item => (
-        <option key={item.id}>{item.name}</option>
+        <option value={item.name} key={item.id}>
+          {item.name}
+        </option>
       ))}
     </select>
   );

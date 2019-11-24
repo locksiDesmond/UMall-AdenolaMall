@@ -70,31 +70,32 @@ button {
   font-size: 1.1rem;
   text-transform: capitalize;
   padding: 0 0.3rem;
+  background-color: #05aff2;
+  color: #fff;
 }
-.profile--dropdown{
-  position:relative;
-  display:inline;
+.profile--dropdown {
+  position: relative;
+  display: inline;
 }
-.dropdown--menu{
-  display:none;
-  position:absolute;
-background-color: #fff;
-margin-top: .4rem;
-width:6rem;
-padding:.7rem .5rem;
-box-shadow: 1px 1px 4px -2px black;
-z-index: 99;
-top:2.4rem;
-left:0
-  
+.dropdown--menu {
+  display: none;
+  position: absolute;
+  background-color: #05aff2;
+  margin-top: 0.4rem;
+  width: 6rem;
+  padding: 0.7rem 0.5rem;
+  box-shadow: 1px 1px 4px -2px black;
+  z-index: 99;
+  top: 2.4rem;
+  left: 0;
 }
-.dropdown--menu button{
+.dropdown--menu button {
   background-color: #fff;
-  color:#000;
-  font-size: .9rem !important;
+  color: #000;
+  font-size: 0.9rem !important;
 }
-.show > .dropdown--menu{
-  display:block;
+.show > .dropdown--menu {
+  display: block;
 }
 .a {
   background-color: transparent;
@@ -329,8 +330,8 @@ a:hover,
 }
 .sidenav--avatar {
   border: none;
-  height: 2.7rem;
-  width: 2.7rem;
+  height: 2.1rem;
+  width: 2.4rem;
 }
 
 /* MainBody */
@@ -362,7 +363,7 @@ section.signin {
 .signin--section {
   display: Block;
   width: 492px;
-  height: 624px;
+  height: 500px;
   background-color: #fff;
   border-radius: 17px;
   margin-top: 3rem;
@@ -381,7 +382,9 @@ section.signin {
   padding: 1.5rem;
   font-size: 1rem;
 }
-
+.signup {
+  height: 670px;
+}
 /* End signup */
 
 /* continue  signIn */
@@ -795,8 +798,8 @@ span.price {
 .image--div p {
   text-align: center;
 }
-.image--div .big{
-margin-left: 1rem;
+.image--div .big {
+  margin-left: 1rem;
 }
 @media (max-width: 992px) {
   .image--div {
@@ -835,10 +838,25 @@ margin-left: 1rem;
 }
 
 /* PROFILE NAV */
-.profile--nav a{
-  color:#001992 !important;
+.profile--nav a {
+  color: #001992 !important;
 }
-.profile--nav  .active{
-   background-color: #05aff2 !important;
-   border-radius: 10px 10px 0 0 ;
+.profile--nav .active {
+  background-color: #05aff2 !important;
+  border-radius: 10px 10px 0 0;
+}
+.profile--body {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.profile--main {
+  flex: 3;
+  background-color: #fff;
+  margin-left: 1rem;
+  border-radius: 10px 10px 0 0;
+}
+.profile--aside {
+  flex: 1;
+  padding-left: 1rem;
 }

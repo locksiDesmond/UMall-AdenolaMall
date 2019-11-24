@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import image from "../../images/blackwoman.jfif";
 import ProfileNav from "./ProfileNav";
-const UserProfile = () => {
+import MainNav from "./../Navbar/MainNav";
+const UserProfile = ({ authenticated }) => {
   const [display, setDisplay] = useState("link-1");
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
@@ -22,19 +22,22 @@ const UserProfile = () => {
     </div>
   );
   return (
-    <div className="main--content main">
-      <div className="image--div" style={{ backgroundImage: `url(${image})` }}>
-        <img className="" alt="D P" />
+    <React.Fragment>
+      <MainNav />
+      <div className="profile--body">
+        <div className="profile--main">
+          <ProfileNav onClick={handleSelect} display={display} />
+          {display === "link-1"
+            ? settings
+            : display === "link-2"
+            ? Profile
+            : upload}
+        </div>
+        <div className="profile--aside">
+          <h1>Profile side</h1>
+        </div>
       </div>
-      <div className="">some stuff</div>
-      <h2>UserProfile</h2>
-      <ProfileNav onClick={handleSelect} display={display} />
-      {display === "link-1"
-        ? settings
-        : display === "link-1"
-        ? Profile
-        : upload}
-    </div>
+    </React.Fragment>
   );
 };
 
