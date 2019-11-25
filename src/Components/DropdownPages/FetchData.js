@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { Component, useState, useEffect } from "react";
 import { firebase } from "./../../Firebase/Firebase";
 const Newdata = (category, subcategory) => {
   const [data, setData] = useState(["loading"]);
@@ -6,7 +6,7 @@ const Newdata = (category, subcategory) => {
     firebase
       .firestore()
       .collection(category)
-      .where("subCategory", "==", subcategory)
+      .where("subcategory", "==", subcategory)
       .get()
       .then(querySnapshot => {
         const somedata = querySnapshot.docs.map(doc => doc.data());
@@ -33,4 +33,50 @@ export const CategoryData = category => {
   });
   return times;
 };
+export const Userdata = uid => {
+  const [user, setUsers] = useState(["loading"]);
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("Users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        const data = doc.data();
+        setUsers(data);
+      });
+  });
+  return user;
+};
+export class UserDataClass extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: "",
+      uid: props
+    };
+  }
+  componentDidMount() {
+    const { uid } = this.state;
+    if (uid) {
+      firebase
+        .firestore()
+        .collection("Users")
+        .doc(uid)
+        .get()
+        .then(doc => {
+          const data = doc.data();
+          this.setState({ user: data });
+        });
+    }
+  }
+  setUid(uid) {
+    this.setState({
+      uid: uid
+    });
+  }
+  getUser() {
+    return this.state.user;
+  }
+}
 export default Newdata;

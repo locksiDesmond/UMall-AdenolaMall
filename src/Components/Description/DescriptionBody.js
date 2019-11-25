@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
-function Descriptionbody(props) {
+function Descriptionbody({ items, userdata }) {
   const [show, setShow] = useState(false);
-  const { items } = props;
   const handleShow = () => {
     setShow(!show);
   };
@@ -10,11 +9,9 @@ function Descriptionbody(props) {
     <div className="description--page">
       <div className="product--description">
         <h1>{items.name}</h1>
-        <img
-          className="description--image"
-          src={items.pictureUrl}
-          alt=" product"
-        />
+        {items.pictureUrl.map(item => (
+          <img className="description--image" src={item} alt=" product" />
+        ))}
         <span className="date">{items.data}</span>
         <h2>Description</h2>
         <p className="description--details">{items.description}</p>
@@ -24,10 +21,11 @@ function Descriptionbody(props) {
           <div className="profile-image-name">
             <img
               className="rounded-circle product--image"
-              src={items.pictureUrl}
+              src={userdata.photoUrl}
               alt="profile "
             />
-            <h2> Owners Name</h2>
+
+            <h2> {userdata.username}</h2>
           </div>
           <ul className="details">
             <li>
@@ -47,7 +45,9 @@ function Descriptionbody(props) {
             <button className="btn show--number" onClick={handleShow}>
               Show Number
             </button>
-            {show && <div style={{ marginTop: "1rem" }}> Number Demo</div>}
+            {show && (
+              <div style={{ marginTop: "1rem" }}> {userdata.phoneNumber}</div>
+            )}
           </div>
         </div>
         <div className="warnings">

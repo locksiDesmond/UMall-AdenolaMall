@@ -12,7 +12,6 @@ function UMall() {
           {({ authenticated, loaded }) => {
             return (
               <>
-                {" "}
                 {loaded ? (
                   <Routes authenticated={authenticated} loading={loaded} />
                 ) : (

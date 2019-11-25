@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CategoryData } from "./FetchData";
-import image from "../../images/blackwoman.jfif";
+// import image from "../../images/blackwoman.jfif";
 import Btn from "./../../SmallComponent/Btn";
 import ProductCard from "./../ProductCard/index";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ import Loading from "../../SmallComponent/Loading";
 function MainDrop(props) {
   let category = props.location.state;
   const data = CategoryData(category);
-  console.log(data[0] === "loading");
   const [bgimage, setImage] = useState("");
   const products = data.map(item => (
     <ProductCard key={item.date} data={item} />
@@ -18,13 +17,24 @@ function MainDrop(props) {
   useEffect(() => {
     switch (category) {
       case "Devices":
-        setImage("f");
+        setImage(
+          "https://cdn.macrumors.com/article-new/2019/05/bestiphoneaccessoriesguide-800x434.jpg"
+        );
         break;
       case "Clothings":
-        setImage(image);
+        setImage(
+          "https://static3.bigstockphoto.com/6/5/2/large1500/256602442.jpg"
+        );
         break;
       case "Cosmetics":
-        setImage("d");
+        setImage(
+          "https://www.tsingapore.com/FileStorage/Article/Hotspot/Beauty/2018/11/ormaie1200.jpg"
+        );
+        break;
+      case "Footwears":
+        setImage(
+          "https://assets.teenvogue.com/photos/5d489ca292a6b200094bdd2c/master/w_1600%2Cc_limit/Screen%252520Shot%2525202019-08-05%252520at%2525205.15.01%252520PM.png"
+        );
         break;
       case "Household Items":
         setImage("c");
@@ -42,7 +52,10 @@ function MainDrop(props) {
       <React.Fragment>
         <div
           className="image--div"
-          style={{ backgroundImage: `url(${bgimage})` }}
+          style={{
+            backgroundImage: `url(${bgimage})`,
+            color: category === "Devices" ? "#000" : "#05aff2"
+          }}
         >
           <div>
             <p>Want to </p>

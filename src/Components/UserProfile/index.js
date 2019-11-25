@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import ProfileNav from "./ProfileNav";
+import Profile from "./Profile";
+
 import MainNav from "./../Navbar/MainNav";
+import { Redirect } from "react-router-dom";
+import { ContextCreator } from "../../Context/Context";
+import umall from "../../images/svgs/umall-1.svg";
+
+import UpdateProfile from "./UpdateProfile";
 const UserProfile = ({ authenticated }) => {
   const [display, setDisplay] = useState("link-1");
   const handleSelect = selectedkey => {
@@ -11,30 +18,45 @@ const UserProfile = ({ authenticated }) => {
       <h1>Settings</h1>
     </div>
   );
-  const Profile = (
-    <div>
-      <h1>Profile</h1>
-    </div>
-  );
-  const upload = (
-    <div>
-      <h1>upload</h1>
-    </div>
-  );
+
   return (
     <React.Fragment>
       <MainNav />
-      <div className="profile--body">
+      {!authenticated && <Redirect to="/signin" />}
+      <div style={{ fontSize: "1rem" }} className="profile--body">
         <div className="profile--main">
           <ProfileNav onClick={handleSelect} display={display} />
-          {display === "link-1"
-            ? settings
-            : display === "link-2"
-            ? Profile
-            : upload}
+          {display === "link-1" ? (
+            settings
+          ) : display === "link-2" ? (
+            <h1>Profile</h1>
+          ) : (
+            <ContextCreator.Consumer>
+              {({ user, firebase }) => (
+                <UpdateProfile firebase={firebase} user={user} />
+              )}
+            </ContextCreator.Consumer>
+          )}
         </div>
         <div className="profile--aside">
-          <h1>Profile side</h1>
+          <div className="profile">
+            <ContextCreator.Consumer>
+              {({ user, firebase }) => (
+                <Profile firebase={firebase} user={user} />
+              )}
+            </ContextCreator.Consumer>
+          </div>
+          <div className="footer">
+            <ul>
+              <li>&copy; Locksi 2019</li>
+              <li>Contact </li>
+              <li>Term and condition</li>
+              <li>Warnings</li>
+            </ul>
+            <div>
+              <img style={{ height: "2.5rem" }} alt="logo" src={umall} />
+            </div>
+          </div>
         </div>
       </div>
     </React.Fragment>

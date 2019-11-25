@@ -9,10 +9,11 @@ class Description extends React.Component {
     };
   }
   render() {
+    const { item, userdata } = this.state.items;
     return (
       <React.Fragment>
         <MainNav />
-        <Descriptionbody items={this.state.items} />
+        <Descriptionbody items={item} userdata={userdata} />
       </React.Fragment>
     );
   }

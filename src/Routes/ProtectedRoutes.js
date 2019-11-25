@@ -25,7 +25,7 @@ class ProtectedRoutes extends React.Component {
     });
   }
   render() {
-    const { authenticated, loading } = this.context;
+    const { authenticated, loading,user } = this.context;
     const RenderItem = (
       <React.Fragment>
         <MainNav onClick={this.sideNavToggle} />
@@ -38,7 +38,7 @@ class ProtectedRoutes extends React.Component {
             <Route exact path="/home" component={Home} />
             <Route
               path="/Home/upload"
-              component={() => <Upload authenticated={authenticated} />}
+              component={() => <Upload user={user} authenticated={authenticated} />}
             />
             <Route path="/home/main/Footwears" component={MainDrop} />
             <Route path="/home/main/Devices" component={MainDrop} />

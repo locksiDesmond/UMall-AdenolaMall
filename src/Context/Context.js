@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
-import { firebase } from "./../Firebase/Firebase";
-
+import Firebase, { firebase } from "./../Firebase/Firebase";
+import { IconContext } from "react-icons";
 export const ContextCreator = createContext();
 class ContextClass extends React.Component {
   constructor(props) {
@@ -9,18 +9,19 @@ class ContextClass extends React.Component {
       user: {},
       authenticated: false,
       displayName: "",
-      loaded: false
+      loaded: false,
+      phoneNumber: ""
     };
   }
   componentDidMount() {
     this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        const email = user.email;
         this.setState({
-          displayName: email,
+          displayName: user.displayName,
           authenticated: true,
           loaded: true,
-          user: user
+          user: user,
+          phoneNumber: user.phoneNumber
         });
       } else {
         this.setState({
@@ -36,8 +37,12 @@ class ContextClass extends React.Component {
 
   render() {
     return (
-      <ContextCreator.Provider value={{ ...this.state }}>
-        {this.props.children}
+      <ContextCreator.Provider
+        value={{ ...this.state, firebase: new Firebase() }}
+      >
+        <IconContext.Provider value={{ className: "global-icon" }}>
+          {this.props.children}
+        </IconContext.Provider>
       </ContextCreator.Provider>
     );
   }

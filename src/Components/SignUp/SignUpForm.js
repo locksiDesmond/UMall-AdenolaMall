@@ -58,7 +58,6 @@ class SignUpForm extends React.Component {
       this.setState({ email: { error: "no Email" } });
     }
     if (!(!password.name || !email.name || password.name !== confirm.name)) {
-      debugger;
       firebase
         .auth()
         .createUserWithEmailAndPassword(email.name, password.name)
@@ -69,11 +68,18 @@ class SignUpForm extends React.Component {
           this.setState({
             password: { name: "" },
             confirm: { name: "" },
-            displayName: { name: "" },
             email: { name: "" },
             loading: false,
             redirect: true
           });
+          const displayName = firebase.auth().currentUser;
+          displayName
+            .updateProfile({
+              displayName: this.state.displayName.name
+            })
+            .then(() => {
+              console.log("successful");
+            });
         })
         .catch(error => {
           if (error.code !== "auth/network-request-failed") {
@@ -87,6 +93,16 @@ class SignUpForm extends React.Component {
     this.setState({
       loading: false
     });
+  }
+  updateName() {
+    const displayName = firebase.auth().currentUser;
+    displayName
+      .updateProfile({
+        displayName: this.state.displayName
+      })
+      .then(() => {
+        console.log("successful");
+      });
   }
   handleChange(e) {
     let value = e.target.name;
@@ -107,9 +123,7 @@ class SignUpForm extends React.Component {
     } = this.state;
     return (
       <Form className="signinform" onSubmit={this.handleSubmit}>
-        {redirect && (
-          <Redirect to={{ pathname: "/Home", state: displayName }} />
-        )}
+        {redirect && <Redirect to={{ pathname: "/Home" }} />}
         <Form.Group>
           <Form.Label className="signin-form-name">Display Name</Form.Label>
           <Form.Control

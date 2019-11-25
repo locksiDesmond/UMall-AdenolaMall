@@ -16,7 +16,7 @@ class UpLoadForm extends React.Component {
       price: { name: "", error: "" },
       error: "",
       category: { name: "Devices", error: "" },
-      subcategory: { name: "", error: "" },
+      subcategory: { name: "Others accessories", error: "" },
       objects: [],
       loading: false,
       uploaded: false,
@@ -26,7 +26,7 @@ class UpLoadForm extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.changeSubCategory = this.changeSubCategory.bind(this);
+    this.changesubcategory = this.changesubcategory.bind(this);
     this.errors = this.errors.bind(this);
     this.upload = this.upload.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
@@ -99,7 +99,7 @@ class UpLoadForm extends React.Component {
     });
   }
 
-  changeSubCategory() {
+  changesubcategory() {
     switch (this.state.category.name) {
       case "Devices":
         this.setState({
@@ -232,16 +232,17 @@ class UpLoadForm extends React.Component {
     const date = Date.now();
     const data = {
       name: title.name,
-      subCategory: subcategory.name,
+      subcategory: subcategory.name,
       condition: condition.name,
       category: category.name,
       description: description.name,
       price: price.name,
       date: date,
-      pictureUrl: url
+      pictureUrl: url,
+      uid: this.props.user.uid
     };
     const db = firebase.firestore();
-    db.collection(category.name)
+    db.collection(this.state.category.name)
       .doc()
       .set(data)
       .then(() => {
@@ -252,12 +253,11 @@ class UpLoadForm extends React.Component {
           description: { name: "", error: "" },
           price: { name: "", error: "" },
           error: "",
-          category: { name: "", error: "" },
           subcategory: { name: "Male", error: "" },
           objects: [],
           loading: false,
           uploaded: true,
-          pictureUrl: ""
+          url:""
         });
       })
       .catch(error => {
@@ -294,7 +294,7 @@ class UpLoadForm extends React.Component {
             onChange={e => {
               this.handleChange(e);
               setTimeout(() => {
-                this.changeSubCategory();
+                this.changesubcategory();
               }, 200);
             }}
             value={this.state.category.name}

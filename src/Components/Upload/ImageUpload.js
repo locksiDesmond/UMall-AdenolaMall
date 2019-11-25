@@ -41,6 +41,7 @@ function ImageUpload(props) {
           loading={props.loading}
           loaded={props.loaded}
           value={props.value}
+          ratio={props.ratio}
         />
       ) : (
         <div

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SignUpModal from "./SignUpModal";
 import LogOutModal from "./LogOutModal";
 import SignInModal from "./SignInModal";
+import { GiHamburgerMenu } from "react-icons/gi";
 class MainNav extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +81,7 @@ class MainNav extends React.Component {
           <SignInModal show={this.state.show} handleClose={this.handleClose} />
         </div>
         <button onClick={this.props.onClick} className="btn hamburger">
-          hambugger
+          <GiHamburgerMenu style={{ color: "#fff", fontSize: "2rem" }} />
         </button>
       </Navbar>
     );
