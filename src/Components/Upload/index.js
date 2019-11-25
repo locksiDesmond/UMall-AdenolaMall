@@ -4,10 +4,37 @@ import { Redirect } from "react-router-dom";
 import { Userdata } from "../DropdownPages/FetchData";
 const UserInfo = props => {
   return (
-    <div>
-      <p>Your Details</p>
-      <p>Name : {props.data.username || props.user.displayName}</p>
-      <p>Phone Number : {props.data.phoneNumber || "no Number"}</p>
+    <div className="upload details ">
+      <p style={{ fontSize: "1.3rem", fontWeight: "Bold" }}>Your Details</p>
+      <p>
+        <span className="signin-form-name">Name :</span>
+        <span
+          style={{
+            fontWeight: "500",
+            marginLeft: ".4rem",
+            fontSize: "0.8"
+          }}
+        >
+          {props.data.username || props.user.displayName}
+        </span>
+      </p>
+      <p>
+        <span className="signin-form-name">Phone Number :</span>
+        {props.data.phoneNumber || (
+          <span>
+            No Number
+            <span
+              style={{
+                fontWeight: "500",
+                marginLeft: ".4rem",
+                fontSize: "0.8"
+              }}
+            >
+              please go to profile and update your phone Number
+            </span>
+          </span>
+        )}
+      </p>
     </div>
   );
 };

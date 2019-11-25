@@ -4,8 +4,8 @@ import ImageUpload from "./ImageUpload";
 import SelectForm from "./SelectForm";
 import { firebase } from "./../../Firebase/Firebase";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
+import ButtonLg from "../../SmallComponent/ButtonLg";
 class UpLoadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,8 +16,21 @@ class UpLoadForm extends React.Component {
       price: { name: "", error: "" },
       error: "",
       category: { name: "Devices", error: "" },
-      subcategory: { name: "Others accessories", error: "" },
-      objects: [],
+      subcategory: { name: "Laptops", error: "" },
+      objects: [
+        {
+          name: "Laptops",
+          id: 0
+        },
+        {
+          name: "Mobile Phones",
+          id: 1
+        },
+        {
+          name: "Others accessories",
+          id: 2
+        }
+      ],
       loading: false,
       uploaded: false,
       picture: [],
@@ -257,7 +270,7 @@ class UpLoadForm extends React.Component {
           objects: [],
           loading: false,
           uploaded: true,
-          url:""
+          url: ""
         });
       })
       .catch(error => {
@@ -364,12 +377,21 @@ class UpLoadForm extends React.Component {
           rows="5"
         />
         {this.state.description.error && <p>{this.state.description.error}</p>}
+        <div
+        className="upload--body"
+         
+        >
+          {this.RenderImage(0)}
+          {this.RenderImage(1)}
+          {this.RenderImage(2)}
+        </div>
+        <div
+        className="upload--button"
+       
+        >
+          <ButtonLg title="Submit" small="true" onClick={this.handleSubmit} />
+        </div>
 
-        {this.RenderImage(0)}
-        {this.RenderImage(1)}
-        <Button type="submit" onClick={this.handleSubmit}>
-          submit
-        </Button>
         {this.state.error && <Alert>{this.state.error}</Alert>}
       </Form>
     );

@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
+import { sideNavobject } from "./../SideNav/SideNav";
+import Trends from "./Trends";
 
 function LandingPageBody() {
   const bgimage =
     "https://sharemorestories.com/wp-content/uploads/qtq80-svx0G1.jpeg";
-  // const products = data.map(item => (
-  //   <ProductCard key={item.date} data={item} />
-  // ));
-
+  const sideNav = sideNavobject;
+  console.log(sideNav);
   return (
     <div className="main--content main">
       <React.Fragment>
@@ -40,6 +40,25 @@ function LandingPageBody() {
               products
             )}
           </div> */}
+          {sideNav.Devices.map(item => (
+            <Trends title={item.category} object={item} />
+          ))}
+          <div className="">
+            <p>Trends in Devices</p>
+            {}
+          </div>
+          <div className="">
+            <p>Trends in Footwear</p>
+            {}
+          </div>
+          <div className="">
+            <p>Trends in Household Appliances</p>
+            {}
+          </div>
+          <div className="">
+            <p>Trends in Clothings</p>
+            {}
+          </div>
         </div>
       </React.Fragment>
     </div>

@@ -56,7 +56,7 @@ class MainNav extends React.Component {
     });
   }
   render() {
-    const { authenticated } = this.context;
+    const { authenticated, user } = this.context;
     return (
       <Navbar className="Navbar">
         <Link to={{ pathname: "/" }} className="navbar-brand">
@@ -68,6 +68,7 @@ class MainNav extends React.Component {
             handleShow={this.handleShow}
             showLogOut={this.showLogOut}
             authenticated={authenticated}
+            user={user}
             showSignUp={this.showSignUp}
           />
           <LogOutModal

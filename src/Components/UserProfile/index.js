@@ -9,7 +9,7 @@ import umall from "../../images/svgs/umall-1.svg";
 
 import UpdateProfile from "./UpdateProfile";
 const UserProfile = ({ authenticated }) => {
-  const [display, setDisplay] = useState("link-1");
+  const [display, setDisplay] = useState("Profile");
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
   };
@@ -26,10 +26,10 @@ const UserProfile = ({ authenticated }) => {
       <div style={{ fontSize: "1rem" }} className="profile--body">
         <div className="profile--main">
           <ProfileNav onClick={handleSelect} display={display} />
-          {display === "link-1" ? (
+          {display === "Recent" ? (
             settings
-          ) : display === "link-2" ? (
-            <h1>Profile</h1>
+          ) : display === "Edit" ? (
+            <h1>Edit</h1>
           ) : (
             <ContextCreator.Consumer>
               {({ user, firebase }) => (

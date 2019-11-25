@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
 import img from "../../images/svgs/user.svg";
+import { FaPen } from "react-icons/fa";
+import { FiLogOut } from "react-icons/fi";
 function LeftNav(props) {
   const [show, setShow] = useState(false);
   // const [signedIn, setSignedIn] = useState(false);
@@ -17,6 +19,7 @@ function LeftNav(props) {
   const showDropdown = () => {
     setShow(!show);
   };
+  const iconStyle = { fontSize: ".7rem", marginRight: ".4rem" };
   const profile = (
     <div
       style={{ marginLeft: ".5rem" }}
@@ -33,7 +36,7 @@ function LeftNav(props) {
       </button>
       <div className="dropdown--menu">
         <button className="a" onClick={showDropdown}>
-          Adeleke Johnson
+          {props.user.displayName}
         </button>
         <hr />
         <button onClick={showDropdown} className="a">
@@ -41,11 +44,13 @@ function LeftNav(props) {
         </button>
         <Link to={{ pathname: "/Profile" }}>
           <button onClick={showDropdown} className="a">
+            <FaPen style={iconStyle} />
             Profile
           </button>
         </Link>
         <button className="a signin--modal--button" onClick={props.showLogOut}>
-          Log-out
+          <FiLogOut style={iconStyle} />
+          Log out
         </button>
       </div>
     </div>
