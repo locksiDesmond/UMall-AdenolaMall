@@ -49,11 +49,17 @@ class ProductClass extends React.Component {
           <br />
         </div>
         <div className="d-none d-lg-block card--picture">
-          <img src={item.pictureUrl[0]} alt="product card" />
+          <img
+            src={item.pictureUrl[0] || userdata.photoUrl}
+            alt="product card"
+          />
         </div>
         <div className="card--body">
           <div className="d-block d-lg-none card--picture">
-            <img src={item.pictureUrl[0]} alt="product card" />
+            <img
+              src={item.pictureUrl[0] || userdata.photoUrl}
+              alt="product card"
+            />
           </div>
           <div className="card--title">
             <p>{item.name} </p>

@@ -143,7 +143,7 @@ a:hover,
 
 /* @media for navbar */
 @media (max-width: 760px) {
-  .btn--group {
+  .Navbar > .btn--group {
     display: none !important;
   }
 }
@@ -278,13 +278,29 @@ a:hover,
   transition: all 1s cubic-bezier(0.57, 0.33, 0.26, 0.96);
   overflow-y: visible;
 }
-
+.sidenav > .btn--group{
+  display:none
+}
+@media (max-width: 990px){
+  .sidenav  .search--input {
+    width: 23rem !important;
+    height:2rem !important
+}
+.sidenav > .btn--group > button{
+  height:2.06rem !important
+}
+}
 @media (max-width: 737px) {
   .sidenav {
     display: none;
   }
   .body--content {
     position: relative;
+  }
+  .sidenav > .btn--group{
+    display:inline-block;
+    width:auto;
+    margin-bottom: 2rem;
   }
   .show--nav {
     display: block;
@@ -299,7 +315,12 @@ a:hover,
     z-index: 1000;
   }
 }
-
+@media (max-width:576px){
+  
+  .sidenav  .search--input {
+width:13rem !important
+  }
+}
 .dropdown--list {
   font-size: 1rem;
   font-weight: 500;
@@ -871,14 +892,11 @@ span.price {
 @media (max-width: 576px) {
   .image--div {
     padding-top: 0.5rem;
-    font-size: 2rem;
+    font-size: 1.6rem;
     height: 14rem;
   }
 }
-.main--body > p {
-  font-size: 1.4rem;
-  padding: 2rem 0.8rem;
-}
+
 
 /* PROFILE NAV */
 .profile--nav a {
@@ -892,6 +910,21 @@ span.price {
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
+}
+@media (max-width:700px){
+  .profile--body{
+    flex-flow: column;
+  }
+.profile--aside {
+  order:1;
+  margin-bottom: 2rem;
+}
+.profile--main {
+  order:2
+}
+.profile--aside .footer {
+display:none
+}
 }
 .profile--main {
   flex: 3;
@@ -937,3 +970,46 @@ span.price {
   background-color: #fff;
   margin-bottom: 1rem;
 }
+
+/* Dropdown animation */
+.arrow{
+  position: relative;
+  top: 2rem;
+  left: 5rem;
+  transform: translate(-50%,-50%);
+}
+@media (max-width:768px){
+  .arrow{
+    left:3.5rem
+  }
+}
+.arrow span{
+  display: block;
+  width: 15px;
+  height: 15px;
+  border-bottom: 5px solid #f4754e;
+  border-right: 5px solid #f4754e;
+  transform: rotate(45deg);
+  margin: 5px;
+  animation: animate 2s infinite;
+}
+.arrow span:nth-child(2){
+  animation-delay: -0.2s;
+}
+.arrow span:nth-child(3){
+  animation-delay: -0.4s;
+}
+@keyframes animate {
+  0%{
+      opacity: 0;
+      transform: rotate(45deg) translate(-20px,-20px);
+  }
+  50%{
+      opacity: 1;
+  }
+  100%{
+      opacity: 0;
+      transform: rotate(45deg) translate(20px,20px);
+  }
+}
+/* End dropdown  animation */

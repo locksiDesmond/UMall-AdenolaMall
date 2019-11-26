@@ -8,6 +8,7 @@ import perfume from "../../images/svgs/new/perfume-bottle.svg";
 import femaleShoes from "../../images/svgs/new/high-heel-shoe.svg";
 import gel from "../../images/svgs/new/gel.svg";
 import mensShoe from "../../images/svgs/new/shoes.svg";
+import NavForm from "../Navbar/NavForm";
 export const sideNavobject = {
   Devices: [
     {
@@ -82,6 +83,7 @@ class SideNav extends React.Component {
   render() {
     return (
       <div className={`sidenav ${this.props.disabled && "show--nav"}`}>
+        <NavForm onClick={this.props.onClick} />
         <Dropdown
           title="Devices"
           onClick={this.props.onClick}
@@ -103,7 +105,7 @@ class SideNav extends React.Component {
           item={this.state.Footwear}
         />
         <Dropdown
-          title="Household Appliances"
+          title="Household items"
           onClick={this.props.onClick}
           item={this.state.HouseItems}
         />

@@ -94,10 +94,6 @@ class UpLoadForm extends React.Component {
       for (let i = 0; i <= this.state.picture.length; i++) {
         this.upload(this.state.picture[i], i);
       }
-    } else {
-      this.setState({
-        loading: false
-      });
     }
     this.setState({
       loading: false
@@ -213,26 +209,24 @@ class UpLoadForm extends React.Component {
         },
         () => {
           pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
-            console.log(downloadUrl);
             this.setState({
               progress: "",
               url: [...this.state.url, downloadUrl],
-              loading: false
+              loading: false,
+              uploaded:true
             });
           });
         }
       );
     });
   }
-  componentDidUpdate() {
-    if (
-      this.state.picture.length > 0 &&
-      this.state.picture.length === this.state.url.length
-    ) {
-      this.fileUpload();
-    }
+  componentWillUnmount() {
+   
   }
   fileUpload() {
+    this.setState({
+      loading:true
+    })
     const {
       title,
       condition,
@@ -252,7 +246,8 @@ class UpLoadForm extends React.Component {
       price: price.name,
       date: date,
       pictureUrl: url,
-      uid: this.props.user.uid
+      uid: this.props.user.uid,
+      likes:0
     };
     const db = firebase.firestore();
     db.collection(this.state.category.name)
@@ -279,6 +274,12 @@ class UpLoadForm extends React.Component {
       });
   }
   render() {
+    if (
+      this.state.picture.length > 0 &&
+      this.state.picture.length === this.state.url.length
+    ) {
+      this.fileUpload();
+    }
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
         {this.state.uploaded && <Redirect to={{ pathname: "/Home" }} />}
@@ -389,7 +390,7 @@ class UpLoadForm extends React.Component {
         className="upload--button"
        
         >
-          <ButtonLg title="Submit" small="true" onClick={this.handleSubmit} />
+          <ButtonLg loading={this.state.loading} title="Submit" small="true" onClick={this.handleSubmit} />
         </div>
 
         {this.state.error && <Alert>{this.state.error}</Alert>}

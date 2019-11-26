@@ -8,7 +8,7 @@ import Loading from "../../SmallComponent/Loading";
 // import { Spinner } from "react-bootstrap";
 
 function MainDrop(props) {
-  let category = props.location.state;
+  let category = props.state || props.location.state;
   const data = CategoryData(category);
   const [bgimage, setImage] = useState("");
   const products = data.map(item => (
@@ -67,9 +67,15 @@ function MainDrop(props) {
           <div>
             <p>Want to</p>
             <p>Sell</p>
-            <Link to={{ pathname: "/signin" }}>
-              <Btn className="big" color="#05aff2" title="Sign up" />
-            </Link>
+            {props.authenticated ? (
+              <Link to={{ pathname: "/home/upload" }}>
+                <Btn className="big" color="#05aff2" title="Post" />
+              </Link>
+            ) : (
+              <Link to={{ pathname: "/signin" }}>
+                <Btn className="big" color="#05aff2" title="Sign up" />
+              </Link>
+            )}
           </div>
         </div>
         <div className="main--body">

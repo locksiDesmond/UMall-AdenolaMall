@@ -71,10 +71,18 @@ function LeftNav(props) {
       <Link to={{ pathname: "/signin" }}>
         <Btn className="dontshow" title="signin" color="#f4754e" />
       </Link>
-      <button onClick={props.handleShow} className="signin--modal--button a">
-        Signin
-      </button>
-      <button onClick={props.showSignUp} className="signin--modal--button a">
+      <Btn
+        onClick={props.handleShow}
+        className="signin--modal--button a"
+        title="Sign in"
+        color="#f4754e"
+      />
+
+      <button
+        style={{ marginLeft: ".4rem" }}
+        onClick={props.showSignUp}
+        className="signin--modal--button a"
+      >
         SignUp
       </button>
     </span>

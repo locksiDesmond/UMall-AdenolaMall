@@ -11,12 +11,9 @@ class Home extends React.Component {
       loading: true,
       data: [],
     };
-    this.changeState = this.changeState.bind(this);
   }
   static contextType = ContextCreator;
-  changeState(datas) {
-    console.log(datas);
-  }
+
   componentDidUpdate() {
     // const now = Date.now();
     // const date = now - data.date;

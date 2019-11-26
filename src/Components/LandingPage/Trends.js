@@ -5,9 +5,9 @@ const Trends = props => {
     <div>
       <p>{props.title}</p>
       <div>
-        <span>Cards</span>
+        <span>don</span>
       </div>
     </div>
   );
 };
-export default Trends
+export default Trends;

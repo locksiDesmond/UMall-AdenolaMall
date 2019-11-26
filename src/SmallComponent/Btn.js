@@ -29,6 +29,13 @@ function Btn(props) {
       }}
     >
       {props.title}
+      {props.dropdown && (
+        <div class="arrow">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      )}
     </Button>
   );
 }

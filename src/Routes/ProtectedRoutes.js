@@ -7,8 +7,9 @@ import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
 import SideNav from "../Components/SideNav/SideNav";
 import ErrorPage from "./../SmallComponent/ErrorPage";
-import Clothing from "./../Components/DropdownPages/Clothings";
+import DropdownItems from "./../Components/DropdownPages/DropdownItems";
 import MainDrop from "./../Components/DropdownPages/MainDrop";
+import Search from "./../Components/Search page/index";
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +26,7 @@ class ProtectedRoutes extends React.Component {
     });
   }
   render() {
-    const { authenticated, loading,user } = this.context;
+    const { authenticated, loading, user } = this.context;
     const RenderItem = (
       <React.Fragment>
         <MainNav onClick={this.sideNavToggle} />
@@ -38,25 +39,87 @@ class ProtectedRoutes extends React.Component {
             <Route exact path="/home" component={Home} />
             <Route
               path="/Home/upload"
-              component={() => <Upload user={user} authenticated={authenticated} />}
+              component={() => (
+                <Upload user={user} authenticated={authenticated} />
+              )}
             />
-            <Route path="/home/main/Footwears" component={MainDrop} />
-            <Route path="/home/main/Devices" component={MainDrop} />
-            <Route exact path="/home/main/Clothings" component={MainDrop} />
-            <Route path="/home/main/Cosmetics" component={MainDrop} />
             <Route
-              path="/home/main/Household Appliances"
-              component={MainDrop}
+              exact
+              path="/home/main/Footwears"
+              component={() => (
+                <MainDrop state="Footwears" authenticated={authenticated} />
+              )}
             />
-            <Route path="/home/main/Clothings/Female" component={Clothing} />
-            <Route path="/home/main/Clothings/Male" component={Clothing} />
-            <Route path="/home/main/Clothings/Laptops" component={Clothing} />
             <Route
-              path="/home/main/Clothings/Mobile Phones"
-              component={Clothing}
+              exact
+              path="/home/main/Devices"
+              component={() => (
+                <MainDrop state="Devices" authenticated={authenticated} />
+              )}
             />
-            <Route path="/home/main/Clothings/female" component={Clothing} />
-            <Route path="/home/main/Clothings/female" component={Clothing} />
+            <Route
+              exact
+              path="/home/main/Clothings"
+              component={() => (
+                <MainDrop state="Clothings" authenticated={authenticated} />
+              )}
+            />
+            <Route
+              exact
+              path="/home/main/Cosmetics"
+              component={() => (
+                <MainDrop state="Cosmetics" authenticated={authenticated} />
+              )}
+            />
+            <Route
+              exact
+              path="/home/main/Household items"
+              component={() => (
+                <MainDrop
+                  state="Household items"
+                  authenticated={authenticated}
+                />
+              )}
+            />
+            <Route
+              path="/home/main/Clothings/Female"
+              component={DropdownItems}
+            />
+            <Route path="/home/main/Clothings/Male" component={DropdownItems} />
+            <Route
+              path="/home/main/Footwears/Female"
+              component={DropdownItems}
+            />
+            <Route path="/home/main/Footwears/Male" component={DropdownItems} />
+            <Route
+              path="/home/main/Household items/Used"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Household items/New"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Devices/Laptops"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Devices/Mobile Phones"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Devices/Other accessories"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Cosmetics/Perfumes"
+              component={DropdownItems}
+            />
+            <Route
+              path="/home/main/Cosmetics/Creams"
+              component={DropdownItems}
+            />
+            <Route path="/home/Search" component={Search} />
 
             <Route
               path="*"

@@ -20,7 +20,7 @@ const LandingPage = props => {
           <Link to="signup">signup</Link>
           <div className="body--content">
             <SideNav onClick={ToggleNav} disabled={sidenav} />
-            <LandingPageBody />
+            <LandingPageBody authenticated={props.authenticated} />
           </div>
         </React.Fragment>
       )}

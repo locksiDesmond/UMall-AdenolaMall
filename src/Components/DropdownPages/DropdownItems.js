@@ -1,16 +1,15 @@
 import React from "react";
 import Newdata from "./FetchData";
-import ProductCard from "./../ProductCard/index";
+import ProductCard from "../ProductCard/index";
 import Loading from "../../SmallComponent/Loading";
 
-function Clothing(props) {
+function DropdownItems(props) {
   let state = props.location.state;
   const datas = Newdata(state.category, state.title);
   const products = (
     <div className="products">
-      {datas.map(item => (
-        <ProductCard key={item.date} data={item} />
-      ))}
+      {datas !== "error" &&
+        datas.map(item => <ProductCard key={item.date} data={item} />)}
     </div>
   );
   return (
@@ -25,4 +24,4 @@ function Clothing(props) {
     </div>
   );
 }
-export default Clothing;
+export default DropdownItems;

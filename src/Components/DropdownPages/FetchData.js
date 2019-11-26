@@ -33,6 +33,22 @@ export const CategoryData = category => {
   });
   return times;
 };
+export const LandingPageData = (category, order, limit) => {
+  const [times, setTimes] = useState(["loading"]);
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection(category)
+      .orderBy(order)
+      .limit(limit)
+      .onSnapshot(snapshots => {
+        const somedati = snapshots.docs.map(doc => doc.data());
+        setTimes(somedati);
+      });
+    return () => unsubscribe();
+  }, [category, order, limit]);
+  return times;
+};
 export const Userdata = uid => {
   const [user, setUsers] = useState(["loading"]);
   useEffect(() => {
@@ -47,6 +63,26 @@ export const Userdata = uid => {
       });
   });
   return user;
+};
+
+export const SearchData = (category, search) => {
+  const [data, setData] = useState(["loading"]);
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection(category)
+      .where("name", ">=", search)
+      .get()
+      .then(querySnapshot => {
+        const somedata = querySnapshot.docs.map(doc => doc.data());
+        setData(somedata);
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+        setData("error");
+      });
+  }, [category, search]);
+  return data.filter(item => item.name && item.name.indexOf(search) !== -1);
 };
 export class UserDataClass extends Component {
   constructor(props) {

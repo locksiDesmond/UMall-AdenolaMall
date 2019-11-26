@@ -28,7 +28,7 @@ const Routes = props => {
           <Route
             exact
             path="/"
-            component={() => <LandingPage loading={props.loading} />}
+            component={() => <LandingPage authenticated={props.authenticated} loading={props.loading} />}
           />
           <Route path="*" component={ErrorPage} />
         </Switch>
