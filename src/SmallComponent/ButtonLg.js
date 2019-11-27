@@ -6,7 +6,7 @@ function ButtonLg(props) {
   const { title } = props;
   return (
     <Button
-      disabled={props.loading}
+      disabled={props.loading && true}
       className={props.small ? "btn--small" : "btn--large"}
       {...props}
     >
@@ -17,7 +17,7 @@ function ButtonLg(props) {
           size="sm"
           role="status"
           aria-hidden="true"
-          style={{marginRight:".4rem"}}
+          style={{ marginRight: ".4rem" }}
         />
       )}
       {title}

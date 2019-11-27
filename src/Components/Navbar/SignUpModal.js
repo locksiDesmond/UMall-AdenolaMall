@@ -8,6 +8,15 @@ const SignInModal = props => {
   return (
     <Modal show={props.show}>
       <Modal.Body>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            style={{ height: "2rem", fontSize: ".7rem", padding: ".5rem" }}
+            onClick={props.handleClose}
+          >
+            X
+          </Button>
+        </div>
+
         <div className="signin--body">
           <div className="logo--group--with--text">
             <Link to={{ pathname: "/" }}>
@@ -17,7 +26,6 @@ const SignInModal = props => {
           </div>
           <SignUpForm onClick={props.handleClose} />
         </div>
-        <Button onClick={props.handleClose}>Close</Button>
       </Modal.Body>
     </Modal>
   );

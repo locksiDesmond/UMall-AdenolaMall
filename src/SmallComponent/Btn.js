@@ -7,13 +7,13 @@ function Btn(props) {
       borderColor: props.color,
       color: props.color,
       backgroundColor: "#fff",
-      padding: ".1rem .8rem .2rem  "
+      padding: props.small ? ".3rem" : ".1rem .8rem .2rem  "
     },
     over: {
       backgroundColor: props.color,
       color: "#fff ",
       borderColor: "none",
-      padding: ".1rem .8rem .2rem "
+      padding: props.small ? ".3rem" : ".1rem .8rem .2rem "
     }
   };
 
@@ -30,7 +30,7 @@ function Btn(props) {
     >
       {props.title}
       {props.dropdown && (
-        <div class="arrow">
+        <div className="arrow">
           <span></span>
           <span></span>
           <span></span>

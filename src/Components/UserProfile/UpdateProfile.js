@@ -15,7 +15,7 @@ const UpdateProfile = props => {
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);
-    if (!!displayName.name || !phoneNumber.name) {
+    if (!(!displayName.name || !phoneNumber.name)) {
       if (displayName !== props.user.displayName) {
         const newUpdate = props.firebase.auth.currentUser;
         newUpdate
@@ -69,14 +69,6 @@ const UpdateProfile = props => {
         );
       }
 
-      // if(photo){
-      //   const newUpdate = props.firebase.auth.currentUser
-      //     newUpdate.UpdateProfile({
-      //       phoneNumber:photoUrl
-      //     }).then(()=>{
-      //       console.log("successful")
-      //     })
-      // }
     }
   };
   const downloadPicture = picture => {

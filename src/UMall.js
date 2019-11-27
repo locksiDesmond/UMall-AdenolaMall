@@ -9,11 +9,16 @@ function UMall() {
     <div className="app">
       <div className="body">
         <ContextCreator.Consumer>
-          {({ authenticated, loaded }) => {
+          {({ authenticated, loaded, user, firebase }) => {
             return (
               <>
                 {loaded ? (
-                  <Routes authenticated={authenticated} loading={loaded} />
+                  <Routes
+                    user={user}
+                    authenticated={authenticated}
+                    loading={loaded}
+                    firebase={firebase}
+                  />
                 ) : (
                   <Loading />
                 )}

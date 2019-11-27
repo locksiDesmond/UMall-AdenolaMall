@@ -1,6 +1,6 @@
 import React from "react";
 import MainNav from "./../Components/Navbar/MainNav";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./../Components/Home/MainBody";
 import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
@@ -30,9 +30,6 @@ class ProtectedRoutes extends React.Component {
     const RenderItem = (
       <React.Fragment>
         <MainNav onClick={this.sideNavToggle} />
-        <Link to={{ pathname: "/home/" }}>Home </Link>
-        <Link to={{ pathname: "/home/Profile" }}>Profile</Link>
-        <Link to={{ pathname: "/home/upload" }}>Upload Dp</Link>
         <div className="body--content">
           <SideNav onClick={this.sideNavToggle} disabled={this.state.sidebar} />
           <Switch>

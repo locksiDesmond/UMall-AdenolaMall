@@ -42,13 +42,20 @@ function LeftNav(props) {
         <button onClick={showDropdown} className="a">
           Setting
         </button>
+        <button onClick={showDropdown} className="display--none a">
+          Post
+        </button>
         <Link to={{ pathname: "/Profile" }}>
           <button onClick={showDropdown} className="a">
             <FaPen style={iconStyle} />
             Profile
           </button>
         </Link>
-        <button className="a signin--modal--button" onClick={props.showLogOut}>
+        <button
+          style={{ display: "block" }}
+          className="a signin--modal--button"
+          onClick={props.showLogOut}
+        >
           <FiLogOut style={iconStyle} />
           Log out
         </button>
@@ -58,7 +65,7 @@ function LeftNav(props) {
   const user = (
     <React.Fragment>
       <span>
-        <Link to={{ pathname: "/home/upload" }}>
+        <Link className="display--block" to={{ pathname: "/home/upload" }}>
           <Btn title="post" color="#f4754e" />
         </Link>
 
@@ -69,12 +76,12 @@ function LeftNav(props) {
   const anonymous = (
     <span>
       <Link to={{ pathname: "/signin" }}>
-        <Btn className="dontshow" title="signin" color="#f4754e" />
+        <Btn className="dontshow" title="Log in" color="#f4754e" />
       </Link>
       <Btn
         onClick={props.handleShow}
         className="signin--modal--button a"
-        title="Sign in"
+        title="Log in"
         color="#f4754e"
       />
 
@@ -83,7 +90,7 @@ function LeftNav(props) {
         onClick={props.showSignUp}
         className="signin--modal--button a"
       >
-        SignUp
+        Sign Up
       </button>
     </span>
   );

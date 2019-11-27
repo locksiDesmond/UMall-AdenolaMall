@@ -11,6 +11,7 @@ class SignUpForm extends React.Component {
     this.state = {
       displayName: { name: "", error: "" },
       password: { name: "", error: "" },
+      phoneNumber: { name: "", error: "" },
       email: { name: "", error: "" },
       confirm: { name: "", error: "" },
       error: "",
@@ -36,10 +37,13 @@ class SignUpForm extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    const { displayName, password, confirm, email } = this.state;
+    const { displayName, password, confirm, email, phoneNumber } = this.state;
     this.setState({ loading: true });
     if (!displayName.name) {
       this.setState({ displayName: { error: "invalid display name" } });
+    }
+    if (!phoneNumber.name) {
+      this.setState({ phoneNumber: { error: "enter Phone Number" } });
     }
     if (password.name !== confirm.name) {
       this.setState({ confirm: { error: "Passwords are not the same" } });
@@ -57,7 +61,16 @@ class SignUpForm extends React.Component {
     if (!email.name) {
       this.setState({ email: { error: "no Email" } });
     }
-    if (!(!password.name || !email.name || password.name !== confirm.name)) {
+    if (
+      !(
+        !password.name ||
+        !email.name ||
+        password.name !== confirm.name ||
+        !phoneNumber.name ||
+        !phoneNumber.name.length >= 6
+      )
+    ) {
+      this.setState({ loading: true });
       firebase
         .auth()
         .createUserWithEmailAndPassword(email.name, password.name)
@@ -72,8 +85,8 @@ class SignUpForm extends React.Component {
             loading: false,
             redirect: true
           });
-          const displayName = firebase.auth().currentUser;
-          displayName
+          const setdisplayName = firebase.auth().currentUser;
+          setdisplayName
             .updateProfile({
               displayName: this.state.displayName.name
             })
@@ -94,16 +107,6 @@ class SignUpForm extends React.Component {
       loading: false
     });
   }
-  updateName() {
-    const displayName = firebase.auth().currentUser;
-    displayName
-      .updateProfile({
-        displayName: this.state.displayName
-      })
-      .then(() => {
-        console.log("successful");
-      });
-  }
   handleChange(e) {
     let value = e.target.name;
     this.setState({
@@ -119,11 +122,14 @@ class SignUpForm extends React.Component {
       error,
       email,
       redirect,
-      loading
+      loading,
+      phoneNumber
     } = this.state;
     return (
       <Form className="signinform" onSubmit={this.handleSubmit}>
-        {redirect && <Redirect to={{ pathname: "/Home" }} />}
+        {redirect && (
+          <Redirect to={{ pathname: "/", state: this.state.phoneNumber }} />
+        )}
         <Form.Group>
           <Form.Label className="signin-form-name">Display Name</Form.Label>
           <Form.Control
@@ -145,6 +151,17 @@ class SignUpForm extends React.Component {
             type="email"
           />
           {email.error && <p>{email.error}</p>}
+        </Form.Group>
+        <Form.Group>
+          <Form.Label className="signin-form-name">phoneNumber</Form.Label>
+          <Form.Control
+            name="phoneNumber"
+            type="Number"
+            value={phoneNumber.name}
+            onChange={this.handleChange}
+            className={phoneNumber.error ? "input--error" : "input--control"}
+          />
+          {phoneNumber.error && <p>{phoneNumber.error}</p>}
         </Form.Group>
         <Form.Group>
           <Form.Label className="signin-form-name">Password</Form.Label>
@@ -169,12 +186,12 @@ class SignUpForm extends React.Component {
         </Form.Group>
         <ButtonLg
           small="true"
-          disabled={loading && true}
+          disabled={loading}
           type="submit"
           title="submit"
         />
 
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error && <Alert style={{marginTop:"1rem"}} variant="danger">{error}</Alert>}
       </Form>
     );
   }

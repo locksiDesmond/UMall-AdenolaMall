@@ -8,8 +8,22 @@ import logo from "./../../images/umall2.gif";
 const SignInModal = props => {
   return (
     <Modal show={props.show}>
-      \{" "}
       <Modal.Body>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            style={{
+              height: "2rem",
+              backgroundColor: "#f4754e",
+              outline: "none",
+              border: "none",
+              fontSize: ".7rem",
+              padding: ".5rem"
+            }}
+            onClick={props.handleClose}
+          >
+            X
+          </Button>
+        </div>
         <section className="signin--body">
           <div className="logo--group--with--text">
             <Link to={{ pathname: "/" }}>
@@ -18,7 +32,6 @@ const SignInModal = props => {
             </Link>
             <SignInForm onClick={props.handleClose} />
           </div>
-          <Button onClick={props.handleClose}>Close</Button>
         </section>
       </Modal.Body>
     </Modal>

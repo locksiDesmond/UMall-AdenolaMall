@@ -82,7 +82,10 @@ class SideNav extends React.Component {
   }
   render() {
     return (
-      <div className={`sidenav ${this.props.disabled && "show--nav"}`}>
+      <div
+        {...this.props}
+        className={`sidenav ${this.props.disabled && "show--nav"}`}
+      >
         <NavForm onClick={this.props.onClick} />
         <Dropdown
           title="Devices"

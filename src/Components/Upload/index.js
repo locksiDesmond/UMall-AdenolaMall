@@ -2,6 +2,7 @@ import React from "react";
 import UpLoadForm from "./UpLoadForm";
 import { Redirect } from "react-router-dom";
 import { Userdata } from "../DropdownPages/FetchData";
+import Loading from "../../SmallComponent/Loading";
 const UserInfo = props => {
   return (
     <div className="upload details ">
@@ -15,12 +16,29 @@ const UserInfo = props => {
             fontSize: "0.8"
           }}
         >
-          {props.data.username || props.user.displayName}
+          {props.user.displayName}
         </span>
       </p>
       <p>
         <span className="signin-form-name">Phone Number :</span>
-        {props.data.phoneNumber || (
+        {props.data ? (
+          props.data.phoneNumber ? (
+            props.data.phoneNumber
+          ) : (
+            <span>
+              No Number
+              <span
+                style={{
+                  fontWeight: "500",
+                  marginLeft: ".4rem",
+                  fontSize: "0.8"
+                }}
+              >
+                please go to profile and update your phone Number
+              </span>
+            </span>
+          )
+        ) : (
           <span>
             No Number
             <span
@@ -44,8 +62,14 @@ const Upload = ({ user, authenticated }) => {
     <div className="main--content">
       {authenticated ? (
         <React.Fragment>
-          <UserInfo user={user} data={userdata} />
-          <UpLoadForm user={user} />
+          {userdata === "loading" ? (
+            <Loading />
+          ) : (
+            <React.Fragment>
+              <UserInfo user={user} data={userdata} />
+              <UpLoadForm user={user} data={userdata} />
+            </React.Fragment>
+          )}
         </React.Fragment>
       ) : (
         <Redirect to={{ pathname: "/signin" }} />

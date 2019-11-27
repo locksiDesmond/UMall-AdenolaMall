@@ -82,13 +82,16 @@ class UpLoadForm extends React.Component {
     if (!condition.name) {
       this.errors("condition", "state a condition!");
     }
+    if(!this.props.data){
+    this.errors("error","set your phone Number")
+    }
     if (
       !(
         !title.name ||
         !description.name ||
         !price.name ||
         !condition.name ||
-        !category.name
+        !category.name || !this.props.data
       )
     ) {
       for (let i = 0; i <= this.state.picture.length; i++) {
@@ -184,6 +187,9 @@ class UpLoadForm extends React.Component {
     }
   }
   upload(picture, i) {
+    this.setState({
+      loading: true
+    });
     const { title, description, subcategory, category } = this.state;
     return new Promise((resolve, reject) => {
       const store = firebase.storage();
@@ -212,22 +218,21 @@ class UpLoadForm extends React.Component {
             this.setState({
               progress: "",
               url: [...this.state.url, downloadUrl],
-              loading: false,
-              uploaded:true
+              loading: false
             });
+            this.fileUpload()
           });
         }
       );
     });
   }
-  componentWillUnmount() {
-   
-  }
+ 
   fileUpload() {
-    this.setState({
-      loading:true
-    })
-    const {
+    if (
+      this.state.picture.length > 0 &&
+      this.state.picture.length === this.state.url.length
+    ) { 
+      const {
       title,
       condition,
       description,
@@ -251,7 +256,7 @@ class UpLoadForm extends React.Component {
     };
     const db = firebase.firestore();
     db.collection(this.state.category.name)
-      .doc()
+      .doc("one")
       .set(data)
       .then(() => {
         console.log("succesfull");
@@ -265,6 +270,7 @@ class UpLoadForm extends React.Component {
           objects: [],
           loading: false,
           uploaded: true,
+          picture:"",
           url: ""
         });
       })
@@ -273,13 +279,10 @@ class UpLoadForm extends React.Component {
         this.setState({ loading: false, error: error.message });
       });
   }
+}
   render() {
-    if (
-      this.state.picture.length > 0 &&
-      this.state.picture.length === this.state.url.length
-    ) {
-      this.fileUpload();
-    }
+   
+
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
         {this.state.uploaded && <Redirect to={{ pathname: "/Home" }} />}
@@ -390,7 +393,7 @@ class UpLoadForm extends React.Component {
         className="upload--button"
        
         >
-          <ButtonLg loading={this.state.loading} title="Submit" small="true" onClick={this.handleSubmit} />
+          <ButtonLg loading={this.state.loading? true: false} title="Submit" small="true" onClick={this.handleSubmit} />
         </div>
 
         {this.state.error && <Alert>{this.state.error}</Alert>}

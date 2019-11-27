@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { CategoryData } from "./FetchData";
-// import image from "../../images/blackwoman.jfif";
 import Btn from "./../../SmallComponent/Btn";
 import ProductCard from "./../ProductCard/index";
 import { Link } from "react-router-dom";
 import Loading from "../../SmallComponent/Loading";
-// import { Spinner } from "react-bootstrap";
+import ButtonLg from "./../../SmallComponent/ButtonLg";
 
 function MainDrop(props) {
   let category = props.state || props.location.state;
-  const data = CategoryData(category);
+  const [more, setMore] = useState(2);
+  const data = CategoryData(category, more);
   const [bgimage, setImage] = useState("");
+
   const products = data.map(item => (
     <ProductCard key={item.date} data={item} />
   ));
@@ -46,10 +47,9 @@ function MainDrop(props) {
         setImage("a");
     }
   }, [category]);
-
   return (
-    <div className="main--content main">
-      <React.Fragment>
+    <React.Fragment>
+      <div className="main--content main">
         <div
           className="image--div"
           style={{
@@ -82,14 +82,30 @@ function MainDrop(props) {
           <p>Trends</p>
           <div className="products">
             {data[0] === "loading" ? (
-              <Loading className="products loading" />
+              <div style={{ marginLeft: "47%" }}>
+                <Loading className="products loading" />
+              </div>
             ) : (
               products
             )}
+            {data.length === 0 && <p>No item found</p>}
           </div>
         </div>
-      </React.Fragment>
-    </div>
+        <div
+          style={{
+            justifyContent: "center",
+            display: "flex",
+            margin: ".5rem .1rem 1rem .1rem"
+          }}
+        >
+          <ButtonLg
+            disabled={data[0] === "loading" ? true : false}
+            title="show more"
+            onClick={() => setMore(more + 2)}
+          />
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 export default MainDrop;

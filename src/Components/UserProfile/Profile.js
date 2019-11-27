@@ -18,7 +18,7 @@ const Profile = ({ user }) => {
             alt="display"
             style={{ width: "10rem", height: "10rem" }}
             className="rounded-circle "
-            src={userdata.photoUrl || img}
+            src={img}
           />
         </div>
 
@@ -30,12 +30,16 @@ const Profile = ({ user }) => {
           }}
           className="block-center"
         >
-          {userdata.username || user.displayName}
+          {user.displayName}
         </p>
       </div>
       <div>
-        {userdata.phoneNumber ? (
-          <p>Phone Number : {userdata.phoneNumber} </p>
+        {userdata ? (
+          userdata.phoneNumber ? (
+            <p>Phone Number : {userdata.phoneNumber} </p>
+          ) : (
+            <p>no Phone Number</p>
+          )
         ) : (
           <p>no Phone Number</p>
         )}
@@ -49,6 +53,6 @@ const Profile = ({ user }) => {
       </div>
     </React.Fragment>
   );
-  return <React.Fragment>{userdata ? data : <Loading />}</React.Fragment>;
+  return <React.Fragment>{user ? data : <Loading />}</React.Fragment>;
 };
 export default Profile;
