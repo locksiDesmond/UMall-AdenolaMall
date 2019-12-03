@@ -12,6 +12,7 @@ class ContextClass extends React.Component {
       loaded: false,
       phoneNumber: ""
     };
+    // this.setName = this.handleName.bind(this);
   }
   componentDidMount() {
     this.unsubscribe = firebase.auth().onAuthStateChanged(user => {
@@ -23,6 +24,19 @@ class ContextClass extends React.Component {
           user: user,
           phoneNumber: user.phoneNumber
         });
+        const metadata = { ...user.metadata };
+        const created = new Date(this.state.user.metadata.creationTime);
+        const last = new Date(this.state.user.metadata.lastSignInTime);
+        if (last - created !== 0) {
+          firebase
+            .firestore()
+            .collection("Users")
+            .doc(this.state.user.uid)
+            .update({
+              metadata: metadata,
+              username: this.state.user.displayName
+            });
+        }
       } else {
         this.setState({
           authenticated: false,
@@ -31,6 +45,28 @@ class ContextClass extends React.Component {
       }
     });
   }
+  // handleName(a) {
+  //   console.log(a);
+  //   if (this.state.authenticated) {
+  //     const created = new Date(this.state.user.metadata.creationTime);
+  //     const last = new Date(this.state.user.metadata.lastSignInTime);
+  //     const url =
+  //       "gs://umall-adenola-mall-production.appspot.com/Defaultphoto/boy.svg";
+  //     if (last - created === 0 && a) {
+  //       const { phoneNumber, displayName } = a;
+  //       const metadata = { ...this.state.user.metadata };
+  //       firebase.store
+  //         .collection("Users")
+  //         .doc(this.state.user.uid)
+  //         .set({
+  //           username: displayName.name,
+  //           phoneNumber: phoneNumber.name,
+  //           photoUrl: url,
+  //           metadata: metadata
+  //         });
+  //     }
+  //   }
+  // }
   componentWillUnmount() {
     this.unsubscribe();
   }
@@ -38,7 +74,10 @@ class ContextClass extends React.Component {
   render() {
     return (
       <ContextCreator.Provider
-        value={{ ...this.state, firebase: new Firebase() }}
+        value={{
+          ...this.state,
+          firebase: new Firebase()
+        }}
       >
         <IconContext.Provider value={{ className: "global-icon" }}>
           {this.props.children}

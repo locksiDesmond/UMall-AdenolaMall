@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { firebase } from "../../Firebase/Firebase";
+// import { firebase } from "../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
-function SignInForm() {
+function SignInForm(props) {
   const [email, setEmail] = useState({ name: "", password: "" });
   const [password, setPassword] = useState({ name: "", password: "" });
   const [error, setError] = useState("");
@@ -20,8 +20,7 @@ function SignInForm() {
       setPassword({ error: "No password" });
     }
     if (!(!email.name || !password.name)) {
-      firebase
-        .auth()
+      props.firebase.auth
         .signInWithEmailAndPassword(email.name, password.name)
         .then(user => {
           if (user) {
@@ -38,7 +37,7 @@ function SignInForm() {
   };
   return (
     <Form className="signupform" onSubmit={handleSubmit}>
-      {redirect && <Redirect to={{ pathname: "/Home" }} />}
+      {redirect && <Redirect to={{ pathname: "/" }} />}
       <Form.Group>
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control

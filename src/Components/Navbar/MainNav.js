@@ -56,7 +56,7 @@ class MainNav extends React.Component {
     });
   }
   render() {
-    const { authenticated, user } = this.context;
+    const { authenticated, user, firebase } = this.context;
     return (
       <Navbar className="Navbar">
         <Link to={{ pathname: "/" }} className="navbar-brand">
@@ -72,16 +72,23 @@ class MainNav extends React.Component {
             showSignUp={this.showSignUp}
           />
           <LogOutModal
+            firebase={firebase}
+            user={user}
             show={this.state.logout}
             handleClose={this.closeLogOut}
           />
           <SignUpModal
             show={this.state.signup}
+            firebase={firebase}
             handleClose={this.closeSignUp}
           />
-          <SignInModal show={this.state.show} handleClose={this.handleClose} />
+          <SignInModal
+            show={this.state.show}
+            firebase={firebase}
+            handleClose={this.handleClose}
+          />
         </div>
-        <button onClick={this.props.onClick} className="btn hamburger">
+        <button onClick={this.props.onclick} className="btn hamburger">
           <GiHamburgerMenu style={{ color: "#fff", fontSize: "2rem" }} />
         </button>
       </Navbar>

@@ -39,7 +39,7 @@ export const sideNavobject = {
     {
       id: 2,
       title: "Female",
-      path: "/home/clothing",
+      path: "/clothing",
       category: "Clothings",
       avatar: woman
     }
@@ -60,7 +60,10 @@ export const sideNavobject = {
       category: "Cosmetics",
       avatar: gel
     },
-    { id: 1, title: "Perfumes", category: "Cosmetics", avatar: perfume }
+    { id: 1, title: "Perfumes", category: "Cosmetics", avatar: perfume },
+    { id: 2, title: "Makeups", category: "Cosmetics" },
+    { id: 2, title: "Jewelries", category: "Cosmetics" },
+    { id: 3, title: "Others", category: "Cosmetics" }
   ],
   HouseItems: [
     {
@@ -86,30 +89,31 @@ class SideNav extends React.Component {
         {...this.props}
         className={`sidenav ${this.props.disabled && "show--nav"}`}
       >
-        <NavForm onClick={this.props.onClick} />
+        <NavForm onclick={this.props.onclick} />
         <Dropdown
-          title="Devices"
-          onClick={this.props.onClick}
+          title="Devices and Accessories"
+          onclick={this.props.onclick}
           item={this.state.Devices}
+          category="Devices"
         />
         <Dropdown
           title="Clothings"
-          onClick={this.props.onClick}
+          onclick={this.props.onclick}
           item={this.state.Clothings}
         />
         <Dropdown
           title="Cosmetics"
-          onClick={this.props.onClick}
+          onclick={this.props.onclick}
           item={this.state.Cosmetics}
         />
         <Dropdown
           title="Footwears"
-          onClick={this.props.onClick}
+          onclick={this.props.onclick}
           item={this.state.Footwear}
         />
         <Dropdown
           title="Household items"
-          onClick={this.props.onClick}
+          onclick={this.props.onclick}
           item={this.state.HouseItems}
         />
       </div>

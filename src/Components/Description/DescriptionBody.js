@@ -5,10 +5,9 @@ import ProductCard from "./../ProductCard/index";
 import { IoIosHeart } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 
-function Descriptionbody({ items, userdata }) {
+function Descriptionbody({ items, userdata,likes, liked, onclick}) {
   const [show, setShow] = useState(false);
   const [number, setNumber] = useState(0);
-  const [like, setLike] = useState(false);
   const [direction, setDirection] = useState(null);
   let item = RelatedData(items.category, items.name);
   const Otheritem = item.map(item => (
@@ -18,9 +17,11 @@ function Descriptionbody({ items, userdata }) {
     setNumber(selectedIndex);
     setDirection(e.direction);
   };
+  console.log(userdata);
   const handleShow = () => {
     setShow(!show);
   };
+
   return (
     <div className="description--page">
       <div className="product--description">
@@ -69,14 +70,22 @@ function Descriptionbody({ items, userdata }) {
               className="heart"
               style={{ marginRight: "1rem" }}
               onClick={() => {
-                setLike(!like);
-              }}
-            >
-              {like ? (
+                onclick();
+                }}
+                >
+                {liked ? (
                 <IoIosHeart style={{ color: "red" }} />
               ) : (
                 <FaRegHeart style={{ fill: "black" }} />
               )}
+              <span style={{ fontSize: ".7rem" }}>
+                {likes
+                  ? likes === 0
+                    ? " "
+                    : likes.length
+                  : ""}
+            </span>
+            }
             </span>
             <span className="price">&#8358;{items.price}</span>
           </div>
@@ -99,17 +108,19 @@ function Descriptionbody({ items, userdata }) {
             <h2 className="capitalize"> {userdata.username}</h2>
           </div>
           <ul className="details">
-            <li>
-              Last Seen: <span> {userdata.metadata.lastSigninTime.slice(5, 17)}</span>
+            <li className="signin-form-name">
+              Last Seen :
+              <span> {userdata.metadata.lastSignInTime.slice(5, 16)}</span>
             </li>
-            <li>
-              Joined <span> </span>
+            <li className="signin-form-name">
+              Joined :
+              <span> {userdata.metadata.creationTime.slice(5, 16)}</span>
             </li>
-            <li>
-              Material posted<span> </span>
+            <li className="signin-form-name">
+              Material posted : <span>{userdata.materialPosted} </span>
             </li>
-            <li>
-              Sold <span>20 </span>
+            <li className="signin-form-name">
+              Sold : <span>{userdata.materialSold}</span>
             </li>
           </ul>
           <div className=" show--number-parent">

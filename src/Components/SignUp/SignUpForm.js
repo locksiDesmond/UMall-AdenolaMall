@@ -1,7 +1,7 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { firebase } from "../../Firebase/Firebase";
+// import { firebase } from "../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
 
@@ -16,25 +16,13 @@ class SignUpForm extends React.Component {
       confirm: { name: "", error: "" },
       error: "",
       loading: false,
-      redirect: false
+      redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // const [displayName, setName] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirm, setConfirm] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [error, setError] = useState("");
-  // const [redirect, setRedirect] = useState("");
-  // const [loading, setLoading] = useState(false);
-  // const style = error ? "input--error" : "input--control";
-  componentDidMount() {
-    if (this.state.error) {
-      this.setState({ loading: false });
-    }
-  }
+
   handleSubmit(e) {
     e.preventDefault();
     const { displayName, password, confirm, email, phoneNumber } = this.state;
@@ -48,7 +36,7 @@ class SignUpForm extends React.Component {
     if (password.name !== confirm.name) {
       this.setState({ confirm: { error: "Passwords are not the same" } });
     }
-    if (password.name.length <= 6) {
+    if (password.name.length < 6) {
       this.setState({
         password: {
           error: "passwords should be atleast 6 characters "
@@ -61,18 +49,22 @@ class SignUpForm extends React.Component {
     if (!email.name) {
       this.setState({ email: { error: "no Email" } });
     }
+    if (phoneNumber.name.length !== 11) {
+      this.setState({ phoneNumber: { error: "phone number not correct" } });
+    }
     if (
       !(
         !password.name ||
         !email.name ||
         password.name !== confirm.name ||
         !phoneNumber.name ||
-        !phoneNumber.name.length >= 6
+        password.name.length < 6 ||
+        phoneNumber.name.length !== 11
       )
     ) {
       this.setState({ loading: true });
-      firebase
-        .auth()
+      console.log("si");
+      this.props.firebase.auth
         .createUserWithEmailAndPassword(email.name, password.name)
         .then(user => {
           if (this.props.onClick) {
@@ -85,7 +77,7 @@ class SignUpForm extends React.Component {
             loading: false,
             redirect: true
           });
-          const setdisplayName = firebase.auth().currentUser;
+          const setdisplayName = this.props.firebase.auth.currentUser;
           setdisplayName
             .updateProfile({
               displayName: this.state.displayName.name
@@ -128,8 +120,9 @@ class SignUpForm extends React.Component {
     return (
       <Form className="signinform" onSubmit={this.handleSubmit}>
         {redirect && (
-          <Redirect to={{ pathname: "/", state: this.state.phoneNumber }} />
+          <Redirect to={{ pathname: "/", state: { ...this.state } }} />
         )}
+       
         <Form.Group>
           <Form.Label className="signin-form-name">Display Name</Form.Label>
           <Form.Control
@@ -178,6 +171,7 @@ class SignUpForm extends React.Component {
           <Form.Label className="signin-form-name">Confirm Password</Form.Label>
           <Form.Control
             name="confirm"
+            type="password"
             value={confirm.name}
             onChange={this.handleChange}
             className={confirm.error ? "input--error" : "input--control bgski"}
@@ -189,9 +183,15 @@ class SignUpForm extends React.Component {
           disabled={loading}
           type="submit"
           title="submit"
+          loading={loading}
+          onClick={this.handleSubmit}
         />
 
-        {error && <Alert style={{marginTop:"1rem"}} variant="danger">{error}</Alert>}
+        {error && (
+          <Alert style={{ marginTop: "1rem" }} variant="danger">
+            {error}
+          </Alert>
+        )}
       </Form>
     );
   }

@@ -4,18 +4,11 @@ import Btn from "./../../SmallComponent/Btn";
 import img from "../../images/svgs/user.svg";
 import { FaPen } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+// import boy from "../../images/svgs/boy.svg";
+import { Userdata } from "../DropdownPages/FetchData";
 function LeftNav(props) {
   const [show, setShow] = useState(false);
-  // const [signedIn, setSignedIn] = useState(false);
-
-  // const authenticated = props.authenticated;
-  // useEffect(() => {
-  //   if (authenticated) {
-  //     setSignedIn(true);
-  //   } else {
-  //     setSignedIn(false);
-  //   }
-  // }, [authenticated]);
+  const userdata = Userdata(props.user.uid);
   const showDropdown = () => {
     setShow(!show);
   };
@@ -28,23 +21,27 @@ function LeftNav(props) {
       <button className="a">
         <img
           id="dropdown basic"
-          src={img}
+          src={userdata.photoUrl}
           alt="Dp"
           onClick={showDropdown}
           className="rounded-circle card--profile--photo"
         />
       </button>
       <div className="dropdown--menu">
-        <button className="a" onClick={showDropdown}>
+        <button
+          style={{ color: "#474a60" }}
+          className="a a-none"
+          onClick={showDropdown}
+        >
           {props.user.displayName}
         </button>
         <hr />
-        <button onClick={showDropdown} className="a">
-          Setting
-        </button>
-        <button onClick={showDropdown} className="display--none a">
-          Post
-        </button>
+        <Link to={{ pathname: "/umall/Post" }}>
+          <button onClick={showDropdown} className="display--none a">
+            Post
+          </button>
+        </Link>
+
         <Link to={{ pathname: "/Profile" }}>
           <button onClick={showDropdown} className="a">
             <FaPen style={iconStyle} />
@@ -65,7 +62,7 @@ function LeftNav(props) {
   const user = (
     <React.Fragment>
       <span>
-        <Link className="display--block" to={{ pathname: "/home/upload" }}>
+        <Link className="display--block" to={{ pathname: "/umall/Post" }}>
           <Btn title="post" color="#f4754e" />
         </Link>
 

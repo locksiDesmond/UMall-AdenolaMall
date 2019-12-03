@@ -9,10 +9,13 @@ function DropdownItems(props) {
   const [more, setMore] = useState(2);
   const data = Newdata(state.category, state.title, more);
   const products = (
-    <div className="products">
-      {data !== "error" &&
-        data.map(item => <ProductCard key={item.date} data={item} />)}
-    </div>
+    <React.Fragment>
+      <h1>{data.subcategory} </h1>
+      <div className="products">
+        {data !== "error" &&
+          data.map(item => <ProductCard key={item.date} data={item} />)}
+      </div>
+    </React.Fragment>
   );
   return (
     <div className="main--content">
@@ -23,8 +26,6 @@ function DropdownItems(props) {
       ) : (
         products
       )}
-      {data.length === 0 && <p>No item found</p>}
-
       <div
         style={{
           justifyContent: "center",

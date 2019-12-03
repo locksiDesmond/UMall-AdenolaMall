@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import Upload from "../../images/svgs/upload.svg";
 import "./ReactCrop.css";
@@ -12,9 +12,11 @@ import {
 // import PictureUpload from "./PictureUpload";
 function ImageUpload(props) {
   const [imgSrc, setSrc] = useState(null);
+  const [files, setFile] = useState("");
   const [error, setError] = useState("");
   const onDrop = useCallback(acceptedfiles => {
     acceptedfiles.forEach(file => {
+      setFile(file);
       const Reader = new FileReader();
       Reader.onabort = () => {
         console.log("aborted file");
@@ -22,6 +24,7 @@ function ImageUpload(props) {
       Reader.onerror = () => {
         console.log("Error");
       };
+
       Reader.onload = () => {
         const dataUrl = Reader.result;
         setSrc(dataUrl);
@@ -29,7 +32,10 @@ function ImageUpload(props) {
       Reader.readAsDataURL(file);
     });
   }, []);
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: "image/*"
+  });
   const handleDownload = e => {
     e.preventDefault();
 
@@ -37,11 +43,18 @@ function ImageUpload(props) {
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(imgSrc, fileName);
     if (!(croppedFile.size >= 1024000)) {
-      props.handleSubmit(croppedFile, props.value);
+      if (!(files >= 1024000)) {
+        props.handleSubmit(files, props.value);
+      }
     } else {
       setError("File too Large");
     }
   };
+  useEffect(() => {
+    if (props.src) {
+      setSrc(props.src);
+    }
+  }, [props.src]);
   return (
     <section>
       <div
@@ -78,12 +91,21 @@ function ImageUpload(props) {
                   aria-hidden="true"
                 />
               )}
-              post
+              Select
             </Button>
           </div>
         ) : (
-          <div>
-            <p>Drag and upload files here</p>
+          <div style={{ position: "relative" }}>
+            <p
+              style={{
+                position: "absolute",
+                top: "45%",
+                fontWeight: "500",
+                textAlign: "center"
+              }}
+            >
+              Drag and drop here to upload pictures
+            </p>
             <img src={Upload} alt="drag n drop" />
           </div>
         )}

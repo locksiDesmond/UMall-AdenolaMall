@@ -117,6 +117,11 @@ a,
 .a:focus {
   outline: 0 !important;
 }
+.a-none:hover{
+color:#fff !important;
+text-decoration: none;
+cursor: inherit;
+}
 
 a:hover,
 .a:hover {
@@ -145,7 +150,7 @@ a:hover,
 }
 
 /* @media for navbar */
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .Navbar > .btn--group {
     display: none !important;
   }
@@ -166,13 +171,13 @@ a:hover,
   outline-color: #f4754e;
   color: #05aff2;
 }
-@media (max-width: 990px) {
+@media (max-width: 992px) {
   .search--input {
     width: 15rem !important;
   }
 }
 
-@media (max-width: 990px) {
+@media (max-width: 992px) {
   .search--input {
     width: 11rem !important;
   }
@@ -246,6 +251,11 @@ a:hover,
   min-height: -webkit-fill-available;
   padding-top: 25%;
 }
+@media(max-width:760px){
+  .loading {
+       padding-top: 50%;
+  }
+}
 
 /* Error 404 */
 
@@ -271,7 +281,18 @@ a:hover,
   padding: 2rem 2.5rem;
   font-size: 1rem;
   margin-top: 2rem;
+  color: #474a60;
+  display:flex;
+  justify-content: space-evenly;
 }
+.footer--section > *{
+  flex:4;
+  list-style: none;
+  }
+.footer--section a:hover{
+  color:gray;
+}
+
 
 /* SideNav */
 .sidenav {
@@ -294,7 +315,7 @@ a:hover,
 .sidenav > .btn--group {
   display: none;
 }
-@media (max-width: 990px) {
+@media (max-width: 992px) {
   .sidenav .search--input {
     width: 23rem !important;
     height: 2rem !important;
@@ -303,7 +324,7 @@ a:hover,
     height: 2.06rem !important;
   }
 }
-@media (max-width: 737px) {
+@media (max-width: 768px) {
   .sidenav {
     display: none;
   }
@@ -393,6 +414,19 @@ a:hover,
 .imageupload {
   display: flex;
   justify-content: space-between;
+  width:17rem
+}
+.upload--body  .imageupload{
+  margin:1rem 2.5rem;
+
+}
+.upload--body > :first-child > .imageupload{
+  margin:1rem 0
+}
+@media (max-width:568px){
+  .imageupload{
+    margin: 1rem 0rem;
+  }
 }
 .imageupload > * {
   margin-right: 3rem;
@@ -484,7 +518,10 @@ section.signin {
   margin-left: 2rem;
   margin-top: 1.5rem;
 }
-
+/* RESET PASSWORD */
+.reset{
+  height: 20rem
+}
 /* media for signup */
 @media (max-width: 576px) {
   .signin--section {
@@ -512,7 +549,7 @@ section.signin {
   /* margin-left: 3rem; */
   float: right;
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   /* modal Show */
   .signin--modal--button {
     display: none;
@@ -522,11 +559,11 @@ section.signin {
   display: block;
 }
 .upload {
-  margin-left: 0.2rem;
+  margin-left: 1rem;
 }
 .upload--body {
   display: flex;
-  margin-top: 2rem;
+  margin-top: .5rem;
   margin-bottom: 2rem;
 }
 @media (min-width: 700px) {
@@ -551,7 +588,7 @@ section.signin {
   margin-bottom: 1.5rem;
   margin-top: 3rem;
 }
-@media (max-width: 500px) {
+@media (max-width: 576px) {
   .input--control {
     width: 90% !important;
   }
@@ -559,13 +596,12 @@ section.signin {
     display: Block;
   }
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .upload--body {
     display: flex;
     justify-content: center;
     flex-flow: column;
     margin: auto;
-    width: 50%;
   }
   .upload--button {
     margin-right: 0;
@@ -586,14 +622,31 @@ section.signin {
   padding-left: 0;
 }
 
-@media (max-width: 733px) {
+@media (max-width: 768px) {
   .main--content {
     margin-left: 0;
     padding-left: 0.4rem;
     padding-right: 0.5rem;
   }
 }
+.main--body#section{
+  padding-left: 1rem;
+  font-size: 1rem;
 
+}
+.trends:not(:nth-last-child(1))::after{
+  content:"";
+  display:block;
+  background-color: #f4754e;
+  height:1px;
+  margin-bottom: 1rem;
+  margin-top: .5rem;
+  width:100%;
+}
+.trends > p{
+  font-weight: 500;
+  font-size: 1.3rem;
+}
 .upload-length {
   width: 70%;
 }
@@ -613,6 +666,9 @@ section.signin {
 }
 .card--group div.card--body {
   padding: 0.3rem 1.7rem;
+}
+.card--group:hover{
+  cursor:pointer
 }
 .card--picture {
   flex: 1;
@@ -657,19 +713,20 @@ section.signin {
   white-space: nowrap;
 }
 .card--group .card--description {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   overflow: hidden;
   display: grid;
   height: 46px;
   width: 187px;
   line-height: 15px;
 }
-.card--group .card--description::before,
-.card--group .icons::before {
-  content: " ";
+.card--group .card--description::before
+{
+  content: "";
   display: block;
-  height: 0.1rem;
-  background-color: #fff;
+  height: 1px;
+  margin-top: .5rem;
+  background-color: #05aff2;
 }
 .card--group .card--description > p {
   text-overflow: ellipsis !important;
@@ -809,7 +866,14 @@ span.price {
   height: auto;
   padding: 2rem;
 }
+.details > *{
+  list-style: none;
+}
+.details span{
+  color:#000;
+  font-weight: normal;
 
+}
 .description--aside {
   display: block;
   flex: 1;
@@ -823,11 +887,6 @@ span.price {
 .product--image {
   height: 6rem;
   width: 6rem;
-}
-.details {
-  margin: 1rem 0.2rem;
-  list-style: none;
-  padding-left: 1.2rem;
 }
 .show--number-parent {
   /* display: flex;
@@ -847,7 +906,7 @@ span.price {
   background-color: #fff;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .description--page {
     display: block;
     margin: 0.6rem 0;
@@ -871,7 +930,7 @@ span.price {
   background-color: #cccaca;
   background-size: 100%;
   background-repeat: no-repeat;
-  height: 28rem;
+  height: 38rem;
   border-radius: 10px 0 0 0;
   display: flex;
   justify-content: space-around;
@@ -880,6 +939,29 @@ span.price {
   font-weight: 400;
   color: white;
 }
+.Footwears,.Devices,.Clothings{
+  height: 34.5rem !important;
+}
+@media (max-width:1200px){
+  .Footwears ,.Devices,.Clothings{
+    height:29rem !important;
+    }
+}
+@media(max-width:992px){
+  .Footwears ,.Devices,.Clothings{
+  height:21rem !important;
+  }
+}
+@media(max-width:768px){
+  .Footwears ,.Devices,.Clothings{
+    height:19.5rem !important;
+    }
+}
+@media(max-width:579px){
+  .Footwears,.Devices,.Clothings{
+    height:16rem !important;
+    }
+} 
 
 .image--div > * {
   padding: 3rem;
@@ -925,12 +1007,19 @@ span.price {
   .image--div {
     padding-top: 0.5rem;
     font-size: 1.6rem;
-    height: 14rem;
+    height: 13.5rem;
   }
+}
+@media (max-width: 370px) {
+  .image--div {
+    padding-top: 0rem;
+    font-size: 1.3rem;
+    height: 10.9rem;
+}
 }
 
 /* PROFILE NAV */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .user--profile > .show--nav {
     display: block !important;
     margin-top: 3.5rem;
@@ -952,7 +1041,7 @@ span.price {
   justify-content: space-around;
   margin-top: 1rem;
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .profile--body {
     flex-flow: column;
   }

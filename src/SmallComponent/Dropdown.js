@@ -23,8 +23,11 @@ class Dropdown extends React.Component {
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
           <Link
-            onClick={this.props.onClick}
-            to={{ pathname: `/Home/main/${title}`, state: title }}
+            onClick={this.props.onclick}
+            to={{
+              pathname: `/umall/${this.props.category || title}`,
+              state: title
+            }}
           >
             <span style={{ color: "#000" }}>{title}</span>
           </Link>
@@ -46,22 +49,29 @@ class Dropdown extends React.Component {
               return (
                 <Link
                   onClick={() => {
-                    this.props.onClick();
+                    this.props.onclick();
                     this.handleClick();
                   }}
                   key={item.id}
                   to={{
                     pathname:
-                      `/home/main/${title}/${item.title}` || "errorpage",
+                      `/umall/${this.props.category || title}/${item.title}` ||
+                      "errorpage",
                     state: item
                   }}
                 >
-                  <li className="dropdown--item--list">
-                    <img
-                      className="img-thumbnail sidenav--avatar"
-                      src={item.avatar}
-                      alt="icon"
-                    />
+                  <li
+                    className="dropdown--item--list"
+                    style={{ marginLeft: !item.avatar && "2.2rem" }}
+                  >
+                    {item.avatar && (
+                      <img
+                        className="img-thumbnail sidenav--avatar"
+                        src={item.avatar}
+                        alt="icon"
+                      />
+                    )}
+
                     {item.title}
                   </li>
                 </Link>

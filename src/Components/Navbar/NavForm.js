@@ -8,14 +8,14 @@ function NavForm(props) {
     if (search) {
       setRedirect(true);
     }
-    if (props.onClick) {
-      props.onClick();
+    if (props.onclick) {
+      props.onclick();
     }
   };
   return (
     <form onSubmit={handleSubmit} className="btn--group">
       {redirect && (
-        <Redirect to={{ pathname: "/home/Search", state: search }} />
+        <Redirect to={{ pathname: "/umall/Search", state: search }} />
       )}
       <input
         style={{

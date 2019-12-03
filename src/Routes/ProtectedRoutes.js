@@ -1,7 +1,6 @@
 import React from "react";
 import MainNav from "./../Components/Navbar/MainNav";
 import { Route, Switch } from "react-router-dom";
-import Home from "./../Components/Home/MainBody";
 import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
@@ -29,48 +28,47 @@ class ProtectedRoutes extends React.Component {
     const { authenticated, loading, user } = this.context;
     const RenderItem = (
       <React.Fragment>
-        <MainNav onClick={this.sideNavToggle} />
+        <MainNav onclick={this.sideNavToggle} />
         <div className="body--content">
-          <SideNav onClick={this.sideNavToggle} disabled={this.state.sidebar} />
+          <SideNav onclick={this.sideNavToggle} disabled={this.state.sidebar} />
           <Switch>
-            <Route exact path="/home" component={Home} />
             <Route
-              path="/Home/upload"
+              path="/umall/Post"
               component={() => (
                 <Upload user={user} authenticated={authenticated} />
               )}
             />
             <Route
               exact
-              path="/home/main/Footwears"
+              path="/umall/Footwears"
               component={() => (
                 <MainDrop state="Footwears" authenticated={authenticated} />
               )}
             />
             <Route
               exact
-              path="/home/main/Devices"
+              path="/umall/Devices"
               component={() => (
                 <MainDrop state="Devices" authenticated={authenticated} />
               )}
             />
             <Route
               exact
-              path="/home/main/Clothings"
+              path="/umall/Clothings"
               component={() => (
                 <MainDrop state="Clothings" authenticated={authenticated} />
               )}
             />
             <Route
               exact
-              path="/home/main/Cosmetics"
+              path="/umall/Cosmetics"
               component={() => (
                 <MainDrop state="Cosmetics" authenticated={authenticated} />
               )}
             />
             <Route
               exact
-              path="/home/main/Household items"
+              path="/umall/Household items"
               component={() => (
                 <MainDrop
                   state="Household items"
@@ -78,45 +76,37 @@ class ProtectedRoutes extends React.Component {
                 />
               )}
             />
+            <Route path="/umall/Clothings/Female" component={DropdownItems} />
+            <Route path="/umall/Clothings/Male" component={DropdownItems} />
+            <Route path="/umall/Footwears/Female" component={DropdownItems} />
+            <Route path="/umall/Footwears/Male" component={DropdownItems} />
             <Route
-              path="/home/main/Clothings/Female"
-              component={DropdownItems}
-            />
-            <Route path="/home/main/Clothings/Male" component={DropdownItems} />
-            <Route
-              path="/home/main/Footwears/Female"
-              component={DropdownItems}
-            />
-            <Route path="/home/main/Footwears/Male" component={DropdownItems} />
-            <Route
-              path="/home/main/Household items/Used"
+              path="/umall/Household items/Used"
               component={DropdownItems}
             />
             <Route
-              path="/home/main/Household items/New"
+              path="/umall/Household items/New"
+              component={DropdownItems}
+            />
+            <Route path="/umall/Devices/Laptops" component={DropdownItems} />
+            <Route
+              path="/umall/Devices/Mobile Phones"
               component={DropdownItems}
             />
             <Route
-              path="/home/main/Devices/Laptops"
+              path="/umall/Devices/Other accessories"
               component={DropdownItems}
             />
+            <Route path="/umall/Cosmetics/Perfumes" component={DropdownItems} />
+            <Route path="/umall/Cosmetics/Mkeups" component={DropdownItems} />
             <Route
-              path="/home/main/Devices/Mobile Phones"
+              path="/umall/Cosmetics/Jewelries"
               component={DropdownItems}
             />
-            <Route
-              path="/home/main/Devices/Other accessories"
-              component={DropdownItems}
-            />
-            <Route
-              path="/home/main/Cosmetics/Perfumes"
-              component={DropdownItems}
-            />
-            <Route
-              path="/home/main/Cosmetics/Creams"
-              component={DropdownItems}
-            />
-            <Route path="/home/Search" component={Search} />
+            <Route path="/umall/Cosmetics/Others" component={DropdownItems} />
+
+            <Route path="/umall/Cosmetics/Creams" component={DropdownItems} />
+            <Route path="/umall/Search" component={Search} />
 
             <Route
               path="*"
@@ -132,12 +122,3 @@ class ProtectedRoutes extends React.Component {
   }
 }
 export default ProtectedRoutes;
-// {authenticated ? (
-//   loading ? (
-//     <Loading />
-//   ) : (
-//     RenderItem
-//   )
-// ) : (
-//   <Redirect to={{ pathname: "/signin" }} />
-// )

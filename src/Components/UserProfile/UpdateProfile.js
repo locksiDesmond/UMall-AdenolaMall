@@ -1,13 +1,26 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import React, { useState, useEffect } from "react";
 import ImageUpload from "./../Upload/ImageUpload";
 import Form from "react-bootstrap/Form";
 import ProgressBar from "react-bootstrap/ProgressBar";
+import { Userdata } from "../DropdownPages/FetchData";
+import ButtonLg from "./../../SmallComponent/ButtonLg";
 
 const UpdateProfile = props => {
-  const [displayName, setDisplayName] = useState({ name: "", error: "" });
-  const [phoneNumber, setPhoneNumber] = useState({ name: "", error: "" });
-  const [photo, setPhoto] = useState("");
+  let userdata = Userdata(props.user.uid);
+  const [displayName, setDisplayName] = useState({
+    name: props.user.displayName,
+    error: ""
+  });
+  const [phoneNumber, setPhoneNumber] = useState({
+    name: userdata.phoneNumber,
+    error: ""
+  });
+  useEffect(() => {
+    if (phoneNumber.name === undefined) {
+      setPhoneNumber({ name: userdata.phoneNumber });
+    }
+  }, [phoneNumber.name, userdata.phoneNumber]);
+  const [photo, setPhoto] = useState();
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState("");
@@ -29,10 +42,18 @@ const UpdateProfile = props => {
             console.log(error.message);
           });
       }
-      if (phoneNumber !== props.user.phoneNumber) {
+      if (phoneNumber.name.length !== 11) {
+        setPhoneNumber({ error: "invalid Password" });
+      }
+      if (
+        !(
+          !photo ||
+          photo === userdata.photoUrl ||
+          phoneNumber.name.length !== 11
+        )
+      ) {
         const picture = props.firebase.st
-          .ref()
-          .child(props.user.uid)
+          .ref(`userDp/${photo.name}`)
           .put(photo);
         picture.on(
           "state_changed",
@@ -52,7 +73,7 @@ const UpdateProfile = props => {
               props.firebase.store
                 .collection("Users")
                 .doc(props.user.uid)
-                .set({
+                .update({
                   username: displayName.name,
                   phoneNumber: phoneNumber.name,
                   photoUrl: downloadUrl
@@ -68,7 +89,6 @@ const UpdateProfile = props => {
           }
         );
       }
-
     }
   };
   const downloadPicture = picture => {
@@ -77,7 +97,11 @@ const UpdateProfile = props => {
   };
   return (
     <React.Fragment>
-      <Form onSubmit={handleSubmit}>
+      <Form
+        style={{ marginTop: "1rem" }}
+        className="upload"
+        onSubmit={handleSubmit}
+      >
         {progress && <ProgressBar now={progress} />}
 
         <Form.Group>
@@ -90,20 +114,29 @@ const UpdateProfile = props => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Phone Number</Form.Label>
+          <Form.Label className="signin-form-name">Phone Number</Form.Label>
           <Form.Control
             className={phoneNumber.error ? "input--error" : "input--control"}
             type="number"
             value={phoneNumber.name}
             name="phoneNumber"
-            placeholder="0**********"
             onChange={e => setPhoneNumber({ name: e.currentTarget.value })}
           />
         </Form.Group>
-        <ImageUpload ratio="1" loaded={loaded} handleSubmit={downloadPicture} />
-        <Button disabled={loading} type="submit">
-          Save Changes
-        </Button>
+        <ImageUpload
+          ratio="1"
+          loaded={loaded}
+          handleSubmit={downloadPicture}
+          style={{ marginLeft: "0" }}
+        />
+        <div style={{ marginTop: "1rem" }}>
+          <ButtonLg
+            loading={loading ? true : false}
+            title="Save"
+            small="true"
+            onClick={handleSubmit}
+          />
+        </div>
         {error && <p>{error}</p>}
       </Form>
     </React.Fragment>

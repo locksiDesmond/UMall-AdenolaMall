@@ -34,19 +34,21 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
     if (authenticated) {
       const created = new Date(user.metadata.creationTime);
       const last = new Date(user.metadata.lastSignInTime);
-      const name = location.name;
-      const metadata = {...user.metadata};
       const url =
-        "gs://umall-adenola-mall-production.appspot.com/Defaultphoto/boy.svg";
+        "https://firebasestorage.googleapis.com/v0/b/umall-adenola-mall-production.appspot.com/o/Defaultphoto%2Fboy.svg?alt=media&token=82509f3a-3d6c-42aa-8f35-2b60aed21209";
       if (last - created === 0 && location) {
+        const { phoneNumber, displayName } = location;
+        const metadata = { ...user.metadata };
         firebase.store
           .collection("Users")
           .doc(user.uid)
           .set({
-            username: user.displayName,
-            phoneNumber: name,
+            username: displayName.name,
+            phoneNumber: phoneNumber.name,
             photoUrl: url,
-            metadata : metadata
+            metadata: metadata,
+            materialPosted: 0,
+            materialSold: 0
           });
         setWelcome("You are Welcomed to umall");
 
@@ -74,7 +76,9 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
             position: "absolute",
             display: "flex",
             justifyContent: "center",
-            backgroundColor: "#f4754e"
+            backgroundColor: "#f4754e",
+            width: "78%",
+            margin: "1rem 1.5rem"
           }}
           onClose={() => setWelcome("")}
           dismissible
@@ -85,7 +89,11 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
       <React.Fragment>
         <div
           className="image--div"
-          style={{ backgroundImage: `url(${bgimage})`, color: "#fff" }}
+          style={{
+            backgroundImage: `url(${bgimage})`,
+            color: "#f4754e",
+            textShadow: " 1px 1px 2px #f4754e"
+          }}
         >
           <div>
             <p>Want to </p>
@@ -103,9 +111,11 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
           </div>
           <div>
             <p>Want to</p>
-            <p>Sell</p>
+            <p>
+              Sell <span style={{ color: "#f4754e" }}>?</span>
+            </p>
             {authenticated ? (
-              <Link to={{ pathname: "/home/upload" }}>
+              <Link to={{ pathname: "/Post" }}>
                 <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (
@@ -117,58 +127,38 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
         </div>
         <div className="main--body" id="section">
           <p>Trends</p>
-          <div className="">
+          <div className="trends">
             <p>Trends in Devices</p>
             <div className="products">
-              {devices[0] === "loading" ? (
-                <p style={{ marginLeft: "47%" }}>{Loading}</p>
-              ) : (
-                Devices
-              )}
+              {devices[0] === "loading" ? <p>{Loading}</p> : Devices}
               {devices.length === 0 && <p>No item found</p>}
             </div>
           </div>
-          <div className="">
+          <div className="trends">
             <p>Trends in Clothings</p>
             <div className="products">
-              {clothings[0] === "loading" ? (
-                <p style={{ marginLeft: "47%" }}>{Loading}</p>
-              ) : (
-                Clothings
-              )}
+              {clothings[0] === "loading" ? <p>{Loading}</p> : Clothings}
               {clothings.length === 0 && <p>No item found</p>}
             </div>
           </div>
-          <div className="">
+          <div className="trends">
             <p>Trends in FootWears</p>
             <div className="products">
-              {footwears[0] === "loading" ? (
-                <p style={{ marginLeft: "47%" }}>{Loading}</p>
-              ) : (
-                Footwears
-              )}
+              {footwears[0] === "loading" ? <p>{Loading}</p> : Footwears}
               {footwears.length === 0 && <p>No item found</p>}
             </div>
           </div>
-          <div className="">
+          <div className="trends">
             <p>Trends in Household Appliances</p>
             <div className="products">
-              {household[0] === "loading" ? (
-                <p style={{ marginLeft: "47%" }}>{Loading}</p>
-              ) : (
-                Household
-              )}
+              {household[0] === "loading" ? <p>{Loading}</p> : Household}
               {household.length === 0 && <p>No item found</p>}
             </div>
           </div>
-          <div className="">
+          <div className="trends">
             <p>Trends in Cosmetics</p>
             <div className="products">
-              {cosmetics[0] === "loading" ? (
-                <p style={{ marginLeft: "47%" }}>{Loading}</p>
-              ) : (
-                Cosmetics
-              )}
+              {cosmetics[0] === "loading" ? <p>{Loading}</p> : Cosmetics}
               {cosmetics.length === 0 && <p>No item found</p>}
             </div>
           </div>

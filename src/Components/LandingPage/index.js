@@ -15,9 +15,9 @@ const LandingPage = props => {
         <Loading />
       ) : (
         <React.Fragment>
-          <MainNav onClick={ToggleNav} />
+          <MainNav onclick={ToggleNav} />
           <div className="body--content">
-            <SideNav onClick={ToggleNav} disabled={sidenav} />
+            <SideNav onclick={ToggleNav} disabled={sidenav} />
             <LandingPageBody
               location={location}
               user={props.user}

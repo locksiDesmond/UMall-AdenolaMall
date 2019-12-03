@@ -11,7 +11,10 @@ const Newdata = (category, subcategory, limit) => {
       .where("subcategory", "==", subcategory)
       .get()
       .then(querySnapshot => {
-        const somedata = querySnapshot.docs.map(doc => doc.data());
+        const somedata = querySnapshot.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
         setData(somedata);
       })
       .catch(function(error) {
@@ -31,7 +34,10 @@ export const CategoryData = (category, limit) => {
       .orderBy("date")
       .limit(limit)
       .onSnapshot(snapshots => {
-        const somedati = snapshots.docs.map(doc => doc.data());
+        const somedati = snapshots.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
         setTimes(somedati);
       });
     return () => unsubscribe();
@@ -47,7 +53,10 @@ export const LandingPageData = (category, order, limit) => {
       .orderBy(order)
       .limit(limit)
       .onSnapshot(snapshots => {
-        const somedati = snapshots.docs.map(doc => doc.data());
+        const somedati = snapshots.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
         setTimes(somedati);
       });
     return () => unsubscribe();
@@ -64,7 +73,10 @@ export const GetUserPosts = (category, order, limit, uid) => {
       .limit(limit)
       .where("uid", "==", uid)
       .onSnapshot(snapshots => {
-        const somedati = snapshots.docs.map(doc => doc.data());
+        const somedati = snapshots.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
         setTimes(somedati);
       });
     return () => unsubscribe();
@@ -72,7 +84,7 @@ export const GetUserPosts = (category, order, limit, uid) => {
   return times;
 };
 export const Userdata = uid => {
-  const [user, setUsers] = useState(["loading"]);
+  const [user, setUser] = useState(["loading"]);
   useEffect(() => {
     firebase
       .firestore()
@@ -81,30 +93,67 @@ export const Userdata = uid => {
       .get()
       .then(doc => {
         const data = doc.data();
-        setUsers(data);
+        setUser(data);
+      })
+      .catch(() => {
+        setUser("error");
       });
-  });
+  }, [uid]);
   return user;
 };
-
-export const SearchData = (category, search) => {
+export const DeletePicture = name => {
+  // const { category, subcategory, name, description } = user;
+  // console.log(`${category}/${subcategory}/${name}/${description}${0}`);
+  firebase
+    .storage()
+    .ref(`images/${name}`)
+    .delete()
+    .then(() => {
+      console.log("picture  successful");
+    })
+    .catch(() => {
+      console.log("error picture");
+    });
+};
+export const DeleteData = (category, id, image) => {
+  firebase
+    .firestore()
+    .collection(category)
+    .doc(id)
+    .delete()
+    .then(() => {
+      console.log("successful");
+    })
+    .catch(() => {
+      console.log("error");
+    });
+};
+export const SearchData = (category, search, limit = 10) => {
   const [data, setData] = useState(["loading"]);
   useEffect(() => {
-    firebase
-      .firestore()
-      .collection(category)
-      .where("name", ">=", search)
-      .get()
-      .then(querySnapshot => {
-        const somedata = querySnapshot.docs.map(doc => doc.data());
-        setData(somedata);
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
-        setData("error");
-      });
-  }, [category, search]);
-  return data.filter(item => item.name && item.name.indexOf(search) !== -1);
+    if (search.length > 3) {
+      firebase
+        .firestore()
+        .collection(category)
+        .where("name", ">=", search)
+        .limit(limit)
+        .get()
+        .then(querySnapshot => {
+          const somedata = querySnapshot.docs.map(doc => ({
+            doc: doc.id,
+            ...doc.data()
+          }));
+          setData(somedata);
+        })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+          setData("error");
+        });
+    }
+  }, [category, search, limit]);
+  return data.filter(
+    item => item.name && item.name.toLowerCase().indexOf(search) !== -1
+  );
 };
 export const RelatedData = (category, search) => {
   const [data, setData] = useState(["loading"]);
@@ -116,7 +165,10 @@ export const RelatedData = (category, search) => {
       .limit(5)
       .get()
       .then(querySnapshot => {
-        const somedata = querySnapshot.docs.map(doc => doc.data());
+        const somedata = querySnapshot.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
         setData(somedata);
       })
       .catch(function(error) {
@@ -124,7 +176,48 @@ export const RelatedData = (category, search) => {
         setData("error");
       });
   }, [category, search]);
-  return data
+  return data;
+};
+export const sec2time = timeInSeconds => {
+  let pad = function(num, size) {
+      return ("000" + num).slice(size * -1);
+    },
+    time = parseFloat(timeInSeconds).toFixed(3),
+    days = Math.floor(time / 60 / 60 / 24),
+    hours = Math.floor(time / 60 / 60),
+    minutes = Math.floor(time / 60) % 60,
+    seconds = Math.floor(time - minutes * 60);
+
+  return (
+    pad(days, 2) +
+    ":" +
+    pad(hours, 2) +
+    ":" +
+    pad(minutes, 2) +
+    ":" +
+    pad(seconds, 2)
+  );
+};
+export const secondsToHms = d => {
+  d = Number(d);
+  let D = Math.floor(d / (3600 * 24));
+  var h = Math.floor((d % (3600 * 24)) / 3600);
+  var m = Math.floor((d % 3600) / 60);
+
+  var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
+  var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes. ") : "";
+  var DDisplay = D > 0 ? D + (D === 1 ? "Days, " : " Days, ") : "";
+  if (D > 1) {
+    return DDisplay + "ago";
+  } else if (h > 1) {
+    return hDisplay + "ago";
+  } else if (m > 1) {
+    return mDisplay + "ago";
+  } else {
+    return "now";
+  }
+
+  // return DDisplay + hDisplay + mDisplay;
 };
 export class UserDataClass extends Component {
   constructor(props) {

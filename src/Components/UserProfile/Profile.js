@@ -15,10 +15,10 @@ const Profile = ({ user }) => {
       >
         <div className="block-center">
           <img
-            alt="display"
+            alt="profile "
             style={{ width: "10rem", height: "10rem" }}
             className="rounded-circle "
-            src={img}
+            src={userdata.photoUrl}
           />
         </div>
 
@@ -43,12 +43,18 @@ const Profile = ({ user }) => {
         ) : (
           <p>no Phone Number</p>
         )}
-        <p>date Joined: {user.metadata.creationTime.slice(5, 17)}</p>
+        <p>
+          date Joined:
+          <span style={{ marginLeft: ".6rem" }}>
+            {userdata.metadata && userdata.metadata.creationTime.slice(5, 17)}
+          </span>
+        </p>
         <div>
-          material Posted: <Badge color="blue" title="6" />
+          material Posted:
+          <Badge color="blue" title={userdata.materialPosted} />
         </div>
         <div>
-          Sold : <Badge color="green" title="3" />
+          Sold : <Badge color="green" title={userdata.materialSold} />
         </div>
       </div>
     </React.Fragment>

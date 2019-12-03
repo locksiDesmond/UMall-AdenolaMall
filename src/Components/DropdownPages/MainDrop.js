@@ -37,8 +37,10 @@ function MainDrop(props) {
           "https://assets.teenvogue.com/photos/5d489ca292a6b200094bdd2c/master/w_1600%2Cc_limit/Screen%252520Shot%2525202019-08-05%252520at%2525205.15.01%252520PM.png"
         );
         break;
-      case "Household Items":
-        setImage("c");
+      case "Household items":
+        setImage(
+          "https://cdn2.vectorstock.com/i/1000x1000/11/51/household-appliances-icons-set-vector-751151.jpg"
+        );
         break;
       case "others":
         setImage("b");
@@ -51,7 +53,7 @@ function MainDrop(props) {
     <React.Fragment>
       <div className="main--content main">
         <div
-          className="image--div"
+          className={`image--div ${category}`}
           style={{
             backgroundImage: `url(${bgimage})`,
             color: category === "Devices" ? "#000" : "#05aff2"
@@ -68,7 +70,7 @@ function MainDrop(props) {
             <p>Want to</p>
             <p>Sell</p>
             {props.authenticated ? (
-              <Link to={{ pathname: "/home/upload" }}>
+              <Link to={{ pathname: "/Post" }}>
                 <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (
@@ -82,7 +84,7 @@ function MainDrop(props) {
           <p>Trends</p>
           <div className="products">
             {data[0] === "loading" ? (
-              <div style={{ marginLeft: "47%" }}>
+              <div>
                 <Loading className="products loading" />
               </div>
             ) : (

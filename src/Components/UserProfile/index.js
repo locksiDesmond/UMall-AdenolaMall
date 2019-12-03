@@ -11,7 +11,7 @@ import UpdateProfile from "./UpdateProfile";
 import SideNav from "./../SideNav/SideNav";
 import RecentUploads from "./RecentUploads";
 const UserProfile = ({ authenticated }) => {
-  const [display, setDisplay] = useState("Profile");
+  const [display, setDisplay] = useState("Recent");
   const [sidebar, setSidebar] = useState(false);
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
@@ -30,8 +30,6 @@ const UserProfile = ({ authenticated }) => {
               <ContextCreator.Consumer>
                 {({ user }) => <RecentUploads user={user} />}
               </ContextCreator.Consumer>
-            ) : display === "Edit" ? (
-              <h1>Edit</h1>
             ) : (
               <ContextCreator.Consumer>
                 {({ user, firebase }) => (
@@ -52,7 +50,7 @@ const UserProfile = ({ authenticated }) => {
               <ul>
                 <li>&copy; Locksi 2019</li>
                 <li>Contact </li>
-                <li>Term and condition</li>
+                <li>Terms and condition</li>
                 <li>Warnings</li>
               </ul>
               <div>
