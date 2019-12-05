@@ -36,6 +36,15 @@ class Description extends React.Component {
       }
     }
   }
+  componentDidUpdate() {
+    if (this.state.sidebar) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+    }
+  }
 
   handleLike() {
     const { authenticated } = this.context;
@@ -51,20 +60,19 @@ class Description extends React.Component {
           .collection(this.state.item.category)
           .doc(this.state.item.doc)
           .update({
-            likes: firebase.firestore.FieldValue.arrayRemove(
-              this.props.user.uid
-            )
+            likes: firebase.firestore.FieldValue.arrayRemove(user.uid)
           });
         this.setState({ liked: !this.state.liked, likes: likes });
       } else {
         const likes = this.state.likes;
         const { user } = this.context;
         likes.push(user.uid);
-        this.props.firebase.store
+        firebase
+          .firestore()
           .collection(this.state.item.category)
           .doc(this.state.item.doc)
           .update({
-            likes: firebase.firestore.FieldValue.arrayUnion(this.props.user.uid)
+            likes: firebase.firestore.FieldValue.arrayUnion(user.uid)
           });
         this.setState({ liked: !this.state.liked, likes: likes });
       }
@@ -78,17 +86,20 @@ class Description extends React.Component {
     const { item, userdata, liked, likes } = this.state;
     return (
       <React.Fragment>
-        <MainNav onClick={this.handleSidebar} />
+        <MainNav handleclick={this.handleSidebar} />
         <div
           className={` ${
             this.state.sidebar ? "user--profile" : "displa--none"
           }`}
         >
-          <SideNav onClick={this.handleSidebar} disabled={this.state.sidebar} />
+          <SideNav
+            handleclick={this.handleSidebar}
+            disabled={this.state.sidebar}
+          />
           <Descriptionbody
             items={item}
             likes={likes}
-            onclick={this.handleLike}
+            handleclick={this.handleLike}
             userdata={userdata}
             liked={liked}
           />

@@ -2,7 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 // import { firebase } from "../../Firebase/Firebase";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
 
 class SignUpForm extends React.Component {
@@ -17,11 +17,15 @@ class SignUpForm extends React.Component {
       error: "",
       loading: false,
       redirect: false,
+      check: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.toggleCheck = this.toggleCheck.bind(this);
   }
-
+  toggleCheck() {
+    this.setState({ check: !this.state.check });
+  }
 
   handleSubmit(e) {
     e.preventDefault();
@@ -35,6 +39,9 @@ class SignUpForm extends React.Component {
     }
     if (password.name !== confirm.name) {
       this.setState({ confirm: { error: "Passwords are not the same" } });
+    }
+    if (!this.state.check) {
+      this.setState({ error: "form not completed" });
     }
     if (password.name.length < 6) {
       this.setState({
@@ -59,11 +66,11 @@ class SignUpForm extends React.Component {
         password.name !== confirm.name ||
         !phoneNumber.name ||
         password.name.length < 6 ||
-        phoneNumber.name.length !== 11
+        phoneNumber.name.length !== 11 ||
+        !this.state.check
       )
     ) {
       this.setState({ loading: true });
-      console.log("si");
       this.props.firebase.auth
         .createUserWithEmailAndPassword(email.name, password.name)
         .then(user => {
@@ -115,14 +122,15 @@ class SignUpForm extends React.Component {
       email,
       redirect,
       loading,
-      phoneNumber
+      phoneNumber,
+      check
     } = this.state;
     return (
       <Form className="signinform" onSubmit={this.handleSubmit}>
         {redirect && (
           <Redirect to={{ pathname: "/", state: { ...this.state } }} />
         )}
-       
+
         <Form.Group>
           <Form.Label className="signin-form-name">Display Name</Form.Label>
           <Form.Control
@@ -177,6 +185,21 @@ class SignUpForm extends React.Component {
             className={confirm.error ? "input--error" : "input--control bgski"}
           />
           {confirm.error && <p>{confirm.error}</p>}
+        </Form.Group>
+        <Form.Group>
+          <input
+            onChange={this.toggleCheck}
+            type="checkbox"
+            defaultChecked={check}
+          />
+
+          <span style={{ paddingLeft: ".5rem" }}>
+            yes, i have
+            <Link to={{ pathname: "/TermsAndConditions" }}>
+              <em style={{ marginLeft: ".3rem", color: "#001992" }}>read </em>
+            </Link>
+            and i accept Terms and Condition
+          </span>
         </Form.Group>
         <ButtonLg
           small="true"

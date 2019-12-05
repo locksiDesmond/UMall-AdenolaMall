@@ -9,9 +9,9 @@ class Dropdown extends React.Component {
       isOpen: false,
       redirect: false
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleclick = this.handleclick.bind(this);
   }
-  handleClick() {
+  handleclick() {
     this.setState(() => ({
       isOpen: !this.state.isOpen
     }));
@@ -23,7 +23,7 @@ class Dropdown extends React.Component {
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
           <Link
-            onClick={this.props.onclick}
+            onClick={this.props.handleclick}
             to={{
               pathname: `/umall/${this.props.category || title}`,
               state: title
@@ -33,7 +33,7 @@ class Dropdown extends React.Component {
           </Link>
           <button
             className="dropdown--icon a"
-            onClick={() => this.handleClick()}
+            onClick={() => this.handleclick()}
           >
             <img
               className="dropdown--svg"
@@ -49,8 +49,8 @@ class Dropdown extends React.Component {
               return (
                 <Link
                   onClick={() => {
-                    this.props.onclick();
-                    this.handleClick();
+                    this.props.handleclick();
+                    this.handleclick();
                   }}
                   key={item.id}
                   to={{
@@ -62,7 +62,9 @@ class Dropdown extends React.Component {
                 >
                   <li
                     className="dropdown--item--list"
-                    style={{ marginLeft: !item.avatar && "2.2rem" }}
+                    style={{
+                      margin: !item.avatar && " .5rem .5rem .5rem 2.3rem"
+                    }}
                   >
                     {item.avatar && (
                       <img

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileNav from "./ProfileNav";
 import Profile from "./Profile";
 
@@ -16,12 +16,20 @@ const UserProfile = ({ authenticated }) => {
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
   };
-
+  useEffect(() => {
+    if (sidebar) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+    }
+  }, [sidebar]);
   return (
     <React.Fragment>
-      <MainNav onClick={() => setSidebar(!sidebar)} />
+      <MainNav handleclick={() => setSidebar(!sidebar)} />
       <div className={` ${sidebar ? "user--profile" : "displa--none"}`}>
-        <SideNav onClick={() => setSidebar(!sidebar)} disabled={sidebar} />
+        <SideNav handleclick={() => setSidebar(!sidebar)} disabled={sidebar} />
         {!authenticated && <Redirect to="/signin" />}
         <div style={{ fontSize: "1rem" }} className="profile--body">
           <div className="profile--main">

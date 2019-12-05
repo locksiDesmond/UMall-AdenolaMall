@@ -129,7 +129,7 @@ const UpdateProfile = props => {
           handleSubmit={downloadPicture}
           style={{ marginLeft: "0" }}
         />
-        <div style={{ marginTop: "1rem" }}>
+        <div style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
           <ButtonLg
             loading={loading ? true : false}
             title="Save"

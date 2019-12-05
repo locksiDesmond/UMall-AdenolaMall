@@ -24,7 +24,7 @@ const Profile = ({ user }) => {
 
         <p
           style={{
-            paddingLeft: "20px",
+            paddingLeft: "10px",
             fontSize: "1.2rem",
             textTransform: "capitalize"
           }}
@@ -49,10 +49,10 @@ const Profile = ({ user }) => {
             {userdata.metadata && userdata.metadata.creationTime.slice(5, 17)}
           </span>
         </p>
-        <div>
+        <p>
           material Posted:
           <Badge color="blue" title={userdata.materialPosted} />
-        </div>
+        </p>
         <div>
           Sold : <Badge color="green" title={userdata.materialSold} />
         </div>

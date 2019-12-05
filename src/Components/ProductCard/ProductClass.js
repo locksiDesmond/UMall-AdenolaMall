@@ -4,6 +4,7 @@ import { FaRegHeart } from "react-icons/fa";
 import img from "../../images/svgs/boy.svg";
 import { IoMdTime } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
+import { MdFiberNew } from "react-icons/md";
 import { DeleteData, DeletePicture } from "./../DropdownPages/FetchData";
 import { firebase } from "./../../Firebase/Firebase";
 
@@ -114,12 +115,28 @@ class ProductClass extends React.Component {
 
           <br />
         </div>
-        <div className="d-none d-lg-block card--picture">
+        <div
+          className="d-none d-lg-block card--picture"
+          style={{ position: "relative" }}
+        >
           <img src={item.pictureUrl[0]} alt="product card" />
+          {item.condition === "New" && (
+            <span style={{ position: "absolute", right: "1rem" }}>
+              <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />
+            </span>
+          )}
         </div>
         <div className="card--body">
-          <div className="d-block d-lg-none card--picture">
+          <div
+            className="d-block d-lg-none card--picture"
+            style={{ position: "relative" }}
+          >
             <img src={item.pictureUrl[0]} alt="product card" />
+            {item.condition === "New" && (
+              <span style={{ position: "absolute", top: "0", right: "0rem" }}>
+                <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />
+              </span>
+            )}
           </div>
           <div className="card--title">
             <p className="capitalize">{item.name} </p>
@@ -144,12 +161,13 @@ class ProductClass extends React.Component {
               )}
               <span style={{ fontSize: ".7rem" }}>
                 {this.state.likes
-                  ? this.state.likes === 0
+                  ? this.state.likes.length === 0
                     ? " "
                     : this.state.likes.length
                   : ""}
               </span>
             </span>
+
             {isDeleteable && (
               <span
                 onClick={e => {

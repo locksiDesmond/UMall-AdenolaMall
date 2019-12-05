@@ -4,11 +4,11 @@ import Btn from "./../../SmallComponent/Btn";
 import img from "../../images/svgs/user.svg";
 import { FaPen } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
-// import boy from "../../images/svgs/boy.svg";
 import { Userdata } from "../DropdownPages/FetchData";
 function LeftNav(props) {
   const [show, setShow] = useState(false);
-  const userdata = Userdata(props.user.uid);
+
+  const userdata = props.authenticated && Userdata(props.user.uid);
   const showDropdown = () => {
     setShow(!show);
   };
@@ -22,7 +22,7 @@ function LeftNav(props) {
         <img
           id="dropdown basic"
           src={userdata.photoUrl}
-          alt="Dp"
+          alt="dp"
           onClick={showDropdown}
           className="rounded-circle card--profile--photo"
         />
@@ -37,7 +37,11 @@ function LeftNav(props) {
         </button>
         <hr />
         <Link to={{ pathname: "/umall/Post" }}>
-          <button onClick={showDropdown} className="display--none a">
+          <button
+            style={{ marginLeft: "1rem" }}
+            onClick={showDropdown}
+            className="display--none a"
+          >
             Post
           </button>
         </Link>

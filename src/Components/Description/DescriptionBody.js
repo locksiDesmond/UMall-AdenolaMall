@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { RelatedData } from "./../DropdownPages/FetchData";
 import ProductCard from "./../ProductCard/index";
+import Badge from "../../SmallComponent/Badge";
+import { MdFiberNew } from "react-icons/md";
 import { IoIosHeart } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 
-function Descriptionbody({ items, userdata,likes, liked, onclick}) {
+function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
   const [show, setShow] = useState(false);
   const [number, setNumber] = useState(0);
   const [direction, setDirection] = useState(null);
-  let item = RelatedData(items.category, items.name);
+  let item = RelatedData(items.category, items.name, items.doc);
   const Otheritem = item.map(item => (
     <ProductCard data={item} key={item.date} />
   ));
@@ -17,7 +19,6 @@ function Descriptionbody({ items, userdata,likes, liked, onclick}) {
     setNumber(selectedIndex);
     setDirection(e.direction);
   };
-  console.log(userdata);
   const handleShow = () => {
     setShow(!show);
   };
@@ -25,9 +26,9 @@ function Descriptionbody({ items, userdata,likes, liked, onclick}) {
   return (
     <div className="description--page">
       <div className="product--description">
-        <h1>{items.name}</h1>
-        <div className="carousel--image">
-          <div className="first">boys</div>
+        <h1 className="capitalize">{items.name}</h1>
+        <div className="carousel--image ">
+          <div className="first"></div>
           <Carousel
             className="second"
             fade="true"
@@ -50,7 +51,7 @@ function Descriptionbody({ items, userdata,likes, liked, onclick}) {
             onSelect={handleSelect}
           >
             {items.pictureUrl.map((item, index) => (
-              <Carousel.Item>
+              <Carousel.Item key={item.date}>
                 <img
                   className="description--image"
                   src={item}
@@ -59,45 +60,58 @@ function Descriptionbody({ items, userdata,likes, liked, onclick}) {
               </Carousel.Item>
             ))}
           </Carousel>
-          <div className="last">boys</div>
+
+          <div className="last"></div>
         </div>
 
         <span className="date">{items.data}</span>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Description</h2>
           <div className="icons">
+            {items.condition === "New" && (
+              <span>
+                <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />
+              </span>
+            )}
             <span
               className="heart"
               style={{ marginRight: "1rem" }}
               onClick={() => {
-                onclick();
-                }}
-                >
-                {liked ? (
+                handleclick();
+              }}
+            >
+              {liked ? (
                 <IoIosHeart style={{ color: "red" }} />
               ) : (
                 <FaRegHeart style={{ fill: "black" }} />
               )}
               <span style={{ fontSize: ".7rem" }}>
-                {likes
-                  ? likes === 0
-                    ? " "
-                    : likes.length
-                  : ""}
-            </span>
-            }
+                {likes ? (likes.length === 0 ? " " : likes.length) : ""}
+              </span>
             </span>
             <span className="price">&#8358;{items.price}</span>
           </div>
         </div>
 
         <p className="description--details">{items.description}</p>
-        <div className="products">
-          {item[0] === "loading" ? <p>loading</p> : Otheritem}
+        <div className="products-d-none d-white">
+          <p style={{ fontWeight: "500", fontSize: "1.2rem" }}>Related Items</p>
+          <div className="products ">
+            {item[0] === "loading" ? <p>loading</p> : Otheritem}
+          </div>
         </div>
       </div>
       <div className="description--aside">
         <div className="product--owner-profile">
+          <p
+            style={{
+              textAlign: "center",
+              fontWeight: "500",
+              fontSize: "1.1rem"
+            }}
+          >
+            Sellers details
+          </p>
           <div className="profile-image-name block-center">
             <img
               className="rounded-circle product--image"
@@ -105,36 +119,45 @@ function Descriptionbody({ items, userdata,likes, liked, onclick}) {
               alt="profile "
             />
 
-            <h2 className="capitalize"> {userdata.username}</h2>
+            <p style={{fontSize:"1.1rem",width: "7rem", fontWeight:"500"}} className="capitalize"> {userdata.username}</p>
           </div>
           <ul className="details">
             <li className="signin-form-name">
               Last Seen :
-              <span> {userdata.metadata.lastSignInTime.slice(5, 16)}</span>
+              <span>{userdata.metadata.lastSignInTime.slice(5, 16)}</span>
             </li>
             <li className="signin-form-name">
               Joined :
-              <span> {userdata.metadata.creationTime.slice(5, 16)}</span>
+              <span>{userdata.metadata.creationTime.slice(5, 16)}</span>
             </li>
             <li className="signin-form-name">
-              Material posted : <span>{userdata.materialPosted} </span>
+              Material posted : <Badge padding="true" color="blue" title={userdata.materialPosted}/>
             </li>
-            <li className="signin-form-name">
-              Sold : <span>{userdata.materialSold}</span>
-            </li>
+            <p className="signin-form-name">
+              Sold : <Badge padding="true" color="Green" title={userdata.materialSold}/>
+            </p>
           </ul>
           <div className=" show--number-parent">
             <button className="btn show--number" onClick={handleShow}>
-              Show Number
+              {show ? <span>Hide </span> : <span>Show </span>}Number
             </button>
             {show && (
-              <div style={{ marginTop: "1rem" }}> {userdata.phoneNumber}</div>
+              <div style={{ marginTop: "1.2rem", fontWeight: "500" }}>
+                {userdata.phoneNumber}
+              </div>
             )}
           </div>
         </div>
+
         <div className="warnings">
           <h3>Report And Warnings</h3>
           <p> bunch of reports</p>
+        </div>
+        <div className="d-white products-d-block">
+          <p style={{ fontWeight: "500", fontSize: "1.2rem" }}>Related Items</p>
+          <div className="products ">
+            {item[0] === "loading" ? <p>loading</p> : Otheritem}
+          </div>
         </div>
       </div>
     </div>

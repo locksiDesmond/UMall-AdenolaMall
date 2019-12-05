@@ -85,35 +85,32 @@ class SideNav extends React.Component {
   }
   render() {
     return (
-      <div
-        {...this.props}
-        className={`sidenav ${this.props.disabled && "show--nav"}`}
-      >
-        <NavForm onclick={this.props.onclick} />
+      <div className={`sidenav ${this.props.disabled && "show--nav"}`}>
+        <NavForm handleclick={this.props.handleclick} />
         <Dropdown
           title="Devices and Accessories"
-          onclick={this.props.onclick}
+          handleclick={this.props.handleclick}
           item={this.state.Devices}
           category="Devices"
         />
         <Dropdown
           title="Clothings"
-          onclick={this.props.onclick}
+          handleclick={this.props.handleclick}
           item={this.state.Clothings}
         />
         <Dropdown
           title="Cosmetics"
-          onclick={this.props.onclick}
+          handleclick={this.props.handleclick}
           item={this.state.Cosmetics}
         />
         <Dropdown
           title="Footwears"
-          onclick={this.props.onclick}
+          handleclick={this.props.handleclick}
           item={this.state.Footwear}
         />
         <Dropdown
           title="Household items"
-          onclick={this.props.onclick}
+          handleclick={this.props.handleclick}
           item={this.state.HouseItems}
         />
       </div>

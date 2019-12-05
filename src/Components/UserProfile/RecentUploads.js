@@ -52,11 +52,6 @@ const RecentUploads = ({ user }) => {
             <hr />
           </React.Fragment>
         )}
-        {!devices ||
-          !footwears ||
-          !clothings ||
-          !household ||
-          (!cosmetics && <p>item not found</p>)}
       </div>
     </React.Fragment>
   );

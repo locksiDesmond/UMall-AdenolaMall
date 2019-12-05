@@ -15,11 +15,17 @@ function SignInForm(props) {
     setLoading(true);
     if (!email.name) {
       setEmail({ error: "no Email" });
+      setLoading(false);
     }
     if (!password.name) {
       setPassword({ error: "No password" });
+      setLoading(false);
     }
-    if (!(!email.name || !password.name)) {
+    if (password.name.length < 6) {
+      setPassword({ error: "Password must be at least 6 chaaracters" });
+      setLoading(false);
+    }
+    if (!(!email.name || !password.name || password.name.length < 6)) {
       props.firebase.auth
         .signInWithEmailAndPassword(email.name, password.name)
         .then(user => {
@@ -33,7 +39,6 @@ function SignInForm(props) {
           setLoading(false);
         });
     }
-    setLoading(false);
   };
   return (
     <Form className="signupform" onSubmit={handleSubmit}>
@@ -59,7 +64,8 @@ function SignInForm(props) {
         {password.error && <p style={{ color: "#f00" }}>{password.error}</p>}
       </Form.Group>
       <ButtonLg
-        disabled={loading ? true : false}
+        disabled={loading ? "true" : ""}
+        loading={loading ? "true" : ""}
         small="true"
         type="submit"
         title="submit"

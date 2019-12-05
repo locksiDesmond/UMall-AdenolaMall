@@ -17,7 +17,7 @@ function ProductCard(props) {
   return (
     <React.Fragment>
       {newuser[0] !== "loading" && (
-        <ContextCreator>
+        <ContextCreator.Consumer>
           {({ firebase, user, authenticated }) => (
             <ProductClass
               isDeleteable={props.isDeleteable}
@@ -29,7 +29,7 @@ function ProductCard(props) {
               firebase={firebase}
             />
           )}
-        </ContextCreator>
+        </ContextCreator.Consumer>
       )}
     </React.Fragment>
   );

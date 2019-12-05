@@ -3,7 +3,7 @@ import { SearchData } from "./../DropdownPages/FetchData";
 import ProductCard from "../ProductCard";
 import ButtonLg from "./../../SmallComponent/ButtonLg";
 const Search = props => {
-  const search = props.location.state;
+  const search = props.location.state.toLowerCase();
   const [devicesmore, setDMore] = useState();
   const [footwearsmore, setFMore] = useState();
   const [cosmeticsmore, setCMore] = useState();

@@ -55,7 +55,8 @@ function ForgotPassword(props) {
             </Form.Group>
             <ButtonLg
               sm="true"
-              loading={loading}
+              disabled={loading ? "true" : ""}
+              loading={loading ? "true" : ""}
               type="submit"
               onClick={handleSubmit}
               title="Reset"

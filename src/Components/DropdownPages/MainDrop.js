@@ -64,23 +64,25 @@ function MainDrop(props) {
             <p>
               Buy <span style={{ color: "#f4754e" }}>?</span>
             </p>
-            <Btn className="big" color="#f4754e" title="Shop now" />
+            <a href="#down">
+              <Btn dropdown="true" className="big" color="#f4754e" title="Shop now" />
+            </a>
           </div>
           <div>
             <p>Want to</p>
             <p>Sell</p>
             {props.authenticated ? (
-              <Link to={{ pathname: "/Post" }}>
-                <Btn className="big" color="#05aff2" title="Post" />
+              <Link to={{ pathname: "/umall/Post" }}>
+                <Btn  className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (
-              <Link to={{ pathname: "/signin" }}>
+              <Link to={{ pathname: "/signUp" }}>
                 <Btn className="big" color="#05aff2" title="Sign up" />
               </Link>
             )}
           </div>
         </div>
-        <div className="main--body">
+        <div className="main--body" id="down">
           <p>Trends</p>
           <div className="products">
             {data[0] === "loading" ? (

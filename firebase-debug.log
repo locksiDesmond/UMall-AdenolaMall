@@ -1,0 +1,132 @@
+[debug] [2019-12-05T02:20:09.689Z] ----------------------------------------------------------------------
+[debug] [2019-12-05T02:20:09.696Z] Command:       C:\Program Files (x86)\nodejs\node.exe C:\Users\LOCKSI\AppData\Local\Yarn\Data\global\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-12-05T02:20:09.697Z] CLI Version:   7.8.1
+[debug] [2019-12-05T02:20:09.697Z] Platform:      win32
+[debug] [2019-12-05T02:20:09.697Z] Node Version:  v10.16.2
+[debug] [2019-12-05T02:20:09.905Z] Time:          Thu Dec 05 2019 03:20:09 GMT+0100 (West Africa Standard Time)
+[debug] [2019-12-05T02:20:09.905Z] ----------------------------------------------------------------------
+[debug] [2019-12-05T02:20:09.905Z] 
+[debug] [2019-12-05T02:20:10.137Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-12-05T02:20:10.139Z] > authorizing via signed-in user
+[debug] [2019-12-05T02:20:10.139Z] [iam] checking project umall-adenola-mall-production for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2019-12-05T02:20:10.146Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-12-05T02:20:10.148Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-12-05T02:20:14.019Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:20:14.096Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/umall-adenola-mall-production:testIamPermissions  
+
+[debug] [2019-12-05T02:20:17.639Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:20:17.643Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/umall-adenola-mall-production  
+ 
+[debug] [2019-12-05T02:20:31.415Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'umall-adenola-mall-production'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script.
+[info] i  database: checking rules syntax...
+[debug] [2019-12-05T02:22:29.431Z] >>> HTTP REQUEST PUT https://umall-adenola-mall-production.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+[debug] [2019-12-05T02:22:30.893Z] <<< HTTP RESPONSE 200
+[info] +  database: rules syntax for database umall-adenola-mall-production is valid
+[debug] [2019-12-05T02:22:30.897Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/umall-adenola-mall-production  
+ 
+[debug] [2019-12-05T02:22:32.952Z] <<< HTTP RESPONSE 200
+[info] i  firebase.storage: checking storage.rules for compilation errors...
+[debug] [2019-12-05T02:22:32.961Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production:test  
+
+[debug] [2019-12-05T02:22:34.237Z] <<< HTTP RESPONSE 200
+[info] +  firebase.storage: rules file storage.rules compiled successfully
+[info] i  firestore: reading indexes from firestore.indexes.json...
+[info] i  cloud.firestore: checking firestore.rules for compilation errors...
+[debug] [2019-12-05T02:22:34.327Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production:test  
+
+[debug] [2019-12-05T02:22:35.285Z] <<< HTTP RESPONSE 200
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully
+[debug] [2019-12-05T02:22:35.292Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "firebase-admin": "^8.6.0",
+    "firebase-functions": "^3.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.1.6"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2019-12-05T02:22:35.296Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/umall-adenola-mall-production/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2019-12-05T02:22:35.297Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/umall-adenola-mall-production/services/runtimeconfig.googleapis.com  
+ 
+[debug] [2019-12-05T02:22:37.497Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2019-12-05T02:22:37.586Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:37.587Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/umall-adenola-mall-production/adminSdkConfig  
+ 
+[debug] [2019-12-05T02:22:38.086Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:38.089Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/umall-adenola-mall-production/versions  
+
+[debug] [2019-12-05T02:22:41.003Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:41.009Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production/releases?pageSize=10&pageToken=  
+ 
+[debug] [2019-12-05T02:22:42.221Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:42.225Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production/rulesets/493a342b-8082-4a2b-b3dd-281e81b8248d  
+ 
+[debug] [2019-12-05T02:22:43.460Z] <<< HTTP RESPONSE 200
+[info] i  storage: latest version of storage.rules already up to date, skipping upload...
+[debug] [2019-12-05T02:22:43.474Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production/releases?pageSize=10&pageToken=  
+ 
+[debug] [2019-12-05T02:22:43.475Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1beta2/projects/umall-adenola-mall-production/databases/(default)/collectionGroups/-/indexes  
+ 
+[debug] [2019-12-05T02:22:44.449Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:44.450Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/umall-adenola-mall-production/rulesets/c1f33b0d-da48-4bff-ac06-648261f2673d  
+ 
+[debug] [2019-12-05T02:22:44.781Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:44.783Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1beta2/projects/umall-adenola-mall-production/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false  
+ 
+[debug] [2019-12-05T02:22:45.420Z] <<< HTTP RESPONSE 200
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload...
+[debug] [2019-12-05T02:22:46.049Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:22:46.052Z] Skipping existing index: {"collectionGroup":"Clothings","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.052Z] Skipping existing index: {"collectionGroup":"Cosmetics","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.052Z] Skipping existing index: {"collectionGroup":"Devices","queryScope":"COLLECTION","fields":[{"fieldPath":"subcategory","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.052Z] Skipping existing index: {"collectionGroup":"Devices","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.053Z] Skipping existing index: {"collectionGroup":"Devices","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"name","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.053Z] Skipping existing index: {"collectionGroup":"Footwears","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.053Z] Skipping existing index: {"collectionGroup":"getUserRecent","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[debug] [2019-12-05T02:22:46.053Z] Skipping existing index: {"collectionGroup":"Household items","queryScope":"COLLECTION","fields":[{"fieldPath":"uid","order":"ASCENDING"},{"fieldPath":"date","order":"ASCENDING"}]}
+[info] +  firestore: deployed indexes in firestore.indexes.json successfully
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2019-12-05T02:22:46.067Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/umall-adenola-mall-production/configs  
+ 
+[debug] [2019-12-05T02:22:47.126Z] <<< HTTP RESPONSE 200
+[info] i  hosting[umall-adenola-mall-production]: beginning deploy...
+[info] i  hosting[umall-adenola-mall-production]: found 61 files in build
+[debug] [2019-12-05T02:22:57.707Z] [hosting] hash cache [YnVpbGQ] stored for 61 files
+[debug] [2019-12-05T02:22:57.708Z] [hosting][hash queue][FINAL]
+[debug] [2019-12-05T02:22:57.709Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/umall-adenola-mall-production/versions/e30e392965ed0b51:populateFiles  
+ <request body omitted>
+[debug] [2019-12-05T02:23:01.385Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-05T02:23:01.451Z] [hosting][populate queue][FINAL]
+[debug] [2019-12-05T02:23:01.451Z] [hosting] uploads queued: 32

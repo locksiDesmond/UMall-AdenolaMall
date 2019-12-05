@@ -8,8 +8,8 @@ function NavForm(props) {
     if (search) {
       setRedirect(true);
     }
-    if (props.onclick) {
-      props.onclick();
+    if (props.handleclick) {
+      props.handleclick();
     }
   };
   return (

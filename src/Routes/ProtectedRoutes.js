@@ -1,14 +1,21 @@
 import React from "react";
 import MainNav from "./../Components/Navbar/MainNav";
+import Loadable from "react-loadable";
 import { Route, Switch } from "react-router-dom";
 import { ContextCreator } from "./../Context/Context";
 import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
 import SideNav from "../Components/SideNav/SideNav";
-import ErrorPage from "./../SmallComponent/ErrorPage";
 import DropdownItems from "./../Components/DropdownPages/DropdownItems";
 import MainDrop from "./../Components/DropdownPages/MainDrop";
-import Search from "./../Components/Search page/index";
+const ErrorPage = Loadable({
+  loader: () => import("./../SmallComponent/ErrorPage"),
+  loading: Loading
+});
+const Search = Loadable({
+  loader: () => import("./../Components/Search page/index"),
+  loading: Loading
+});
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);
@@ -24,13 +31,25 @@ class ProtectedRoutes extends React.Component {
       sidebar: !this.state.sidebar
     });
   }
+  componentDidUpdate() {
+    if (this.state.sidebar) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+    }
+  }
   render() {
     const { authenticated, loading, user } = this.context;
     const RenderItem = (
       <React.Fragment>
-        <MainNav onclick={this.sideNavToggle} />
+        <MainNav handleclick={this.sideNavToggle} />
         <div className="body--content">
-          <SideNav onclick={this.sideNavToggle} disabled={this.state.sidebar} />
+          <SideNav
+            handleclick={this.sideNavToggle}
+            disabled={this.state.sidebar}
+          />
           <Switch>
             <Route
               path="/umall/Post"
@@ -98,7 +117,7 @@ class ProtectedRoutes extends React.Component {
               component={DropdownItems}
             />
             <Route path="/umall/Cosmetics/Perfumes" component={DropdownItems} />
-            <Route path="/umall/Cosmetics/Mkeups" component={DropdownItems} />
+            <Route path="/umall/Cosmetics/Makeups" component={DropdownItems} />
             <Route
               path="/umall/Cosmetics/Jewelries"
               component={DropdownItems}

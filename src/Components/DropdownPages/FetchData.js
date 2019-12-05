@@ -155,7 +155,7 @@ export const SearchData = (category, search, limit = 10) => {
     item => item.name && item.name.toLowerCase().indexOf(search) !== -1
   );
 };
-export const RelatedData = (category, search) => {
+export const RelatedData = (category, search, docid) => {
   const [data, setData] = useState(["loading"]);
   useEffect(() => {
     firebase
@@ -176,7 +176,7 @@ export const RelatedData = (category, search) => {
         setData("error");
       });
   }, [category, search]);
-  return data;
+  return data.filter(item => item.doc && item.doc !== docid);
 };
 export const sec2time = timeInSeconds => {
   let pad = function(num, size) {
@@ -204,14 +204,14 @@ export const secondsToHms = d => {
   var h = Math.floor((d % (3600 * 24)) / 3600);
   var m = Math.floor((d % 3600) / 60);
 
-  var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
-  var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes. ") : "";
-  var DDisplay = D > 0 ? D + (D === 1 ? "Days, " : " Days, ") : "";
-  if (D > 1) {
+  var hDisplay = h > 0 ? h + (h === 1 ? " hour " : " hours ") : "";
+  var mDisplay = m > 0 ? m + (m === 1 ? " minute " : " minutes ") : "";
+  var DDisplay = D > 0 ? D + (D === 1 ? "day " : " days ") : "";
+  if (D >= 1) {
     return DDisplay + "ago";
-  } else if (h > 1) {
+  } else if (h >= 1) {
     return hDisplay + "ago";
-  } else if (m > 1) {
+  } else if (m >= 1) {
     return mDisplay + "ago";
   } else {
     return "now";

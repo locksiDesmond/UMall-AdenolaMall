@@ -115,11 +115,11 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
               Sell <span style={{ color: "#f4754e" }}>?</span>
             </p>
             {authenticated ? (
-              <Link to={{ pathname: "/Post" }}>
+              <Link to={{ pathname: "/umall/Post" }}>
                 <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (
-              <Link to={{ pathname: "/signin" }}>
+              <Link to={{ pathname: "/signUp" }}>
                 <Btn className="big" color="#05aff2" title="Sign up" />
               </Link>
             )}

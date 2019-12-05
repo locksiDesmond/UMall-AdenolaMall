@@ -88,7 +88,7 @@ class MainNav extends React.Component {
             handleClose={this.handleClose}
           />
         </div>
-        <button onClick={this.props.onclick} className="btn hamburger">
+        <button onClick={this.props.handleclick} className="btn hamburger">
           <GiHamburgerMenu style={{ color: "#fff", fontSize: "2rem" }} />
         </button>
       </Navbar>

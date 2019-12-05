@@ -9,7 +9,7 @@ import logo from "./../../images/umall2.gif";
 const SignInModal = props => {
   return (
     <Modal show={props.show}>
-      <Modal.Body>
+      <Modal.Body className="signin--section">
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             style={{
@@ -25,37 +25,32 @@ const SignInModal = props => {
             X
           </Button>
         </div>
-        <section className="signin--section">
-          <section className="signin--body">
-            <div className="logo--group--with--text">
-              <Link to={{ pathname: "/" }}>
-                <img alt="Logo" src={logo} />
-                <p>Sell swiftly, buy Swiftly</p>
-              </Link>
-              <SignInForm
-                firebase={props.firebase}
-                onClick={props.handleClose}
-              />
-            </div>
-          </section>
-          <div className="signin--link">
-            <p>
-              Dont have an account
-              <span style={{ color: "#05aff2", marginRight: "1rem" }}> ? </span>
-              <Link to={{ pathname: "/signUp" }}>
-                <Btn color="#05aff2" title="signup" />
-              </Link>
-            </p>
-            <p>
-              Forgot password <span style={{ color: "#05aff2" }}> ?</span>
-              <Link to={{ pathname: "/reset" }}>
-                <span style={{ paddingLeft: ".5rem", color: "#001992" }}>
-                  <em>click here</em>
-                </span>
-              </Link>
-            </p>
+        <section className="signin--body">
+          <div className="logo--group--with--text">
+            <Link to={{ pathname: "/" }}>
+              <img alt="Logo" src={logo} />
+              <p>Sell swiftly, buy Swiftly</p>
+            </Link>
+            <SignInForm firebase={props.firebase} onClick={props.handleClose} />
           </div>
         </section>
+        <div className="signin--link">
+          <p>
+            Dont have an account
+            <span style={{ color: "#05aff2", marginRight: "1rem" }}> ? </span>
+            <Link to={{ pathname: "/signUp" }}>
+              <Btn color="#05aff2" title="signup" />
+            </Link>
+          </p>
+          <p>
+            Forgot password <span style={{ color: "#05aff2" }}> ?</span>
+            <Link to={{ pathname: "/reset" }}>
+              <span style={{ paddingLeft: ".5rem", color: "#001992" }}>
+                <em>click here</em>
+              </span>
+            </Link>
+          </p>
+        </div>
       </Modal.Body>
     </Modal>
   );
