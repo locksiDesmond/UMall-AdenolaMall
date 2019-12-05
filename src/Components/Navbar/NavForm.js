@@ -1,8 +1,22 @@
-import React from "react";
-
-function NavForm() {
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+function NavForm(props) {
+  const [search, setSearch] = useState("");
+  const [redirect, setRedirect] = useState(false);
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (search) {
+      setRedirect(true);
+    }
+    if (props.handleclick) {
+      props.handleclick();
+    }
+  };
   return (
-    <form className="btn--group">
+    <form onSubmit={handleSubmit} className="btn--group">
+      {redirect && (
+        <Redirect to={{ pathname: "/umall/Search", state: search }} />
+      )}
       <input
         style={{
           width: "15rem",
@@ -13,7 +27,8 @@ function NavForm() {
         }}
         type="name"
         id="name"
-        name="name"
+        onChange={e => setSearch(e.currentTarget.value)}
+        name={search}
         placeholder=""
         className="search--input"
       />
@@ -25,6 +40,8 @@ function NavForm() {
           padding: "0 1.2rem",
           fontSize: ".8rem"
         }}
+        type="submit"
+        onClick={handleSubmit}
       >
         Search
       </button>

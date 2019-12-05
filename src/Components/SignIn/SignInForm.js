@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { firebase } from "../../Firebase/Firebase";
+// import { firebase } from "../../Firebase/Firebase";
 import { Redirect } from "react-router-dom";
 import ButtonLg from "../../SmallComponent/ButtonLg";
-function SignInForm() {
+function SignInForm(props) {
   const [email, setEmail] = useState({ name: "", password: "" });
   const [password, setPassword] = useState({ name: "", password: "" });
   const [error, setError] = useState("");
@@ -15,13 +15,18 @@ function SignInForm() {
     setLoading(true);
     if (!email.name) {
       setEmail({ error: "no Email" });
+      setLoading(false);
     }
     if (!password.name) {
       setPassword({ error: "No password" });
+      setLoading(false);
     }
-    if (!(!email.name || !password.name)) {
-      firebase
-        .auth()
+    if (password.name.length < 6) {
+      setPassword({ error: "Password must be at least 6 chaaracters" });
+      setLoading(false);
+    }
+    if (!(!email.name || !password.name || password.name.length < 6)) {
+      props.firebase.auth
         .signInWithEmailAndPassword(email.name, password.name)
         .then(user => {
           if (user) {
@@ -34,11 +39,10 @@ function SignInForm() {
           setLoading(false);
         });
     }
-    setLoading(false);
   };
   return (
     <Form className="signupform" onSubmit={handleSubmit}>
-      {redirect && <Redirect to={{ pathname: "/Home" }} />}
+      {redirect && <Redirect to={{ pathname: "/" }} />}
       <Form.Group>
         <Form.Label className="signin-form-name">Email</Form.Label>
         <Form.Control
@@ -60,7 +64,8 @@ function SignInForm() {
         {password.error && <p style={{ color: "#f00" }}>{password.error}</p>}
       </Form.Group>
       <ButtonLg
-        disabled={loading ? true : false}
+        disabled={loading ? "true" : ""}
+        loading={loading ? "true" : ""}
         small="true"
         type="submit"
         title="submit"

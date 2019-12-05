@@ -1,14 +1,16 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import { firebase } from "./../../Firebase/Firebase";
 import Button from "react-bootstrap/Button";
 const LogOutModal = props => {
   const Logout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .catch(error => {
-        console.log("error");
+    props.firebase.auth.signOut().catch(error => {
+      console.log("error");
+    });
+    props.firebase.store
+      .collection("Users")
+      .doc(props.user.uid)
+      .update({
+        logout: Date.now()
       });
     props.handleClose();
   };
@@ -26,7 +28,7 @@ const LogOutModal = props => {
           }}
         >
           <Button size="sm" onClick={Logout}>
-            Logout
+            Yes
           </Button>
           <Button size="sm" onClick={props.handleClose}>
             Cancel

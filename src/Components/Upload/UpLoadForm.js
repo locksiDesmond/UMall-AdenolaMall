@@ -4,8 +4,8 @@ import ImageUpload from "./ImageUpload";
 import SelectForm from "./SelectForm";
 import { firebase } from "./../../Firebase/Firebase";
 import ProgressBar from "react-bootstrap/ProgressBar";
-import Button from "react-bootstrap/Button";
 import { Redirect } from "react-router-dom";
+import ButtonLg from "../../SmallComponent/ButtonLg";
 class UpLoadForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,17 +16,31 @@ class UpLoadForm extends React.Component {
       price: { name: "", error: "" },
       error: "",
       category: { name: "Devices", error: "" },
-      subcategory: { name: "", error: "" },
-      objects: [],
+      subcategory: { name: "Laptops", error: "" },
+      objects: [
+        {
+          name: "Laptops",
+          id: 0
+        },
+        {
+          name: "Mobile Phones",
+          id: 1
+        },
+        {
+          name: "Others accessories",
+          id: 2
+        }
+      ],
       loading: false,
       uploaded: false,
       picture: [],
+      pictureName:[],
       url: [],
       loaded: Array(3).fill(false)
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.changeSubCategory = this.changeSubCategory.bind(this);
+    this.changesubcategory = this.changesubcategory.bind(this);
     this.errors = this.errors.bind(this);
     this.upload = this.upload.bind(this);
     this.fileUpload = this.fileUpload.bind(this);
@@ -37,7 +51,8 @@ class UpLoadForm extends React.Component {
     const value = name;
     this.setState(() => ({
       [value]: { ...this.state[value], error: error },
-      error: "Error"
+      error: "Error",
+      loading:false
     }));
   }
   downloadPicture(picture, i) {
@@ -69,26 +84,30 @@ class UpLoadForm extends React.Component {
     if (!condition.name) {
       this.errors("condition", "state a condition!");
     }
+    if (!this.props.data) {
+      this.errors("error", "set your phone Number");
+    }
+    if (!this.state.picture) {
+      this.errors("error", "input at least one picture");
+    }
     if (
       !(
         !title.name ||
         !description.name ||
         !price.name ||
         !condition.name ||
-        !category.name
+        !category.name ||
+        !this.props.data ||
+        !this.state.picture
       )
     ) {
-      for (let i = 0; i <= this.state.picture.length; i++) {
+      for (let i = 0; i <= (this.state.picture.length - 1); i++) {
         this.upload(this.state.picture[i], i);
       }
-    } else {
-      this.setState({
-        loading: false
-      });
     }
-    this.setState({
-      loading: false
-    });
+    // this.setState({
+    //   loading: false
+    // });
   }
 
   handleChange(e) {
@@ -99,7 +118,7 @@ class UpLoadForm extends React.Component {
     });
   }
 
-  changeSubCategory() {
+  changesubcategory() {
     switch (this.state.category.name) {
       case "Devices":
         this.setState({
@@ -146,6 +165,16 @@ class UpLoadForm extends React.Component {
             {
               name: "Perfumes",
               id: 1
+            },
+            {
+              name: "Makeups",
+              id:2
+            },{
+              name:"Jewelries",
+              id:3,
+            },{
+              name:"Others",
+              id:4
             }
           ],
           subcategory: { name: "Creams" }
@@ -174,15 +203,17 @@ class UpLoadForm extends React.Component {
         });
     }
   }
+  // .child(
+  //   
+  // )
   upload(picture, i) {
-    const { title, description, subcategory, category } = this.state;
+    // this.setState({
+    //   loading: true
+    // });
     return new Promise((resolve, reject) => {
       const store = firebase.storage();
       const pictureUploading = store
-        .ref()
-        .child(
-          `${category.name}/${subcategory.name}/${title.name}/${description.name}${i}`
-        )
+        .ref(`images/${picture.name}`)    
         .put(picture);
       pictureUploading.on(
         "state_changed",
@@ -195,81 +226,89 @@ class UpLoadForm extends React.Component {
           console.log(progress);
         },
         error => {
-          console.log("error");
           this.setState({ error: error.message, loading: false });
+          console.log("error");
         },
         () => {
           pictureUploading.snapshot.ref.getDownloadURL().then(downloadUrl => {
-            console.log(downloadUrl);
             this.setState({
               progress: "",
+              pictureName: [...this.state.pictureName, picture.name],
+loading: false,
               url: [...this.state.url, downloadUrl],
-              loading: false
-            });
+            });              
+            this.fileUpload();
           });
         }
       );
     });
   }
-  componentDidUpdate() {
+
+  fileUpload() {
+ this.setState({loading:true})
     if (
       this.state.picture.length > 0 &&
       this.state.picture.length === this.state.url.length
     ) {
-      this.fileUpload();
-    }
-  }
-  fileUpload() {
-    const {
-      title,
-      condition,
-      description,
-      price,
-      subcategory,
-      category,
-      url
-    } = this.state;
-    const date = Date.now();
-    const data = {
-      name: title.name,
-      subCategory: subcategory.name,
-      condition: condition.name,
-      category: category.name,
-      description: description.name,
-      price: price.name,
-      date: date,
-      pictureUrl: url
-    };
-    const db = firebase.firestore();
-    db.collection(category.name)
-      .doc()
-      .set(data)
-      .then(() => {
-        console.log("succesfull");
-        this.setState({
-          title: { name: "", error: "" },
-          condition: { name: "New", error: "" },
-          description: { name: "", error: "" },
-          price: { name: "", error: "" },
-          error: "",
-          category: { name: "", error: "" },
-          subcategory: { name: "Male", error: "" },
-          objects: [],
-          loading: false,
-          uploaded: true,
-          pictureUrl: ""
+      const {
+        title,
+        condition,
+        description,
+        price,
+        subcategory,
+        category,
+        url,
+        pictureName
+      } = this.state;
+      const date = Date.now();
+      const data = {
+        name: title.name.toLowerCase(),
+        subcategory: subcategory.name,
+        condition: condition.name,
+        category: category.name,
+        description: description.name,
+        price: price.name,
+        date: date,
+        pictureUrl: url,
+        uid: this.props.user.uid,
+        likes: [],
+        picturename:pictureName,
+      };
+      const db = firebase.firestore();
+      db.collection(this.state.category.name)
+        .doc()
+        .set(data)
+        .then(() => {
+          console.log("succesfull");
+          this.setState({
+            title: { name: "", error: "" },
+            condition: { name: "New", error: "" },
+            description: { name: "", error: "" },
+            price: { name: "", error: "" },
+            error: "",
+            subcategory: { name: "Male", error: "" },
+            objects: [],
+            loading: false,
+            uploaded: true,
+            picture: "",
+            url: ""
+          });
+          db.collection("Users")
+            .doc(this.props.user.uid)
+            .set({
+              materialPosted:  firebase.firestore.FieldValue.increment(1)
+            },{merge:true});
+        })
+        .catch(error => {
+          this.setState({ loading: false, error: error.message });
         });
-      })
-      .catch(error => {
-        console.log(error.message);
-        this.setState({ loading: false, error: error.message });
-      });
+     
+    }
   }
   render() {
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
-        {this.state.uploaded && <Redirect to={{ pathname: "/Home" }} />}
-        {this.state.progress && <ProgressBar now={this.state.progress} />}
+        {this.state.uploaded && <Redirect to={{ pathname: "/profile" }} />}
         <Form.Group>
           <Form.Label className="signin-form-name">Name</Form.Label>
           <Form.Control
@@ -277,7 +316,7 @@ class UpLoadForm extends React.Component {
               this.state.title.error ? "input--error" : "input--control"
             }
             `}
-            placeholder="Title of product"
+            placeholder="Name of product"
             name="title"
             value={this.state.title.name}
             onChange={this.handleChange}
@@ -294,12 +333,12 @@ class UpLoadForm extends React.Component {
             onChange={e => {
               this.handleChange(e);
               setTimeout(() => {
-                this.changeSubCategory();
+                this.changesubcategory();
               }, 200);
             }}
             value={this.state.category.name}
           >
-            <option value="Devices">Devices</option>
+            <option value="Devices">Devices and accessories</option>
             <option value="Clothings">Clothings</option>
             <option value="Footwears">Footwears</option>
             <option value="Cosmetics">Cosmetics</option>
@@ -308,6 +347,7 @@ class UpLoadForm extends React.Component {
           {this.state.category.error && <p>{this.state.category.error}</p>}
         </Form.Group>
         <Form.Group>
+          <Form.Label className="signin-form-name">Subcategory</Form.Label>
           <SelectForm
             error={this.state.subcategory.error}
             name="subcategory"
@@ -319,16 +359,13 @@ class UpLoadForm extends React.Component {
 
         <Form.Group className="input-condition-price">
           <div>
-            <Form.Label className="signin-form-name">
-              Price (in Naira)
-            </Form.Label>
+            <Form.Label className="signin-form-name">&#8358; Price  </Form.Label>
             <input
               className={`form-control ${
                 this.state.price.error ? "input--error" : "input--control"
               }`}
               name="price"
               value={this.state.price.name}
-              placeholder="$10"
               onChange={this.handleChange}
               type="number"
             />
@@ -364,13 +401,29 @@ class UpLoadForm extends React.Component {
           rows="5"
         />
         {this.state.description.error && <p>{this.state.description.error}</p>}
+        <Form.Label
+          style={{ marginTop: "1.3rem" }}
+          className="signin-form-name"
+        >
+          Upload at least one picture
+        </Form.Label>
+        <div className="upload--body">
+          {this.RenderImage(0)}
+          {this.RenderImage(1)}
+          {this.RenderImage(2)}
+        </div>
+        {this.state.error && <Alert variant="danger">{this.state.error}</Alert>}
+        {this.state.progress && <ProgressBar now={this.state.progress} />}
 
-        {this.RenderImage(0)}
-        {this.RenderImage(1)}
-        <Button type="submit" onClick={this.handleSubmit}>
-          submit
-        </Button>
-        {this.state.error && <Alert>{this.state.error}</Alert>}
+        <div className="upload--button">
+          <ButtonLg
+            loading={this.state.loading ? "true" : ""}
+            title="Submit"
+            small="true"
+            onClick={this.handleSubmit}
+          />
+        </div>
+
       </Form>
     );
   }

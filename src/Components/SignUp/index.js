@@ -3,11 +3,7 @@ import logo from "./../../images/umall2.gif";
 import Btn from "./../../SmallComponent/Btn";
 import { Link } from "react-router-dom";
 import SignUpForm from "../SignUp/SignUpForm";
-function SignUp() {
-  const style = {
-    height: "2rem",
-    padding: ".4rem 1rem !important"
-  };
+function SignUp(props) {
   return (
     <section className="signin">
       <section className="signin--section signup">
@@ -18,26 +14,21 @@ function SignUp() {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-          <SignUpForm />
+          <SignUpForm firebase={props.firebase} />
         </section>
         <div className="signin--link">
           <p>
             Dont have an account
             <span style={{ color: "#05aff2", marginRight: "1rem" }}> ? </span>
-            <Link to={{ pathname: "/signUp" }}>
-              <Btn
-                className={`big ${style}`}
-                color="#05aff2"
-                sm
-                title="signup"
-              />
+            <Link to={{ pathname: "/signIn" }}>
+              <Btn color="#05aff2" title="Log in" />
             </Link>
           </p>
           <p>
             Forgot password <span style={{ color: "#05aff2" }}> ?</span>
-            <Link to={{ pathname: "/" }}>
+            <Link to={{ pathname: "/reset" }}>
               <span style={{ paddingLeft: ".5rem", color: "#001992" }}>
-                click here
+                <em>click here</em>
               </span>
             </Link>
           </p>

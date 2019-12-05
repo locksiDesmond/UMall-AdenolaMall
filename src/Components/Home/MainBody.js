@@ -2,7 +2,6 @@ import React from "react";
 import MainImage from "./MainImage";
 import Recent from "./Recent";
 import { ContextCreator } from "./../../Context/Context";
-// import { firebase } from "./../../Firebase/Firebase";
 import Loading from "./../../SmallComponent/Loading";
 import { Redirect } from "react-router-dom";
 class Home extends React.Component {
@@ -10,48 +9,12 @@ class Home extends React.Component {
     super(props);
     this.state = {
       loading: true,
-      data: []
+      data: [],
     };
-    this.changeState = this.changeState.bind(this);
   }
   static contextType = ContextCreator;
-  changeState(datas) {
-    console.log(datas);
-  }
-  componentDidMount() {
-    // firebase
-    //   .firestore()
-    //   .collection("Clothings")
-    //   .where("condition", "==", "Clothings")
-    //   .get()
-    //   .then(function(querySnapshot) {
-    //     querySnapshot.forEach(function(doc) {
-    //       // doc.data() is never undefined for query doc
-    //       this.changeState(doc);
-    //     });
-    //   })
-    //   .catch(function(error) {
-    //     console.log("Error getting documents: ", error);
-    //   });
-    // const byte = firebase
-    //   .firestore()
-    //   .collection("Clothings")
-    //   .where("test", "==", true);
-    // byte
-    //   .get()
-    //   .then(snapshot => {
-    //     const items = snapshot.docs.map(doc => ({
-    //       id: doc.id,
-    //       ...doc.data()
-    //     }));
-    //     this.setState({
-    //       data: items,
-    //       loading: true
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.log(error.message);
-    //   });
+
+  componentDidUpdate() {
     // const now = Date.now();
     // const date = now - data.date;
     // const newData = date.toString();

@@ -4,11 +4,7 @@ import SignInForm from "./SignInForm";
 import { Link } from "react-router-dom";
 import Btn from "./../../SmallComponent/Btn";
 
-function SignIn() {
-  const style = {
-    height: "2rem",
-    padding: ".4rem 1rem !important"
-  };
+function SignIn(props) {
   return (
     <section className="signin">
       <section className="signin--section">
@@ -19,26 +15,21 @@ function SignIn() {
               <p>Sell swiftly, buy Swiftly</p>
             </Link>
           </div>
-          <SignInForm />
+          <SignInForm firebase={props.firebase} />
         </section>
         <div className="signin--link">
           <p>
             Dont have an account
             <span style={{ color: "#05aff2", marginRight: "1rem" }}> ? </span>
             <Link to={{ pathname: "/signUp" }}>
-              <Btn
-                className={`big ${style}`}
-                color="#05aff2"
-                sm
-                title="signup"
-              />
+              <Btn color="#05aff2" title="signup" />
             </Link>
           </p>
           <p>
             Forgot password <span style={{ color: "#05aff2" }}> ?</span>
-            <Link to={{ pathname: "/" }}>
+            <Link to={{ pathname: "/reset" }}>
               <span style={{ paddingLeft: ".5rem", color: "#001992" }}>
-                click here
+                <em>click here</em>
               </span>
             </Link>
           </p>

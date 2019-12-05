@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SignUpModal from "./SignUpModal";
 import LogOutModal from "./LogOutModal";
 import SignInModal from "./SignInModal";
+import { GiHamburgerMenu } from "react-icons/gi";
 class MainNav extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +56,7 @@ class MainNav extends React.Component {
     });
   }
   render() {
-    const { authenticated } = this.context;
+    const { authenticated, user, firebase } = this.context;
     return (
       <Navbar className="Navbar">
         <Link to={{ pathname: "/" }} className="navbar-brand">
@@ -67,20 +68,28 @@ class MainNav extends React.Component {
             handleShow={this.handleShow}
             showLogOut={this.showLogOut}
             authenticated={authenticated}
+            user={user}
             showSignUp={this.showSignUp}
           />
           <LogOutModal
+            firebase={firebase}
+            user={user}
             show={this.state.logout}
             handleClose={this.closeLogOut}
           />
           <SignUpModal
             show={this.state.signup}
+            firebase={firebase}
             handleClose={this.closeSignUp}
           />
-          <SignInModal show={this.state.show} handleClose={this.handleClose} />
+          <SignInModal
+            show={this.state.show}
+            firebase={firebase}
+            handleClose={this.handleClose}
+          />
         </div>
-        <button onClick={this.props.onClick} className="btn hamburger">
-          hambugger
+        <button onClick={this.props.handleclick} className="btn hamburger">
+          <GiHamburgerMenu style={{ color: "#fff", fontSize: "2rem" }} />
         </button>
       </Navbar>
     );

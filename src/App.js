@@ -7,11 +7,11 @@ import ContextClass from "./Context/Context";
 
 function App() {
   return (
-    <div className="App">
+    <React.Fragment>
       <ContextClass>
         <UMall />
       </ContextClass>
-    </div>
+    </React.Fragment>
   );
 }
 

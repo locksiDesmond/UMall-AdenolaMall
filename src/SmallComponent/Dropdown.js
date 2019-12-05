@@ -9,9 +9,9 @@ class Dropdown extends React.Component {
       isOpen: false,
       redirect: false
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleclick = this.handleclick.bind(this);
   }
-  handleClick() {
+  handleclick() {
     this.setState(() => ({
       isOpen: !this.state.isOpen
     }));
@@ -22,12 +22,18 @@ class Dropdown extends React.Component {
     return (
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
-          <Link to={{ pathname: `/Home/main/${title}`, state: title }}>
+          <Link
+            onClick={this.props.handleclick}
+            to={{
+              pathname: `/umall/${this.props.category || title}`,
+              state: title
+            }}
+          >
             <span style={{ color: "#000" }}>{title}</span>
           </Link>
           <button
             className="dropdown--icon a"
-            onClick={() => this.handleClick()}
+            onClick={() => this.handleclick()}
           >
             <img
               className="dropdown--svg"
@@ -43,22 +49,31 @@ class Dropdown extends React.Component {
               return (
                 <Link
                   onClick={() => {
-                    this.props.onClick();
-                    this.handleClick();
+                    this.props.handleclick();
+                    this.handleclick();
                   }}
                   key={item.id}
                   to={{
                     pathname:
-                      `/home/main/Clothings/${item.title}` || "errorpage",
+                      `/umall/${this.props.category || title}/${item.title}` ||
+                      "errorpage",
                     state: item
                   }}
                 >
-                  <li className="dropdown--item--list">
-                    <img
-                      className="img-thumbnail sidenav--avatar"
-                      src={item.avatar}
-                      alt="icon"
-                    />
+                  <li
+                    className="dropdown--item--list"
+                    style={{
+                      margin: !item.avatar && " .5rem .5rem .5rem 2.3rem"
+                    }}
+                  >
+                    {item.avatar && (
+                      <img
+                        className="img-thumbnail sidenav--avatar"
+                        src={item.avatar}
+                        alt="icon"
+                      />
+                    )}
+
                     {item.title}
                   </li>
                 </Link>

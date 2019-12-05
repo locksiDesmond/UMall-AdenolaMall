@@ -16,7 +16,7 @@ class PictureUpload extends PureComponent {
     crop: {
       unit: "%",
       width: 30,
-      aspect: 16 / 9
+      aspect: this.props.ratio ? this.props.ratio : 4 / 3
     },
     cropped: "",
     context: ""
