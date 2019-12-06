@@ -1,7 +1,7 @@
 import React from "react";
 const TermsAndConditions = ()=>{
     return(
-    <div style={{fontSize:"1rem", padding:"1rem 2rem"}}>
+    <div className="contactus" style={{fontSize:"1rem", padding:"1rem 2rem"}}>
         <div class="col-md-12">
 <h2><strong>Terms and Conditions</strong></h2>
 <p>Welcome to Umall!</p>

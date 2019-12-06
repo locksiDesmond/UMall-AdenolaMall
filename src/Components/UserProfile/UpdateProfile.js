@@ -4,6 +4,8 @@ import Form from "react-bootstrap/Form";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import { Userdata } from "../DropdownPages/FetchData";
 import ButtonLg from "./../../SmallComponent/ButtonLg";
+import Profile from "./Profile";
+import { ContextCreator } from "./../../Context/Context";
 
 const UpdateProfile = props => {
   let userdata = Userdata(props.user.uid);
@@ -97,13 +99,24 @@ const UpdateProfile = props => {
   };
   return (
     <React.Fragment>
+      <div
+        className=" d-block d-md-none profile"
+        style={{ backgroundColor: "#02aff2" }}
+      >
+        <ContextCreator.Consumer>
+          {({ user, firebase }) => <Profile firebase={firebase} user={user} />}
+        </ContextCreator.Consumer>
+      </div>
+      <div className="d-block d-md-none">
+        <p style={{ fontSize: "1rem", fontWeight: "500", marginLeft: ".6rem" }}>
+          Update Profile
+        </p>
+      </div>
       <Form
         style={{ marginTop: "1rem" }}
         className="upload"
         onSubmit={handleSubmit}
       >
-        {progress && <ProgressBar now={progress} />}
-
         <Form.Group>
           <Form.Label className="signin-form-name">Display Name</Form.Label>
           <Form.Control
@@ -137,6 +150,7 @@ const UpdateProfile = props => {
             onClick={handleSubmit}
           />
         </div>
+        {progress && <ProgressBar now={progress} />}
         {error && <p>{error}</p>}
       </Form>
     </React.Fragment>

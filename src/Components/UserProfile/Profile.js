@@ -26,7 +26,8 @@ const Profile = ({ user }) => {
           style={{
             paddingLeft: "10px",
             fontSize: "1.2rem",
-            textTransform: "capitalize"
+            textTransform: "capitalize",
+            whiteSpace: "nowrap"
           }}
           className="block-center"
         >
@@ -34,18 +35,10 @@ const Profile = ({ user }) => {
         </p>
       </div>
       <div>
-        {userdata ? (
-          userdata.phoneNumber ? (
-            <p>Phone Number : {userdata.phoneNumber} </p>
-          ) : (
-            <p>no Phone Number</p>
-          )
-        ) : (
-          <p>no Phone Number</p>
-        )}
-        <p>
+        <p>Phone Number : {userdata.phoneNumber} </p>
+        <p style={{ whiteSpace: "nowrap" }}>
           date Joined:
-          <span style={{ marginLeft: ".6rem" }}>
+          <span style={{ whiteSpace: "nowrap", marginLeft: ".6rem" }}>
             {userdata.metadata && userdata.metadata.creationTime.slice(5, 17)}
           </span>
         </p>
@@ -53,9 +46,9 @@ const Profile = ({ user }) => {
           material Posted:
           <Badge color="blue" title={userdata.materialPosted} />
         </p>
-        <div>
+        <p>
           Sold : <Badge color="green" title={userdata.materialSold} />
-        </div>
+        </p>
       </div>
     </React.Fragment>
   );

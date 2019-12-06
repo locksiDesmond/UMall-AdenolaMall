@@ -16,8 +16,7 @@ class ProductClass extends React.Component {
       redirect: false,
       likes: this.props.data.likes,
       liked: false,
-      userdata: this.props.newuser,
-      error: ""
+      userdata: this.props.newuser
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleLike = this.handleLike.bind(this);
@@ -34,9 +33,13 @@ class ProductClass extends React.Component {
     }
   }
   handleClick() {
-    this.setState({
-      redirect: true
-    });
+    if (window.location.pathname === "/description") {
+      this.props.handlerefresh(this.state.item, this.state.userdata);
+    } else {
+      this.setState({
+        redirect: true
+      });
+    }
   }
   handleLike() {
     if (this.props.authenticated) {
@@ -66,7 +69,6 @@ class ProductClass extends React.Component {
       }
     } else {
       alert("you are not a register user");
-      this.setState({ error: "you are notr a registered user" });
     }
   }
   handleDelete() {
@@ -108,7 +110,7 @@ class ProductClass extends React.Component {
           <span className="card--profile--name capitalize">
             {userdata.username}
           </span>
-          <span className="card--date">
+          <span className=" card--date">
             <IoMdTime style={{ color: "02aff2", marginTop: ".2rem" }} />
             {time}
           </span>
@@ -170,6 +172,7 @@ class ProductClass extends React.Component {
 
             {isDeleteable && (
               <span
+                className="sold"
                 onClick={e => {
                   e.stopPropagation();
                   this.handleDelete();

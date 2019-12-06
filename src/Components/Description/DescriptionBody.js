@@ -3,17 +3,23 @@ import Carousel from "react-bootstrap/Carousel";
 import { RelatedData } from "./../DropdownPages/FetchData";
 import ProductCard from "./../ProductCard/index";
 import Badge from "../../SmallComponent/Badge";
-import { MdFiberNew } from "react-icons/md";
 import { IoIosHeart } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 
-function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
+function Descriptionbody({
+  items,
+  userdata,
+  likes,
+  liked,
+  handleclick,
+  handlerefresh
+}) {
   const [show, setShow] = useState(false);
   const [number, setNumber] = useState(0);
   const [direction, setDirection] = useState(null);
   let item = RelatedData(items.category, items.name, items.doc);
   const Otheritem = item.map(item => (
-    <ProductCard data={item} key={item.date} />
+    <ProductCard handlerefresh={handlerefresh} data={item} key={item.date} />
   ));
   const handleSelect = (selectedIndex, e) => {
     setNumber(selectedIndex);
@@ -28,7 +34,7 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
       <div className="product--description">
         <h1 className="capitalize">{items.name}</h1>
         <div className="carousel--image ">
-          <div className="first"></div>
+          <div className="first d-none d-md-block"></div>
           <Carousel
             className="second"
             fade="true"
@@ -51,7 +57,7 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
             onSelect={handleSelect}
           >
             {items.pictureUrl.map((item, index) => (
-              <Carousel.Item key={item.date}>
+              <Carousel.Item key={index}>
                 <img
                   className="description--image"
                   src={item}
@@ -61,18 +67,14 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
             ))}
           </Carousel>
 
-          <div className="last"></div>
+          <div className="last d-none d-md-block"></div>
         </div>
 
         <span className="date">{items.data}</span>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Description</h2>
           <div className="icons">
-            {items.condition === "New" && (
-              <span>
-                <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />
-              </span>
-            )}
+            
             <span
               className="heart"
               style={{ marginRight: "1rem" }}
@@ -93,7 +95,14 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
           </div>
         </div>
 
-        <p className="description--details">{items.description}</p>
+        <div className="description--details">
+          <p>
+            {items.condition === "New" && (
+              <span className="signin-form-name">"Brand New"</span>
+            )}
+          </p>
+          <p>{items.description}</p>
+        </div>
         <div className="products-d-none d-white">
           <p style={{ fontWeight: "500", fontSize: "1.2rem" }}>Related Items</p>
           <div className="products ">
@@ -119,7 +128,12 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
               alt="profile "
             />
 
-            <p style={{fontSize:"1.1rem",width: "7rem", fontWeight:"500"}} className="capitalize"> {userdata.username}</p>
+            <p
+              style={{ fontSize: "1.1rem", width: "7rem", fontWeight: "500" }}
+              className="capitalize"
+            >
+              {userdata.username}
+            </p>
           </div>
           <ul className="details">
             <li className="signin-form-name">
@@ -127,14 +141,23 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
               <span>{userdata.metadata.lastSignInTime.slice(5, 16)}</span>
             </li>
             <li className="signin-form-name">
-              Joined :
-              <span>{userdata.metadata.creationTime.slice(5, 16)}</span>
+              Joined :<span>{userdata.metadata.creationTime.slice(5, 16)}</span>
             </li>
             <li className="signin-form-name">
-              Material posted : <Badge padding="true" color="blue" title={userdata.materialPosted}/>
+              Material posted :
+              <Badge
+                padding="true"
+                color="blue"
+                title={userdata.materialPosted}
+              />
             </li>
             <p className="signin-form-name">
-              Sold : <Badge padding="true" color="Green" title={userdata.materialSold}/>
+              Sold :
+              <Badge
+                padding="true"
+                color="Green"
+                title={userdata.materialSold}
+              />
             </p>
           </ul>
           <div className=" show--number-parent">
@@ -149,9 +172,25 @@ function Descriptionbody({ items, userdata, likes, liked, handleclick }) {
           </div>
         </div>
 
-        <div className="warnings">
-          <h3>Report And Warnings</h3>
-          <p> bunch of reports</p>
+        <div className="contactus warnings">
+          <h3><strong>Report And Warnings</strong></h3>
+          <p>
+            Be sure to verify by any means available to you, the other party
+            identity
+          </p>
+          <h3>
+            <strong>Advise</strong>
+          </h3>
+          <ul>
+            <li>
+              We strongly advise you meet in public places for exchange of
+              goods.
+            </li>
+            <li>
+              Always test your products before you pay, as we will not be hold
+              responsible for any scam.
+            </li>
+          </ul>
         </div>
         <div className="d-white products-d-block">
           <p style={{ fontWeight: "500", fontSize: "1.2rem" }}>Related Items</p>

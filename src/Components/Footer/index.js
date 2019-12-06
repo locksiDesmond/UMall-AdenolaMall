@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { FacebookIcon, TwitterIcon } from "react-share";
 import { GoMarkGithub } from "react-icons/go";
 function Footer() {
-  const handleLike = ()=>{
-    alert("HaHa who uses facebook in 2019 :) !")
-    console.log("you found one Locksi's easter eggs")
-  }
+  const handleLike = () => {
+    alert("HaHa who uses facebook in 2019 :) !");
+    console.log("you found one Locksi's easter eggs");
+  };
   return (
     <footer className="footer--section">
       <ul style={{ listStyle: "none" }}>
@@ -25,25 +25,19 @@ function Footer() {
           </a>
         </li>
         <li>
-          <a href="https://github.com/locksiDesmond/UMall-AdenolaMall">
+          <a href="https://github.com/locksiDesmond/UMall">
             <GoMarkGithub style={{ fontSize: "30px" }} />
           </a>
         </li>
-        <li>Locksi &copy; </li>
       </ul>
       <ul>
-        <li>
+        <li style={{ whiteSpace: "nowrap" }}>
           <Link to="/contactus">Contact Us</Link>
         </li>
         <li>
           <Link to="/TermsAndConditions">Terms and Conditions </Link>
         </li>
-      </ul>
-      <ul>
-        <li style={{ FontWeight: "400", fontSize: "1.2rem" }}>Other related sites</li>
-        <li>Jumia</li>
-        <li>Futa</li>
-        <li>Olx</li>
+        <li>Locksi &copy; </li>
       </ul>
     </footer>
   );

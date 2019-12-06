@@ -6,11 +6,12 @@ function Badge(props) {
         color: props.color ? props.color : "#fff",
         backgroundColor: props.bgcolor ? props.bgcolor : "#fff",
         border: props.color ? `1px solid ${props.color}` : "1px solid #000",
-        height:"1.2rem",
-        width:"1.2rem",
-        fontWeight:"900",
+        height: "1.2rem",
+        width: "1.2rem",
+        fontWeight: "900",
+        marginLeft: ".4rem",
         fontSize: !props.padding ? " .9rem" : ".8rem",
-        paddingTop:!props.padding ? ".05rem" : ""
+        paddingTop: !props.padding ? ".05rem" : ""
       }}
       className="notification--badge"
     >

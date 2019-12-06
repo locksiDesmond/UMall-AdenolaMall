@@ -1,7 +1,10 @@
 import React from "react";
 const ContactUs = () => {
   return (
-    <div style={{ padding: "1rem 2rem", fontSize: "1rem" }}>
+    <div
+      className="contactus"
+      style={{ padding: "1rem 2rem", fontSize: "1rem" }}
+    >
       <h1>Contact Us</h1>
       <div>
         <h2> Website Info</h2>
@@ -13,7 +16,7 @@ const ContactUs = () => {
             url: <span> Umall.website</span>
           </p>
           <p>
-            This site is created for Futarians buyers and sellers to meet one
+            This site was created for Futarians buyers and sellers to meet one
             another
           </p>
         </div>
@@ -28,7 +31,7 @@ const ContactUs = () => {
       <div>
         <h2>Developers info</h2>
         <div>
-          <p>Devloped by Adenola Olamikan Desmond</p>
+          <p>Developed by Adenola Olamikan Desmond</p>
           <p className="signin-form-name">
             Email :
             <span className="signin-form-name">Des.olanrewaju@gmail.com</span>

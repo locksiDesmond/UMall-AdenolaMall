@@ -36,6 +36,13 @@ class Description extends React.Component {
       }
     }
   }
+  refreshPage(item, userdata) {
+    this.props.history.replace({
+      pathname: "/description",
+      state: { item, userdata }
+    });
+    window.location.reload();
+  }
   componentDidUpdate() {
     if (this.state.sidebar) {
       document.body.style.overflow = "hidden";
@@ -102,6 +109,7 @@ class Description extends React.Component {
             handleclick={this.handleLike}
             userdata={userdata}
             liked={liked}
+            handlerefresh={this.refreshPage.bind(this)}
           />
         </div>
       </React.Fragment>
