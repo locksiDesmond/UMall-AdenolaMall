@@ -132,7 +132,7 @@ class UpLoadForm extends React.Component {
               id: 1
             },
             {
-              name: "Others accessories",
+              name: "Other accessories",
               id: 2
             }
           ],
@@ -308,7 +308,7 @@ loading: false,
   render() {
     return (
       <Form className="upload" onSubmit={this.handleSubmit}>
-        {this.state.uploaded && <Redirect to={{ pathname: "/profile" }} />}
+        {this.state.uploaded && <Redirect to={{ pathname: "/profile", state:"Recent" }} />}
         <Form.Group>
           <Form.Label className="signin-form-name">Name</Form.Label>
           <Form.Control

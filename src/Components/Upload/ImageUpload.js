@@ -104,8 +104,12 @@ function ImageUpload(props) {
                 textAlign: "center"
               }}
             >
-              Drag and drop here to upload pictures
+              <span className="d-none d-sm-block">
+                Drag and drop here to upload pictures
+              </span>
+              <span className="d-block d-sm-none">select picture</span>
             </p>
+
             <img src={Upload} alt="drag n drop" />
           </div>
         )}

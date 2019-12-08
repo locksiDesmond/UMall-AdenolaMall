@@ -198,7 +198,7 @@ class SignUpForm extends React.Component {
             <Link to={{ pathname: "/TermsAndConditions" }}>
               <em style={{ marginLeft: ".3rem", color: "#001992" }}>read </em>
             </Link>
-            and i accept Terms and Condition
+            and i accept Terms and Conditions
           </span>
         </Form.Group>
         <ButtonLg

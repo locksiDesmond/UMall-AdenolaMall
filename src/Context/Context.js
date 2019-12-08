@@ -45,28 +45,6 @@ class ContextClass extends React.Component {
       }
     });
   }
-  // handleName(a) {
-  //   console.log(a);
-  //   if (this.state.authenticated) {
-  //     const created = new Date(this.state.user.metadata.creationTime);
-  //     const last = new Date(this.state.user.metadata.lastSignInTime);
-  //     const url =
-  //       "gs://umall-adenola-mall-production.appspot.com/Defaultphoto/boy.svg";
-  //     if (last - created === 0 && a) {
-  //       const { phoneNumber, displayName } = a;
-  //       const metadata = { ...this.state.user.metadata };
-  //       firebase.store
-  //         .collection("Users")
-  //         .doc(this.state.user.uid)
-  //         .set({
-  //           username: displayName.name,
-  //           phoneNumber: phoneNumber.name,
-  //           photoUrl: url,
-  //           metadata: metadata
-  //         });
-  //     }
-  //   }
-  // }
   componentWillUnmount() {
     this.unsubscribe();
   }

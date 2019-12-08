@@ -27,6 +27,7 @@ function ProductCard(props) {
               user={user}
               authenticated={authenticated}
               firebase={firebase}
+              handlerefresh={props.handlerefresh}
             />
           )}
         </ContextCreator.Consumer>

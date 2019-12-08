@@ -10,8 +10,9 @@ import umall from "../../images/svgs/umall-1.svg";
 import UpdateProfile from "./UpdateProfile";
 import SideNav from "./../SideNav/SideNav";
 import RecentUploads from "./RecentUploads";
-const UserProfile = ({ authenticated }) => {
-  const [display, setDisplay] = useState("Recent");
+const UserProfile = ({ authenticated , location }) => {
+  let state = location.state || "Profile"
+  const [display, setDisplay] = useState(state)
   const [sidebar, setSidebar] = useState(false);
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
@@ -46,7 +47,7 @@ const UserProfile = ({ authenticated }) => {
               </ContextCreator.Consumer>
             )}
           </div>
-          <div className="profile--aside">
+          <div className="d-none d-md-block profile--aside">
             <div className="profile">
               <ContextCreator.Consumer>
                 {({ user, firebase }) => (

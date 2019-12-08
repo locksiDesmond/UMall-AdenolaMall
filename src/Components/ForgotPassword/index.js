@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 function ForgotPassword(props) {
   const [email, setEmail] = useState({ name: "", error: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("")
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);
     if (!email.name) {
       setEmail({ error: "invalid Email" });
+          setLoading(false);
     }
     if (email.name) {
       props.firebase.auth
@@ -22,9 +24,10 @@ function ForgotPassword(props) {
         })
         .catch(error => {
           console.log(error.code);
+          setError(error.message);
+                    setLoading(false)
         });
     }
-    setLoading(false);
   };
   return (
     <section className="signin">
@@ -61,6 +64,7 @@ function ForgotPassword(props) {
               onClick={handleSubmit}
               title="Reset"
             />
+            {error  && <p>{error}</p>}
           </Form>
         </section>
       </section>

@@ -53,8 +53,11 @@ const Routes = props => {
           />
           <Route
             path="/Profile"
-            component={() => (
-              <UserProfile authenticated={props.authenticated} />
+            component={({ location }) => (
+              <UserProfile
+                location={location}
+                authenticated={props.authenticated}
+              />
             )}
           />
           <Route path="/contactus" component={ContactUs} />

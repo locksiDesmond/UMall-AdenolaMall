@@ -13,7 +13,10 @@ function ProfileNav(props) {
         <Nav.Link eventKey="Recent"> Recent Upload</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="Profile">Profile</Nav.Link>
+        <Nav.Link eventKey="Profile">
+          <span className="d-block d-md-none"> Profile </span>
+          <span className="d-none d-md-block">Update profile</span>
+        </Nav.Link>
       </Nav.Item>
     </Nav>
   );
