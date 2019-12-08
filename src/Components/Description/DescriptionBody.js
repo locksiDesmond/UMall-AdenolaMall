@@ -4,7 +4,9 @@ import { RelatedData } from "./../DropdownPages/FetchData";
 import ProductCard from "./../ProductCard/index";
 import Badge from "../../SmallComponent/Badge";
 import { IoIosHeart } from "react-icons/io";
+import { IoMdCall } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 
 function Descriptionbody({
   items,
@@ -27,6 +29,16 @@ function Descriptionbody({
   };
   const handleShow = () => {
     setShow(!show);
+  };
+  const getWhatappLink = () => {
+    window.open(
+      "https://api.whatsapp.com/send?phone=" +
+        userdata.phoneNumber +
+        "&text=%20" +
+        "i saw your product (" +
+        items.name +
+        ") on Umall "
+    );
   };
 
   return (
@@ -74,7 +86,6 @@ function Descriptionbody({
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h2>Description</h2>
           <div className="icons">
-            
             <span
               className="heart"
               style={{ marginRight: "1rem" }}
@@ -165,17 +176,42 @@ function Descriptionbody({
               {show ? <span>Hide </span> : <span>Show </span>}Number
             </button>
             {show && (
-              <div style={{ marginTop: "1.2rem", fontWeight: "500" }}>
-                {userdata.phoneNumber}
-              </div>
+              <React.Fragment>
+                <div
+                  onClick={e => {
+                    e.stopPropagation();
+                    window.open("tel:" + userdata.phoneNumber);
+                  }}
+                  style={{
+                    cursor: "pointer",
+                    marginTop: "1.2rem",
+                    fontWeight: "500"
+                  }}
+                >
+                  <IoMdCall style={{ color: "blue", marginRight: ".6rem" }} />
+                  {userdata.phoneNumber}
+                </div>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    getWhatappLink();
+                  }}
+                >
+                  <FaWhatsapp color="green" />
+                  <span style={{ fontWeight: "500" }}>Chat on Whatapp</span>
+                </div>
+              </React.Fragment>
             )}
           </div>
         </div>
 
         <div className="contactus warnings">
-          <h3><strong>Report And Warnings</strong></h3>
+          <h3>
+            <strong>Report And Warnings</strong>
+          </h3>
           <p>
-            Be sure to verify by any means available to you, the other party
+            Be sure to verify by any means available to you, the other party's
             identity
           </p>
           <h3>
@@ -187,7 +223,7 @@ function Descriptionbody({
               goods.
             </li>
             <li>
-              Always test your products before you pay, as we will not be hold
+              Always test your products before you pay, as we will not be held
               responsible for any scam.
             </li>
           </ul>

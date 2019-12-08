@@ -11,11 +11,15 @@ function MainDrop(props) {
   const [more, setMore] = useState(2);
   const data = CategoryData(category, more);
   const [bgimage, setImage] = useState("");
+  const [dropdown, setDropdown] = useState(true);
 
   const products = data.map(item => (
     <ProductCard key={item.date} data={item} />
   ));
   useEffect(() => {
+    setTimeout(() => {
+      setDropdown(false);
+    }, 9500);
     switch (category) {
       case "Devices":
         setImage(
@@ -58,22 +62,30 @@ function MainDrop(props) {
             backgroundImage: `url(${bgimage})`,
             color: category === "Devices" ? "#000" : "#05aff2"
           }}
-        >
+        ></div>
+        <div className="absolute">
           <div>
             <p>Want to </p>
             <p>
               Buy <span style={{ color: "#f4754e" }}>?</span>
             </p>
             <a href="#down">
-              <Btn dropdown="true" className="big" color="#f4754e" title="Shop now" />
+              <Btn
+                dropdown={dropdown && "true"}
+                className="big"
+                color="#f4754e"
+                title="Shop now"
+              />
             </a>
           </div>
           <div>
             <p>Want to</p>
-            <p>Sell</p>
+            <p>
+              Sell <span style={{ color: "#05aff2" }}>?</span>
+            </p>
             {props.authenticated ? (
               <Link to={{ pathname: "/umall/Post" }}>
-                <Btn  className="big" color="#05aff2" title="Post" />
+                <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (
               <Link to={{ pathname: "/signUp" }}>
@@ -82,6 +94,7 @@ function MainDrop(props) {
             )}
           </div>
         </div>
+
         <div className="main--body" id="down">
           <p>Trends</p>
           <div className="products">

@@ -8,6 +8,7 @@ import { LandingPageData } from "../DropdownPages/FetchData";
 
 function LandingPageBody({ location, user, authenticated, firebase }) {
   const [welcome, setWelcome] = useState("");
+  const [dropdown, setDropdown] = useState(true);
   const bgimage =
     "https://sharemorestories.com/wp-content/uploads/qtq80-svx0G1.jpeg";
   const devices = LandingPageData("Devices", "name", 4);
@@ -31,6 +32,9 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
     <ProductCard key={item.date} data={item} />
   ));
   useEffect(() => {
+      setTimeout(() => {
+        setDropdown(false);
+      }, 9500);
     if (authenticated) {
       const created = new Date(user.metadata.creationTime);
       const last = new Date(user.metadata.lastSignInTime);
@@ -95,24 +99,27 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
             textShadow: " 1px 1px 2px #f4754e"
           }}
         >
+
+        </div>
+        <div className="absolute" style={{color:"#fff"}}>
           <div>
             <p>Want to </p>
             <p>
               Buy <span style={{ color: "#f4754e" }}>?</span>
             </p>
-            <a href="#section">
+            <a href="#down">
               <Btn
-                dropdown="true"
+                dropdown={dropdown && "true"}
                 className="big"
                 color="#f4754e"
                 title="Shop now"
               />
             </a>
           </div>
-          <div>
+          <div >
             <p>Want to</p>
             <p>
-              Sell <span style={{ color: "#f4754e" }}>?</span>
+              Sell <span style={{ color: "#05aff2" }}>?</span>
             </p>
             {authenticated ? (
               <Link to={{ pathname: "/umall/Post" }}>

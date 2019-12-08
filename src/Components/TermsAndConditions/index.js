@@ -68,8 +68,8 @@ const TermsAndConditions = ()=>{
 <h3> <strong>Reports And Warnings</strong></h3>
 <p>Please read Warnings</p>
 <p>Falsely advertising products that are not yours is highly prohibited and will lead to the culprit being banned from this website </p>
-<p>We will not be hold responsible for any fraudulent activities in this site. We only provide a market place and do not verify users, but you are free to contact and report such activities. </p>
-<p>Be sure to verify by any means available to you, the other party identity</p>
+<p>We will not be held responsible for any fraudulent activities in this site. We only provide a market place and do not verify users, but you are free to contact and report such activities. </p>
+<p>Be sure to verify by any means available to you, the other party's identity</p>
 <p>Do not post explicit content on this site as you are likey to be barred for this.</p>
 <h3> <strong>Advise</strong> </h3>
 <ul>
