@@ -18,7 +18,7 @@ class Dropdown extends React.Component {
   }
   render() {
     const { isOpen } = this.state;
-    const { item, title } = this.props;
+    const { item, title, comingsoon } = this.props;
     return (
       <div className="sidenav--dropdown">
         <div className="dropdown--list">
@@ -26,7 +26,8 @@ class Dropdown extends React.Component {
             onClick={this.props.handleclick}
             to={{
               pathname: `/umall/${this.props.category || title}`,
-              state: title
+              state:
+                title === "Others" ? { title: "Others", category: "stuf" } : title
             }}
           >
             <span style={{ color: "#000" }}>{title}</span>
@@ -35,11 +36,13 @@ class Dropdown extends React.Component {
             className="dropdown--icon a"
             onClick={() => this.handleclick()}
           >
-            <img
-              className="dropdown--svg"
-              src={isOpen ? logo2 : logo}
-              alt="dropdown icon"
-            />
+            {!comingsoon && (
+              <img
+                className="dropdown--svg"
+                src={isOpen ? logo2 : logo}
+                alt="dropdown icon"
+              />
+            )}
           </button>
         </div>
 

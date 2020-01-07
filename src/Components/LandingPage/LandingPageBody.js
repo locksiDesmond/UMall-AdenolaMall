@@ -6,6 +6,7 @@ import Spinner from "react-bootstrap/Spinner";
 import ProductCard from "../ProductCard";
 import { LandingPageData } from "../DropdownPages/FetchData";
 
+import { PostItems } from "./../DropdownPages/DropdownItems";
 function LandingPageBody({ location, user, authenticated, firebase }) {
   const [welcome, setWelcome] = useState("");
   const [dropdown, setDropdown] = useState(true);
@@ -32,9 +33,9 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
     <ProductCard key={item.date} data={item} />
   ));
   useEffect(() => {
-      setTimeout(() => {
-        setDropdown(false);
-      }, 9500);
+    setTimeout(() => {
+      setDropdown(false);
+    }, 9500);
     if (authenticated) {
       const created = new Date(user.metadata.creationTime);
       const last = new Date(user.metadata.lastSignInTime);
@@ -74,6 +75,7 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
   );
   return (
     <div className="main--content main">
+      {authenticated && PostItems}
       {welcome && (
         <Alert
           style={{
@@ -98,10 +100,8 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
             color: "#f4754e",
             textShadow: " 1px 1px 2px #f4754e"
           }}
-        >
-
-        </div>
-        <div className="absolute" style={{color:"#fff"}}>
+        ></div>
+        <div className="absolute" style={{ color: "#fff" }}>
           <div>
             <p>Want to </p>
             <p>
@@ -116,7 +116,7 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
               />
             </a>
           </div>
-          <div >
+          <div>
             <p>Want to</p>
             <p>
               Sell <span style={{ color: "#05aff2" }}>?</span>
@@ -133,8 +133,7 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
           </div>
         </div>
         <div className="main--body" id="section">
-          <p>Trends</p>
-          <div className="trends">
+          <div id="down" className="trends">
             <p>Trends in Devices</p>
             <div className="products">
               {devices[0] === "loading" ? <p>{Loading}</p> : Devices}

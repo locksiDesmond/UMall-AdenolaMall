@@ -1,15 +1,34 @@
 import React from "react";
-import MainNav from "./../Components/Navbar/MainNav";
 import Loadable from "react-loadable";
 import { Route, Switch } from "react-router-dom";
 import { ContextCreator } from "./../Context/Context";
-import Upload from "./../Components/Upload/index";
 import Loading from "../SmallComponent/Loading";
-import SideNav from "../Components/SideNav/SideNav";
-import DropdownItems from "./../Components/DropdownPages/DropdownItems";
-import MainDrop from "./../Components/DropdownPages/MainDrop";
+const MainNav = Loadable({
+  loader: () => import("./../Components/Navbar/MainNav"),
+  loading: Loading
+});
+const SideNav = Loadable({
+  loader: () => import("../Components/SideNav/SideNav"),
+  loading: Loading
+});
 const ErrorPage = Loadable({
   loader: () => import("./../SmallComponent/ErrorPage"),
+  loading: Loading
+});
+const UserDropdown = Loadable({
+  loader: () => import("./../Components/DropdownPages/UserDropdown"),
+  loading: Loading
+});
+const DropdownItems = Loadable({
+  loader: () => import("./../Components/DropdownPages/DropdownItems"),
+  loading: Loading
+});
+const MainDrop = Loadable({
+  loader: () => import("./../Components/DropdownPages/MainDrop"),
+  loading: Loading
+});
+const Upload = Loadable({
+  loader: () => import("./../Components/Upload/index"),
   loading: Loading
 });
 const Search = Loadable({
@@ -47,8 +66,8 @@ class ProtectedRoutes extends React.Component {
       document.body.style.overflow = "";
       document.body.style.height = "";
     }
-    if(!this.state.small){
-      document.body.style.overflow = "auto" ;
+    if (!this.state.small) {
+      document.body.style.overflow = "auto";
       document.body.style.height = "";
     }
   }
@@ -67,6 +86,13 @@ class ProtectedRoutes extends React.Component {
               path="/umall/Post"
               component={() => (
                 <Upload user={user} authenticated={authenticated} />
+              )}
+            />
+            <Route
+              exact
+              path="/umall/Others"
+              component={() => (
+                <MainDrop state="Others" authenticated={authenticated} />
               )}
             />
             <Route
@@ -135,8 +161,8 @@ class ProtectedRoutes extends React.Component {
               component={DropdownItems}
             />
             <Route path="/umall/Cosmetics/Others" component={DropdownItems} />
-
             <Route path="/umall/Cosmetics/Creams" component={DropdownItems} />
+            <Route path="/umall/Vendors" component={UserDropdown} />
             <Route path="/umall/Search" component={Search} />
 
             <Route

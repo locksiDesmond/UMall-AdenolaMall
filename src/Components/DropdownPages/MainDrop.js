@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
 import Loading from "../../SmallComponent/Loading";
 import ButtonLg from "./../../SmallComponent/ButtonLg";
 
+import { PostItems } from "./DropdownItems";
 function MainDrop(props) {
   let category = props.state || props.location.state;
-  const [more, setMore] = useState(2);
+  const [more, setMore] = useState(10);
   const data = CategoryData(category, more);
   const [bgimage, setImage] = useState("");
   const [dropdown, setDropdown] = useState(true);
-
   const products = data.map(item => (
     <ProductCard key={item.date} data={item} />
   ));
@@ -46,8 +46,10 @@ function MainDrop(props) {
           "https://cdn2.vectorstock.com/i/1000x1000/11/51/household-appliances-icons-set-vector-751151.jpg"
         );
         break;
-      case "others":
-        setImage("b");
+      case "Others":
+        setImage(
+          "https://www.shopise.com/wp-content/uploads/ngg_featured/Tips-to-sell-your-property-fast-and-easy.jpg"
+        );
         break;
       default:
         setImage("a");
@@ -56,6 +58,7 @@ function MainDrop(props) {
   return (
     <React.Fragment>
       <div className="main--content main">
+        {props.authenticated && PostItems}
         <div
           className={`image--div ${category}`}
           style={{
@@ -108,19 +111,21 @@ function MainDrop(props) {
             {data.length === 0 && <p>No item found</p>}
           </div>
         </div>
-        <div
-          style={{
-            justifyContent: "center",
-            display: "flex",
-            margin: ".5rem .1rem 1rem .1rem"
-          }}
-        >
-          <ButtonLg
-            disabled={data[0] === "loading" ? true : false}
-            title="show more"
-            onClick={() => setMore(more + 2)}
-          />
-        </div>
+        {data.length > more - 1 && (
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              margin: ".5rem .1rem 1rem .1rem"
+            }}
+          >
+            <ButtonLg
+              disabled={data[0] === "loading" ? true : false}
+              title="show more"
+              onClick={() => setMore(more + 2)}
+            />
+          </div>
+        )}
       </div>
     </React.Fragment>
   );

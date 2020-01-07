@@ -1,15 +1,21 @@
 import React, { useState } from "react";
-import { SearchData } from "./../DropdownPages/FetchData";
+import { SearchData, SearchUserData } from "./../DropdownPages/FetchData";
 import ProductCard from "../ProductCard";
 import ButtonLg from "./../../SmallComponent/ButtonLg";
+import VendorsCard from "./../VendorsCard/index";
 const Search = props => {
   const search = props.location.state.toLowerCase();
-  const [devicesmore, setDMore] = useState();
-  const [footwearsmore, setFMore] = useState();
-  const [cosmeticsmore, setCMore] = useState();
-  const [clothingsmore, setClMore] = useState();
-  const [homemore, setHMore] = useState();
-
+  const vendors = props.location.state.toUpperCase();
+  const [devicesmore, setDMore] = useState(6);
+  const [footwearsmore, setFMore] = useState(8);
+  const [cosmeticsmore, setCMore] = useState(8);
+  const [clothingsmore, setClMore] = useState(8);
+  const [homemore, setHMore] = useState(8);
+  const [usermore, setUMore] = useState(12);
+  const [othermore, setOMore] = useState(12);
+  const Users = SearchUserData(vendors, usermore).map(item => (
+    <VendorsCard item={item} key={item.phoneNumber} />
+  ));
   const Devices = SearchData("Devices", search, devicesmore).map(item => (
     <ProductCard data={item} key={item.date} />
   ));
@@ -23,6 +29,10 @@ const Search = props => {
   const Clothings = SearchData("Clothings", search, clothingsmore).map(item => (
     <ProductCard data={item} key={item.date} />
   ));
+  const Others = SearchData("Others", search, othermore).map(item => (
+    <ProductCard data={item} key={item.date} />
+  ));
+
   const HouseHold = SearchData(
     "Household items",
     search,
@@ -44,7 +54,7 @@ const Search = props => {
         <div className="products">
           {Devices.length === 0 ? <p>item not found</p> : Devices}
         </div>
-        {Devices.length > 4 && (
+        {Devices.length > 7 && (
           <div
             style={{
               justifyContent: "center",
@@ -74,7 +84,7 @@ const Search = props => {
         <div className="products">
           {Clothings.length === 0 ? <p>item not found</p> : Clothings}
         </div>
-        {Clothings.length > 4 && (
+        {Clothings.length > 7 && (
           <div
             style={{
               justifyContent: "center",
@@ -104,7 +114,7 @@ const Search = props => {
         <div className="products">
           {Footwears.length === 0 ? <p>item not found</p> : Footwears}
         </div>
-        {Footwears.length > 4 && (
+        {Footwears.length > 7 && (
           <div
             style={{
               justifyContent: "center",
@@ -134,7 +144,7 @@ const Search = props => {
         <div className="products">
           {Cosmetics.length === 0 ? <p>item not found</p> : Cosmetics}
         </div>
-        {Cosmetics.length > 4 && (
+        {Cosmetics.length > 7 && (
           <div
             style={{
               justifyContent: "center",
@@ -164,7 +174,7 @@ const Search = props => {
         <div className="products">
           {HouseHold.length === 0 ? <p>item not found</p> : HouseHold}
         </div>
-        {HouseHold.length > 4 && (
+        {HouseHold.length > 7 && (
           <div
             style={{
               justifyContent: "center",
@@ -180,30 +190,67 @@ const Search = props => {
           </div>
         )}
       </div>
-      {/* <div className="trends">
-        <p>Clothings</p>
-        <div className="products">
-          {Clothings.length === 0 ? <p>item not found</p> : Clothings}
-        </div>
-      </div>
       <div className="trends">
-        <p>Footwears</p>
+        <p>
+          Others
+          <span>
+            {Others.length !== 0 && (
+              <span style={{ marginLeft: "1rem", fontSize: ".9rem" }}>
+                {Others.length} items found
+              </span>
+            )}
+          </span>
+        </p>
         <div className="products">
-          {Footwears.length === 0 ? <p>item not found</p> : Footwears}
+          {Others.length === 0 ? <p>item not found</p> : Others}
         </div>
+        {Others.length > 7 && (
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              margin: ".5rem .1rem 1rem .1rem"
+            }}
+          >
+            <ButtonLg
+              disabled={Others.length[0] === "loading" ? true : false}
+              title="show more"
+              onClick={() => setOMore(othermore + 2)}
+            />
+          </div>
+        )}
       </div>
+
       <div className="trends">
-        <p>Cosmetics</p>
+        <p>
+          Users
+          <span>
+            {Users.length !== 0 && (
+              <span style={{ marginLeft: "1rem", fontSize: ".9rem" }}>
+                {Users.length} items found
+              </span>
+            )}
+          </span>
+        </p>
         <div className="products">
-          {Cosmetics.length === 0 ? <p>item not found</p> : HouseHold}
+          {Users.length === 0 ? <p>item not found</p> : Users}
         </div>
+        {Users.length > 11 && (
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              margin: ".5rem .1rem 1rem .1rem"
+            }}
+          >
+            <ButtonLg
+              disabled={Users.length[0] === "loading" ? true : false}
+              title="show more"
+              onClick={() => setUMore(usermore + 4)}
+            />
+          </div>
+        )}
       </div>
-      <div className="trends">
-        <p>Household appliances</p>
-        <div className="products">
-          {HouseHold.length === 0 ? <p>item not found</p> : HouseHold}
-        </div>
-      </div> */}
     </div>
   );
 };

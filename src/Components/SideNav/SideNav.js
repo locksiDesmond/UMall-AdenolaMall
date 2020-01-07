@@ -76,7 +76,9 @@ export const sideNavobject = {
       title: "Used",
       category: "Household items"
     }
-  ]
+  ],
+  Others: [],
+  Vendors: []
 };
 class SideNav extends React.Component {
   constructor(props) {
@@ -112,6 +114,19 @@ class SideNav extends React.Component {
           title="Household items"
           handleclick={this.props.handleclick}
           item={this.state.HouseItems}
+        />
+        <div className="hr"></div>
+        <Dropdown
+          title="Others"
+          handleclick={this.props.handleclick}
+          item={this.state.Others}
+          comingsoon="true"
+        />
+        <Dropdown
+          title="Vendors"
+          handleclick={this.props.handleclick}
+          item={this.state.Vendors}
+          comingsoon="true"
         />
       </div>
     );

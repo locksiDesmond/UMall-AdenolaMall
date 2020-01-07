@@ -6,7 +6,7 @@ const Newdata = (category, subcategory, limit) => {
     firebase
       .firestore()
       .collection(category)
-      .orderBy("date")
+      .orderBy("date", "desc")
       .limit(limit)
       .where("subcategory", "==", subcategory)
       .get()
@@ -31,7 +31,7 @@ export const CategoryData = (category, limit) => {
     const unsubscribe = firebase
       .firestore()
       .collection(category)
-      .orderBy("date")
+      .orderBy("date", "desc")
       .limit(limit)
       .onSnapshot(snapshots => {
         const somedati = snapshots.docs.map(doc => ({
@@ -50,7 +50,7 @@ export const LandingPageData = (category, order, limit) => {
     const unsubscribe = firebase
       .firestore()
       .collection(category)
-      .orderBy(order)
+      .orderBy(order, "desc")
       .limit(limit)
       .onSnapshot(snapshots => {
         const somedati = snapshots.docs.map(doc => ({
@@ -61,6 +61,26 @@ export const LandingPageData = (category, order, limit) => {
       });
     return () => unsubscribe();
   }, [category, order, limit]);
+  return times;
+};
+export const UsersPost = limit => {
+  const [times, setTimes] = useState(["loading"]);
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection("Users")
+      .where("materialPosted", ">=", 1)
+      .orderBy("materialPosted")
+      .limit(limit)
+      .onSnapshot(snapshot => {
+        const somedata = snapshot.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
+        setTimes(somedata);
+      });
+    return () => unsubscribe();
+  });
   return times;
 };
 export const GetUserPosts = (category, order, limit, uid) => {
@@ -93,7 +113,7 @@ export const Userdata = uid => {
       .get()
       .then(doc => {
         const data = doc.data();
-        setUser(data);
+        setUser({ uid: doc.id, ...data });
       })
       .catch(() => {
         setUser("error");
@@ -128,10 +148,36 @@ export const DeleteData = (category, id, image) => {
       console.log("error");
     });
 };
+export const SearchUserData = (search, limit) => {
+  const [data, setData] = useState(["loading"]);
+  console.log(search);
+  useEffect(() => {
+    firebase
+      .firestore()
+      .collection("Users")
+      .where("username", ">=", search)
+      .limit(limit)
+      .get()
+      .then(querySnapshot => {
+        const somedata = querySnapshot.docs.map(doc => ({
+          doc: doc.id,
+          ...doc.data()
+        }));
+        setData(somedata);
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+        setData("error");
+      });
+  }, [search, limit]);
+  return data.filter(
+    item => item.username && item.username.toUpperCase().indexOf(search) !== -1
+  );
+};
 export const SearchData = (category, search, limit = 10) => {
   const [data, setData] = useState(["loading"]);
   useEffect(() => {
-    if (search.length > 3) {
+    if (search.length > 2) {
       firebase
         .firestore()
         .collection(category)

@@ -7,7 +7,6 @@ import { IoIosHeart } from "react-icons/io";
 import { MdFiberNew } from "react-icons/md";
 import { DeleteData, DeletePicture } from "./../DropdownPages/FetchData";
 import { firebase } from "./../../Firebase/Firebase";
-
 class ProductClass extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +32,10 @@ class ProductClass extends React.Component {
     }
   }
   handleClick() {
-    if (window.location.pathname === "/description") {
+    if (
+      window.location.pathname === "/description" ||
+      window.location.pathname === "/vendorsdescription"
+    ) {
       this.props.handlerefresh(this.state.item, this.state.userdata);
     } else {
       this.setState({

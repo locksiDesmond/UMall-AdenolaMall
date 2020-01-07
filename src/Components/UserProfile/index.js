@@ -10,9 +10,9 @@ import umall from "../../images/svgs/umall-1.svg";
 import UpdateProfile from "./UpdateProfile";
 import SideNav from "./../SideNav/SideNav";
 import RecentUploads from "./RecentUploads";
-const UserProfile = ({ authenticated , location }) => {
-  let state = location.state || "Profile"
-  const [display, setDisplay] = useState(state)
+const UserProfile = ({ authenticated, location }) => {
+  let state = location.state || "Profile";
+  const [display, setDisplay] = useState(state);
   const [sidebar, setSidebar] = useState(false);
   const handleSelect = selectedkey => {
     setDisplay(selectedkey);
@@ -37,7 +37,7 @@ const UserProfile = ({ authenticated , location }) => {
             <ProfileNav onClick={handleSelect} display={display} />
             {display === "Recent" ? (
               <ContextCreator.Consumer>
-                {({ user }) => <RecentUploads user={user} />}
+                {({ user }) => <RecentUploads permeable="true" user={user} />}
               </ContextCreator.Consumer>
             ) : (
               <ContextCreator.Consumer>

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import MainNav from "../Navbar/MainNav";
-import SideNav from "../SideNav/SideNav";
 import LandingPageBody from "./LandingPageBody";
 import Loading from "../../SmallComponent/Loading";
+import Loadable from "react-loadable";
+const SideNav = Loadable({
+  loader: () => import("../SideNav/SideNav"),
+  loading: Loading
+});
 const LandingPage = props => {
   const [sidenav, setSidenav] = useState(false);
   const location = props.location;

@@ -2,26 +2,60 @@ import React from "react";
 import { GetUserPosts } from "./../DropdownPages/FetchData";
 import ProductCard from "./../ProductCard/index";
 import Spinner from "react-bootstrap/Spinner";
-const RecentUploads = ({ user }) => {
+const RecentUploads = ({ user, handlerefresh, permeable }) => {
   const devices = GetUserPosts("Devices", "date", 5, user.uid);
   const Devices = devices.map(item => (
-    <ProductCard isDeleteable="true" data={item} key={item.date} />
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      data={item}
+      key={item.date}
+    />
   ));
   const cosmetics = GetUserPosts("Cosmetics", "date", 4, user.uid);
   const Cosmetics = cosmetics.map(item => (
-    <ProductCard isDeleteable="true" key={item.date} data={item} />
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      key={item.date}
+      data={item}
+    />
   ));
   const footwears = GetUserPosts("Footwears", "date", 4, user.uid);
   const Footwears = footwears.map(item => (
-    <ProductCard isDeleteable="true" key={item.date} data={item} />
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      key={item.date}
+      data={item}
+    />
   ));
   const clothings = GetUserPosts("Clothings", "date", 4, user.uid);
   const Clothings = clothings.map(item => (
-    <ProductCard isDeleteable="true" key={item.date} data={item} />
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      key={item.date}
+      data={item}
+    />
+  ));
+  const others = GetUserPosts("Others", "date", 4, user.uid);
+  const Others = others.map(item => (
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      key={item.date}
+      data={item}
+    />
   ));
   const household = GetUserPosts("Household items", "date", 4, user.uid);
   const Household = household.map(item => (
-    <ProductCard isDeleteable="true" key={item.date} data={item} />
+    <ProductCard
+      handlerefresh={handlerefresh}
+      isDeleteable={!permeable ? false : true}
+      key={item.date}
+      data={item}
+    />
   ));
   const Loading = (
     <Spinner
@@ -49,6 +83,7 @@ const RecentUploads = ({ user }) => {
             {Clothings}
             {Household}
             {Cosmetics}
+            {Others}
             <hr />
           </React.Fragment>
         )}

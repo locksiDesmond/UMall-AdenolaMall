@@ -1,7 +1,7 @@
 import React from "react";
 import MainNav from "../Navbar/MainNav";
 import { firebase } from "./../../Firebase/Firebase";
-
+import VendorsProducts from "./VendorsProducts";
 import Descriptionbody from "./DescriptionBody";
 import SideNav from "./../SideNav/SideNav";
 import { ContextCreator } from "./../../Context/Context";
@@ -19,6 +19,7 @@ class Description extends React.Component {
     this.handleLike = this.handleLike.bind(this);
     this.handleSidebar = this.handleSidebar.bind(this);
   }
+  w;
   static contextType = ContextCreator;
   handleSidebar() {
     this.setState({
@@ -103,14 +104,22 @@ class Description extends React.Component {
             handleclick={this.handleSidebar}
             disabled={this.state.sidebar}
           />
-          <Descriptionbody
-            items={item}
-            likes={likes}
-            handleclick={this.handleLike}
-            userdata={userdata}
-            liked={liked}
-            handlerefresh={this.refreshPage.bind(this)}
-          />
+          {item === "Vendors" ? (
+            <VendorsProducts
+              handlerefresh={this.refreshPage.bind(this)}
+              userdata={userdata}
+              item={item}
+            />
+          ) : (
+            <Descriptionbody
+              items={item}
+              likes={likes}
+              handleclick={this.handleLike}
+              userdata={userdata}
+              liked={liked}
+              handlerefresh={this.refreshPage.bind(this)}
+            />
+          )}
         </div>
       </React.Fragment>
     );

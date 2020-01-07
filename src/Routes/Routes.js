@@ -1,16 +1,33 @@
 import React from "react";
 import Loadable from "react-loadable";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ErrorPage from "./../SmallComponent/ErrorPage";
-import Footer from "./../Components/Footer/index";
-import ContactUs from "./../Components/ContactUs/index";
-import TermsAndConditions from "./../Components/TermsAndConditions/index";
-import ForgotPassword from "./../Components/ForgotPassword/index";
 import Loading from "../SmallComponent/Loading";
 const ProtectedRoutes = Loadable({
   loader: () => import("./ProtectedRoutes"),
   loading: Loading
 });
+const ErrorPage = Loadable({
+  loader: () => import("./../SmallComponent/ErrorPage"),
+  loading: Loading
+});
+const Footer = Loadable({
+  loader: () => import("./../Components/Footer/index"),
+  loading: Loading
+});
+const ContactUs = Loadable({
+  loader: () => import("./../Components/ContactUs/index"),
+  loading: Loading
+});
+const TermsAndConditions = Loadable({
+  loader: () => import("./../Components/TermsAndConditions/index"),
+  loading: Loading
+});
+
+const ForgotPassword = Loadable({
+  loader: () => import("./../Components/ForgotPassword/index"),
+  loading: Loading
+});
+
 const UserProfile = Loadable({
   loader: () => import("./../Components/UserProfile/index"),
   loading: Loading
@@ -31,6 +48,7 @@ const Description = Loadable({
   loader: () => import("./../Components/Description/index"),
   loading: Loading
 });
+
 const Routes = props => {
   return (
     <React.Fragment>
@@ -47,6 +65,8 @@ const Routes = props => {
           <Route path="/umall" component={ProtectedRoutes} />
           <Route path="/TermsAndConditions" component={TermsAndConditions} />
           <Route path="/description" component={Description} />
+
+          <Route path="/vendorsdescription" component={Description} />
           <Route
             path="/reset"
             component={() => <ForgotPassword firebase={props.firebase} />}

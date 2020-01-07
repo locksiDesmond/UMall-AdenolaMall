@@ -7,7 +7,100 @@ import { IoIosHeart } from "react-icons/io";
 import { IoMdCall } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
+export function OwnersDetails({ userdata, items }) {
+  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    setShow(!show);
+  };
 
+  const getWhatappLink = () => {
+    window.open(
+      "https://api.whatsapp.com/send?phone=" +
+        "+234" +
+        userdata.phoneNumber.slice(1) +
+        "&text=%20" +
+        "i saw your product on Umall "
+    );
+  };
+
+  return (
+    <div className="product--owner-profile">
+      <p
+        style={{
+          textAlign: "center",
+          fontWeight: "500",
+          fontSize: "1.1rem"
+        }}
+      >
+        Seller's details
+      </p>
+      <div className="profile-image-name block-center">
+        <img
+          className="rounded-circle product--image"
+          src={userdata.photoUrl}
+          alt="profile "
+        />
+
+        <p
+          style={{ fontSize: "1.1rem", width: "7rem", fontWeight: "500" }}
+          className="capitalize"
+        >
+          {userdata.username}
+        </p>
+      </div>
+      <ul className="details">
+        <li className="signin-form-name">
+          Last Seen :
+          <span>{userdata.metadata.lastSignInTime.slice(5, 16)}</span>
+        </li>
+        <li className="signin-form-name">
+          Joined :<span>{userdata.metadata.creationTime.slice(5, 16)}</span>
+        </li>
+        <li className="signin-form-name">
+          Material posted :
+          <Badge padding="true" color="blue" title={userdata.materialPosted} />
+        </li>
+        <p className="signin-form-name">
+          Sold :
+          <Badge padding="true" color="Green" title={userdata.materialSold} />
+        </p>
+      </ul>
+      <div className=" show--number-parent">
+        <button className="btn show--number" onClick={handleShow}>
+          {show ? <span>Hide </span> : <span>Show </span>}Number
+        </button>
+        {show && (
+          <React.Fragment>
+            <div
+              onClick={e => {
+                e.stopPropagation();
+                window.open("tel:" + userdata.phoneNumber);
+              }}
+              style={{
+                cursor: "pointer",
+                marginTop: "1.2rem",
+                fontWeight: "500"
+              }}
+            >
+              <IoMdCall style={{ color: "blue", marginRight: ".6rem" }} />
+              {userdata.phoneNumber}
+            </div>
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={e => {
+                e.stopPropagation();
+                getWhatappLink();
+              }}
+            >
+              <FaWhatsapp color="green" />
+              <span style={{ fontWeight: "500" }}>Chat on Whatapp</span>
+            </div>
+          </React.Fragment>
+        )}
+      </div>
+    </div>
+  );
+}
 function Descriptionbody({
   items,
   userdata,
@@ -16,7 +109,6 @@ function Descriptionbody({
   handleclick,
   handlerefresh
 }) {
-  const [show, setShow] = useState(false);
   const [number, setNumber] = useState(0);
   const [direction, setDirection] = useState(null);
   let item = RelatedData(items.category, items.name, items.doc);
@@ -27,20 +119,6 @@ function Descriptionbody({
     setNumber(selectedIndex);
     setDirection(e.direction);
   };
-  const handleShow = () => {
-    setShow(!show);
-  };
-  const getWhatappLink = () => {
-    window.open(
-      "https://api.whatsapp.com/send?phone=" +
-        userdata.phoneNumber +
-        "&text=%20" +
-        "i saw your product (" +
-        items.name +
-        ") on Umall "
-    );
-  };
-
   return (
     <div className="description--page">
       <div className="product--description">
@@ -122,90 +200,7 @@ function Descriptionbody({
         </div>
       </div>
       <div className="description--aside">
-        <div className="product--owner-profile">
-          <p
-            style={{
-              textAlign: "center",
-              fontWeight: "500",
-              fontSize: "1.1rem"
-            }}
-          >
-            Sellers details
-          </p>
-          <div className="profile-image-name block-center">
-            <img
-              className="rounded-circle product--image"
-              src={userdata.photoUrl}
-              alt="profile "
-            />
-
-            <p
-              style={{ fontSize: "1.1rem", width: "7rem", fontWeight: "500" }}
-              className="capitalize"
-            >
-              {userdata.username}
-            </p>
-          </div>
-          <ul className="details">
-            <li className="signin-form-name">
-              Last Seen :
-              <span>{userdata.metadata.lastSignInTime.slice(5, 16)}</span>
-            </li>
-            <li className="signin-form-name">
-              Joined :<span>{userdata.metadata.creationTime.slice(5, 16)}</span>
-            </li>
-            <li className="signin-form-name">
-              Material posted :
-              <Badge
-                padding="true"
-                color="blue"
-                title={userdata.materialPosted}
-              />
-            </li>
-            <p className="signin-form-name">
-              Sold :
-              <Badge
-                padding="true"
-                color="Green"
-                title={userdata.materialSold}
-              />
-            </p>
-          </ul>
-          <div className=" show--number-parent">
-            <button className="btn show--number" onClick={handleShow}>
-              {show ? <span>Hide </span> : <span>Show </span>}Number
-            </button>
-            {show && (
-              <React.Fragment>
-                <div
-                  onClick={e => {
-                    e.stopPropagation();
-                    window.open("tel:" + userdata.phoneNumber);
-                  }}
-                  style={{
-                    cursor: "pointer",
-                    marginTop: "1.2rem",
-                    fontWeight: "500"
-                  }}
-                >
-                  <IoMdCall style={{ color: "blue", marginRight: ".6rem" }} />
-                  {userdata.phoneNumber}
-                </div>
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={e => {
-                    e.stopPropagation();
-                    getWhatappLink();
-                  }}
-                >
-                  <FaWhatsapp color="green" />
-                  <span style={{ fontWeight: "500" }}>Chat on Whatapp</span>
-                </div>
-              </React.Fragment>
-            )}
-          </div>
-        </div>
-
+        <OwnersDetails userdata={userdata} items={items} />
         <div className="contactus warnings">
           <h3>
             <strong>Report And Warnings</strong>

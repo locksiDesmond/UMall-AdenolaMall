@@ -42,8 +42,8 @@ function ImageUpload(props) {
     const fileExtension = extractImageFileExtensionFromBase64(imgSrc);
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(imgSrc, fileName);
-    if (!(croppedFile.size >= 1024000)) {
-      if (!(files >= 1024000)) {
+    if (!(croppedFile.size >= 1750000)) {
+      if (!(files >= 1750000)) {
         props.handleSubmit(files, props.value);
       }
     } else {

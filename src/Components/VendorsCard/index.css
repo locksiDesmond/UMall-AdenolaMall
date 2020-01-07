@@ -1,0 +1,57 @@
+.vendor--group {
+  width: 14rem;
+  height: 17rem;
+  overflow: hidden;
+  padding: 0rem 1rem 1rem 0;
+  position: relative;
+}
+.rounded--circle {
+  border-radius: 50%;
+  background-color: #f9f9f9;
+  height: 3rem;
+  width: 3rem;
+  margin: 0 0.5rem;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 1rem;
+}
+p {
+  padding: 0rem;
+  margin: 0;
+}
+.vendor--group .capitalize {
+  white-space: nowrap;
+  font-weight: bold;
+}
+.absolutes {
+  position: absolute;
+  top: 2%;
+  right: 10%;
+}
+.vendor--group .global-icon {
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+}
+@media (max-width: 768px) {
+  .vendor--group {
+    width: 10rem;
+    height: 12.5rem;
+  }
+  .vendor--group .product--image {
+    width: 5rem !important;
+    height: 5rem !important;
+  }
+  .vendor--group .rounded--circle {
+    width: 2rem;
+    height: 2rem;
+  }
+  .vendor--group .global-icon {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+  }
+}
