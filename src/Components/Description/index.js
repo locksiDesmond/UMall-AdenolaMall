@@ -9,17 +9,16 @@ class Description extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: this.props.location.state.item,
+      item: this.props.location ? this.props.location.state.item : "Vendors",
       sidebar: false,
-      likes: this.props.location.state.item.likes,
+      likes: this.props.location && this.props.location.state.item.likes,
       liked: false,
-      userdata: this.props.location.state.userdata,
+      userdata: this.props.location && this.props.location.state.userdata,
       error: ""
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleSidebar = this.handleSidebar.bind(this);
   }
-  w;
   static contextType = ContextCreator;
   handleSidebar() {
     this.setState({
@@ -28,6 +27,7 @@ class Description extends React.Component {
   }
   componentDidMount() {
     const { user } = this.context;
+    console.log(this.props.location);
     if (this.state.item.likes) {
       const isLiked = this.state.item.likes.includes(user.uid); //important
       if (isLiked) {
@@ -35,6 +35,13 @@ class Description extends React.Component {
       } else {
         this.setState({ liked: false });
       }
+    }
+    if (this.state.sidebar) {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
     }
   }
   refreshPage(item, userdata) {

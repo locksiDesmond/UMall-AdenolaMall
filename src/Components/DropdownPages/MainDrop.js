@@ -74,7 +74,7 @@ function MainDrop(props) {
             </p>
             <a href="#down">
               <Btn
-                dropdown={dropdown && "true"}
+                dropdown={dropdown ? "true" : undefined}
                 className="big"
                 color="#f4754e"
                 title="Shop now"
@@ -87,7 +87,7 @@ function MainDrop(props) {
               Sell <span style={{ color: "#05aff2" }}>?</span>
             </p>
             {props.authenticated ? (
-              <Link to={{ pathname: "/umall/Post" }}>
+              <Link to={{ pathname: "/post" }}>
                 <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (

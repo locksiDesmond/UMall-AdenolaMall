@@ -49,6 +49,15 @@ const Profile = ({ user }) => {
         <p>
           Sold : <Badge color="green" title={userdata.materialSold} />
         </p>
+        <p>
+          <span style={{ whiteSpace: "nowrap" }}>Your Shop Link:</span>
+          <span
+            style={{ color: "#000", textTransform: "none", fontSize: ".9rem" }}
+          >
+            {`
+              https://umall.website/mylink?uid=${user.uid}`}
+          </span>
+        </p>
       </div>
     </React.Fragment>
   );

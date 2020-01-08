@@ -22,7 +22,6 @@ export function OwnersDetails({ userdata, items }) {
         "i saw your product on Umall "
     );
   };
-
   return (
     <div className="product--owner-profile">
       <p
@@ -51,10 +50,10 @@ export function OwnersDetails({ userdata, items }) {
       <ul className="details">
         <li className="signin-form-name">
           Last Seen :
-          <span>{userdata.metadata.lastSignInTime.slice(5, 16)}</span>
+          <span>{userdata.metadata && userdata.metadata.lastSignInTime.slice(5, 16)}</span>
         </li>
         <li className="signin-form-name">
-          Joined :<span>{userdata.metadata.creationTime.slice(5, 16)}</span>
+          Joined :<span>{ userdata.metadata && userdata.metadata.creationTime.slice(5, 16)}</span>
         </li>
         <li className="signin-form-name">
           Material posted :

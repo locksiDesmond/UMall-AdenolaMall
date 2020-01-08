@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { IoMdShareAlt } from "react-icons/io";
 export const PostItems = (
   <Link to={{ pathname: "/umall/post" }}>
-    <span className="d-block d-md-none post">
+    <span className="d-block d-lg-none post">
       <IoMdShareAlt />
       Post
     </span>

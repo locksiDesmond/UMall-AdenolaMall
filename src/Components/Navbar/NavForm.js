@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 function NavForm(props) {
   const [search, setSearch] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [reload, setReload] = useState(false);
   const handleSubmit = e => {
     e.preventDefault();
     if (search) {
@@ -11,7 +12,15 @@ function NavForm(props) {
     if (props.handleclick) {
       props.handleclick();
     }
+    if (reload) {
+      window.location.reload();
+    }
   };
+  useEffect(() => {
+    if (window.location.pathname === "/umall/Search") {
+      setReload(true);
+    }
+  }, []);
   return (
     <form onSubmit={handleSubmit} className="btn--group">
       {redirect && (

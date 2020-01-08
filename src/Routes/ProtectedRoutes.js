@@ -40,8 +40,7 @@ class ProtectedRoutes extends React.Component {
     super(props);
     this.state = {
       name: "",
-      sidebar: false,
-      small: false
+      sidebar: false
     };
     this.sideNavToggle = this.sideNavToggle.bind(this);
   }
@@ -51,26 +50,7 @@ class ProtectedRoutes extends React.Component {
       sidebar: !this.state.sidebar
     });
   }
-  componentDidMount() {
-    window.addEventListener("resize", this.resize.bind(this));
-  }
-  resize() {
-    console.log("resize");
-    this.setState({ small: window.innerWidth <= 768 });
-  }
-  componentDidUpdate() {
-    if (this.state.sidebar && this.state.small) {
-      document.body.style.overflow = "hidden";
-      document.body.style.height = "100%";
-    } else {
-      document.body.style.overflow = "";
-      document.body.style.height = "";
-    }
-    if (!this.state.small) {
-      document.body.style.overflow = "auto";
-      document.body.style.height = "";
-    }
-  }
+
   render() {
     const { authenticated, loading, user } = this.context;
     const RenderItem = (

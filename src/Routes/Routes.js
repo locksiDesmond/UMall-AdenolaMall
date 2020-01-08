@@ -66,7 +66,12 @@ const Routes = props => {
           <Route path="/TermsAndConditions" component={TermsAndConditions} />
           <Route path="/description" component={Description} />
 
+<Route path="/trialdecription" component{()=><Description/>}/>
           <Route path="/vendorsdescription" component={Description} />
+          <Route
+            path="/mylink"
+            component={() => <Description state="Vendors" />}
+          />
           <Route
             path="/reset"
             component={() => <ForgotPassword firebase={props.firebase} />}

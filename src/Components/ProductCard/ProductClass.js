@@ -123,7 +123,7 @@ class ProductClass extends React.Component {
           className="d-none d-lg-block card--picture"
           style={{ position: "relative" }}
         >
-          <img src={item.pictureUrl[0]} alt="product card" />
+          <img src={item.pictureUrl && item.pictureUrl[0]} alt="product card" />
           {item.condition === "New" && (
             <span style={{ position: "absolute", right: "1rem" }}>
               <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />
@@ -135,7 +135,10 @@ class ProductClass extends React.Component {
             className="d-block d-lg-none card--picture"
             style={{ position: "relative" }}
           >
-            <img src={item.pictureUrl[0]} alt="product card" />
+            <img
+              src={item.pictureUrl && item.pictureUrl[0]}
+              alt="product card"
+            />
             {item.condition === "New" && (
               <span style={{ position: "absolute", top: "0", right: "0rem" }}>
                 <MdFiberNew color="#f4754e" style={{ fontSize: "2rem" }} />

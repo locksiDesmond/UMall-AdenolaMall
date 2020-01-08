@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { UsersPost } from "./FetchData";
 import ButtonLg from "./../../SmallComponent/ButtonLg";
 import VendorsCard from "../VendorsCard";
+import Loading from "./../../SmallComponent/Loading";
 function UserDropdown() {
   const [more, setMore] = useState(12);
   let data = UsersPost(more);
   return (
     <div className="main--content">
-      <h1> User Content</h1>
+      <p style={{ fontWeight: "bold" }}> User Content</p>
       <div className="products">
         {data[0] === "loading" ? (
-          <p> Loading </p>
+          <Loading />
         ) : (
           data
             .sort((a, b) => (b.materialSold > a.materialSold ? 1 : -1))

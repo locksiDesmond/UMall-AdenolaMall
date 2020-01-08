@@ -38,8 +38,8 @@ p {
 }
 @media (max-width: 768px) {
   .vendor--group {
-    width: 10rem;
-    height: 12.5rem;
+    width: 9rem;
+    height: 13.5rem;
   }
   .vendor--group .product--image {
     width: 5rem !important;
@@ -53,5 +53,17 @@ p {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
+  }
+  .flex {
+    padding-left: 0;
+  }
+  .vendor--group {
+    font-size: 0.9rem;
+  }
+  .absolutes {
+    right: 1%;
+  }
+  .block-center {
+    padding: 0;
   }
 }

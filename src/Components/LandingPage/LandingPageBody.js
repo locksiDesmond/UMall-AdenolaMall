@@ -109,7 +109,7 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
             </p>
             <a href="#down">
               <Btn
-                dropdown={dropdown && "true"}
+                dropdown={dropdown ? "true" : undefined}
                 className="big"
                 color="#f4754e"
                 title="Shop now"

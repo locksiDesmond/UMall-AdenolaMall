@@ -150,7 +150,6 @@ export const DeleteData = (category, id, image) => {
 };
 export const SearchUserData = (search, limit) => {
   const [data, setData] = useState(["loading"]);
-  console.log(search);
   useEffect(() => {
     firebase
       .firestore()
