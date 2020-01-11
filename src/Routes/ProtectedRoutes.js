@@ -1,40 +1,22 @@
 import React from "react";
-import Loadable from "react-loadable";
+import loadable from "@loadable/component";
 import { Route, Switch } from "react-router-dom";
 import { ContextCreator } from "./../Context/Context";
 import Loading from "../SmallComponent/Loading";
-const MainNav = Loadable({
-  loader: () => import("./../Components/Navbar/MainNav"),
-  loading: Loading
-});
-const SideNav = Loadable({
-  loader: () => import("../Components/SideNav/SideNav"),
-  loading: Loading
-});
-const ErrorPage = Loadable({
-  loader: () => import("./../SmallComponent/ErrorPage"),
-  loading: Loading
-});
-const UserDropdown = Loadable({
-  loader: () => import("./../Components/DropdownPages/UserDropdown"),
-  loading: Loading
-});
-const DropdownItems = Loadable({
-  loader: () => import("./../Components/DropdownPages/DropdownItems"),
-  loading: Loading
-});
-const MainDrop = Loadable({
-  loader: () => import("./../Components/DropdownPages/MainDrop"),
-  loading: Loading
-});
-const Upload = Loadable({
-  loader: () => import("./../Components/Upload/index"),
-  loading: Loading
-});
-const Search = Loadable({
-  loader: () => import("./../Components/Search page/index"),
-  loading: Loading
-});
+const MainNav = loadable(() => import("./../Components/Navbar/MainNav"));
+const SideNav = loadable(() => import("../Components/SideNav/SideNav"));
+const ErrorPage = loadable(() => import("./../SmallComponent/ErrorPage"));
+const UserDropdown = loadable(() =>
+  import("./../Components/DropdownPages/UserDropdown")
+);
+const DropdownItems = loadable(() =>
+  import("./../Components/DropdownPages/DropdownItems")
+);
+const MainDrop = loadable(() =>
+  import("./../Components/DropdownPages/MainDrop")
+);
+const Upload = loadable(() => import("./../Components/Upload/index"));
+const Search = loadable(() => import("./../Components/Search page/index"));
 class ProtectedRoutes extends React.Component {
   constructor(props) {
     super(props);

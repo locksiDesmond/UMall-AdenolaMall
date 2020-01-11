@@ -32,6 +32,10 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
   const Household = household.map(item => (
     <ProductCard key={item.date} data={item} />
   ));
+  const others = LandingPageData("Others", "name", 4);
+  const Others = others.map(item => (
+    <ProductCard key={item.date} data={item} />
+  ));
   useEffect(() => {
     setTimeout(() => {
       setDropdown(false);
@@ -166,6 +170,13 @@ function LandingPageBody({ location, user, authenticated, firebase }) {
             <div className="products">
               {cosmetics[0] === "loading" ? <p>{Loading}</p> : Cosmetics}
               {cosmetics.length === 0 && <p>No item found</p>}
+            </div>
+          </div>
+          <div className="trends">
+            <p>Others</p>
+            <div className="products">
+              {others[0] === "loading" ? <p>{Loading}</p> : Others}
+              {others.length === 0 && <p>No item found</p>}
             </div>
           </div>
         </div>

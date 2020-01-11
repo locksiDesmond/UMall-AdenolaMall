@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { FaWhatsapp } from "react-icons/fa";
 class ErrorBoundary extends React.Component {
   state = {
@@ -24,7 +23,10 @@ class ErrorBoundary extends React.Component {
   render() {
     return this.state.haserror ? (
       <h4>
-        An error occurred <Link to={{ pathname: "/" }}>Go Home</Link>
+        An error occurred{" "}
+        <a href="https//umall.website" alt="home page">
+          Go to home page
+        </a>{" "}
         <hr />
         <p>
           if error persists Chat Locksi on

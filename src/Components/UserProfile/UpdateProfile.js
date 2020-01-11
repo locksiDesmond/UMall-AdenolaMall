@@ -144,7 +144,7 @@ const UpdateProfile = props => {
         />
         <div style={{ marginTop: "1rem", marginBottom: "1.5rem" }}>
           <ButtonLg
-            loading={loading ? true : false}
+            loading={loading ? "true" : undefined}
             title="Save"
             small="true"
             onClick={handleSubmit}

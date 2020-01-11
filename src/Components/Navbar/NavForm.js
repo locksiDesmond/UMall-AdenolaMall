@@ -38,7 +38,7 @@ function NavForm(props) {
         id="name"
         onChange={e => setSearch(e.currentTarget.value)}
         name={search}
-        placeholder=""
+        placeholder="search name of product or vendor"
         className="search--input"
       />
       <button

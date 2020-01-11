@@ -42,12 +42,12 @@ function ImageUpload(props) {
     const fileExtension = extractImageFileExtensionFromBase64(imgSrc);
     const fileName = "file." + fileExtension;
     const croppedFile = base64StringtoFile(imgSrc, fileName);
-    if (!(croppedFile.size >= 1750000)) {
-      if (!(files >= 1750000)) {
+    if (!(croppedFile.size >= 2005000)) {
+      if (!(files >= 2005000)) {
         props.handleSubmit(files, props.value);
       }
     } else {
-      setError("File too Large");
+      setError("File too Large, image must be less than 2mb");
     }
   };
   useEffect(() => {

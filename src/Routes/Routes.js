@@ -1,54 +1,21 @@
 import React from "react";
-import Loadable from "react-loadable";
+import loadable from "@loadable/component";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Loading from "../SmallComponent/Loading";
-const ProtectedRoutes = Loadable({
-  loader: () => import("./ProtectedRoutes"),
-  loading: Loading
-});
-const ErrorPage = Loadable({
-  loader: () => import("./../SmallComponent/ErrorPage"),
-  loading: Loading
-});
-const Footer = Loadable({
-  loader: () => import("./../Components/Footer/index"),
-  loading: Loading
-});
-const ContactUs = Loadable({
-  loader: () => import("./../Components/ContactUs/index"),
-  loading: Loading
-});
-const TermsAndConditions = Loadable({
-  loader: () => import("./../Components/TermsAndConditions/index"),
-  loading: Loading
-});
+import TextDescription from "./../Components/Description/TextDescription";
+const ProtectedRoutes = loadable(() => import("./ProtectedRoutes"));
+const ErrorPage = loadable(() => import("./../SmallComponent/ErrorPage"));
+const Footer = loadable(() => import("./../Components/Footer/index"));
+const ContactUs = loadable(() => import("./../Components/ContactUs/index"));
+const TermsAndConditions = loadable(() =>
+  import("./../Components/TermsAndConditions/index")
+);
 
-const ForgotPassword = Loadable({
-  loader: () => import("./../Components/ForgotPassword/index"),
-  loading: Loading
-});
-
-const UserProfile = Loadable({
-  loader: () => import("./../Components/UserProfile/index"),
-  loading: Loading
-});
-const SignIn = Loadable({
-  loader: () => import("./../Components/SignIn/index"),
-  loading: Loading
-});
-const SignUp = Loadable({
-  loader: () => import("./../Components/SignUp/index"),
-  loading: Loading
-});
-const LandingPage = Loadable({
-  loader: () => import("./../Components/LandingPage/index"),
-  loading: Loading
-});
-const Description = Loadable({
-  loader: () => import("./../Components/Description/index"),
-  loading: Loading
-});
-
+const ForgotPassword = loadable(() => import("./../Components/ForgotPassword"));
+const UserProfile = loadable(() => import("./../Components/UserProfile/index"));
+const SignIn = loadable(() => import("./../Components/SignIn/index"));
+const SignUp = loadable(() => import("./../Components/SignUp/index"));
+const LandingPage = loadable(() => import("./../Components/LandingPage/index"));
+const Description = loadable(() => import("./../Components/Description/index"));
 const Routes = props => {
   return (
     <React.Fragment>
@@ -64,9 +31,8 @@ const Routes = props => {
           />
           <Route path="/umall" component={ProtectedRoutes} />
           <Route path="/TermsAndConditions" component={TermsAndConditions} />
-          <Route path="/description" component={Description} />
-
-<Route path="/trialdecription" component{()=><Description/>}/>
+          <Route path="/description" component={TextDescription} />
+          )} />
           <Route path="/vendorsdescription" component={Description} />
           <Route
             path="/mylink"

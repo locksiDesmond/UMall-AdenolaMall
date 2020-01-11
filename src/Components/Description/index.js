@@ -27,7 +27,6 @@ class Description extends React.Component {
   }
   componentDidMount() {
     const { user } = this.context;
-    console.log(this.props.location);
     if (this.state.item.likes) {
       const isLiked = this.state.item.likes.includes(user.uid); //important
       if (isLiked) {
@@ -47,6 +46,7 @@ class Description extends React.Component {
   refreshPage(item, userdata) {
     this.props.history.replace({
       pathname: "/description",
+      search: `?uid=${item.uid}&doc=${item.doc}&category=${item.category}`,
       state: { item, userdata }
     });
     window.location.reload();

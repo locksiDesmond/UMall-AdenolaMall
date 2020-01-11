@@ -87,7 +87,7 @@ function MainDrop(props) {
               Sell <span style={{ color: "#05aff2" }}>?</span>
             </p>
             {props.authenticated ? (
-              <Link to={{ pathname: "/post" }}>
+              <Link to={{ pathname: "/umall/post" }}>
                 <Btn className="big" color="#05aff2" title="Post" />
               </Link>
             ) : (

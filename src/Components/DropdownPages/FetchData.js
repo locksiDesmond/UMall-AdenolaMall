@@ -28,7 +28,7 @@ export const CategoryData = (category, limit) => {
   const [times, setTimes] = useState(["loading"]);
   // const page = page;
   useEffect(() => {
-    const unsubscribe = firebase
+  firebase
       .firestore()
       .collection(category)
       .orderBy("date", "desc")
@@ -40,14 +40,13 @@ export const CategoryData = (category, limit) => {
         }));
         setTimes(somedati);
       });
-    return () => unsubscribe();
   });
   return times;
 };
 export const LandingPageData = (category, order, limit) => {
   const [times, setTimes] = useState(["loading"]);
   useEffect(() => {
-    const unsubscribe = firebase
+    firebase
       .firestore()
       .collection(category)
       .orderBy(order, "desc")
@@ -59,8 +58,25 @@ export const LandingPageData = (category, order, limit) => {
         }));
         setTimes(somedati);
       });
-    return () => unsubscribe();
   }, [category, order, limit]);
+  return times;
+};
+export const DescriptionPageData = (category, id) => {
+  const [times, setTimes] = useState(["loading"]);
+  useEffect(() => {
+      firebase
+      .firestore()
+      .collection(category)
+      .doc(id)
+      .get()
+      .then(doc => {
+        const data = doc.data();
+        setTimes({ uid: doc.id, ...data });
+      })
+      .catch(()=>{
+        setTimes('error')
+      })
+  }, [category, id]);
   return times;
 };
 export const UsersPost = limit => {

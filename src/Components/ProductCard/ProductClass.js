@@ -33,8 +33,7 @@ class ProductClass extends React.Component {
   }
   handleClick() {
     if (
-      window.location.pathname === "/description" ||
-      window.location.pathname === "/vendorsdescription"
+      window.location.pathname === "/description"
     ) {
       this.props.handlerefresh(this.state.item, this.state.userdata);
     } else {
@@ -97,7 +96,11 @@ class ProductClass extends React.Component {
       <div onClick={this.handleClick} className="card--group">
         {redirect && (
           <Redirect
-            to={{ pathname: "/description", state: { item, userdata } }}
+            to={{
+              pathname: "/description",
+              search: `?uid=${item.uid}&doc=${item.doc}&category=${item.category}`,
+              state: { item, userdata }
+            }}
           />
         )}
 
