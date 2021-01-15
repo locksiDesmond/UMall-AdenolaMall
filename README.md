@@ -6,7 +6,7 @@
 ![forks](https://img.shields.io/github/forks/locksiDesmond/UMall)
 ![start](https://img.shields.io/github/stars/locksiDesmond/UMall)
 
-[**Visit the website.**](https://umall.website)<br>
+[**Visit the website.**](https://umall-adenola-mall-production.web.app/)<br>
 
 *Umall* is an ecommerce website that lets register users posts their products (everyday item) for registered and non-register customers to get in contact with the owner.
 
